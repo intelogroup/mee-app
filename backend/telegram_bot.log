@@ -1,0 +1,635 @@
+2026-02-18 14:18:05,234 - app.routers.telegram - INFO - Incoming update: {'message': {'chat': {'id': 123}, 'text': 'hello', 'from': {'id': 123, 'username': 'testuser'}}}
+2026-02-18 14:18:05,234 - app.routers.telegram - INFO - Processing update for chat_id 123, text: hello
+2026-02-18 14:18:06,626 - httpx - INFO - HTTP Request: GET https://htiundwxiwwdkieevylu.supabase.co/rest/v1/profiles?select=%2A&telegram_chat_id=eq.123 "HTTP/2 200 OK"
+2026-02-18 14:18:06,627 - app.routers.telegram - WARNING - User 123 not linked (chat_id: 123)
+2026-02-18 14:18:06,627 - app.routers.telegram - INFO - Sending message to chat_id 123: Account not linked. Please use the link from your ...
+2026-02-18 14:18:10,305 - app.routers.telegram - ERROR - Failed to send message to 123: 400 Client Error: Bad Request for url: https://api.telegram.org/bot8590847265:AAEhXjws5Xp1x-mERLLEX-GF3gQAnIe61Ok/sendMessage
+2026-02-18 14:18:10,307 - app.routers.telegram - INFO - Incoming update: {'update_id': 85484284, 'message': {'message_id': 27, 'from': {'id': 8538224711, 'is_bot': False, 'first_name': 'Jim', 'last_name': 'Kali', 'language_code': 'en'}, 'chat': {'id': 8538224711, 'first_name': 'Jim', 'last_name': 'Kali', 'type': 'private'}, 'date': 1771442286, 'text': 'Hungry'}}
+2026-02-18 14:18:10,308 - app.routers.telegram - INFO - Processing update for chat_id 8538224711, text: Hungry
+2026-02-18 14:18:10,494 - httpx - INFO - HTTP Request: GET https://htiundwxiwwdkieevylu.supabase.co/rest/v1/profiles?select=%2A&telegram_chat_id=eq.8538224711 "HTTP/2 200 OK"
+2026-02-18 14:18:10,495 - app.routers.telegram - INFO - Calling Groq for user: User
+2026-02-18 14:18:11,915 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-18 14:18:11,931 - app.routers.telegram - INFO - Received Groq response: When you're feeling hungry, do you usually reach f...
+2026-02-18 14:18:11,931 - app.routers.telegram - INFO - Sending response to chat_id 8538224711
+2026-02-18 14:18:11,931 - app.routers.telegram - INFO - Sending message to chat_id 8538224711: When you're feeling hungry, do you usually reach f...
+2026-02-18 14:18:12,643 - app.routers.telegram - INFO - Successfully sent message to 8538224711
+2026-02-18 14:18:31,521 - app.routers.telegram - INFO - Incoming update: {'update_id': 85484285, 'message': {'message_id': 29, 'from': {'id': 8538224711, 'is_bot': False, 'first_name': 'Jim', 'last_name': 'Kali', 'language_code': 'en'}, 'chat': {'id': 8538224711, 'first_name': 'Jim', 'last_name': 'Kali', 'type': 'private'}, 'date': 1771442311, 'text': 'I like music and woman'}}
+2026-02-18 14:18:31,522 - app.routers.telegram - INFO - Processing update for chat_id 8538224711, text: I like music and woman
+2026-02-18 14:18:32,061 - httpx - INFO - HTTP Request: GET https://htiundwxiwwdkieevylu.supabase.co/rest/v1/profiles?select=%2A&telegram_chat_id=eq.8538224711 "HTTP/2 200 OK"
+2026-02-18 14:18:32,063 - app.routers.telegram - INFO - Calling Groq for user: User
+2026-02-18 14:18:32,531 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-18 14:18:32,532 - app.routers.telegram - INFO - Received Groq response: It sounds like you enjoy music and have an interes...
+2026-02-18 14:18:32,532 - app.routers.telegram - INFO - Sending response to chat_id 8538224711
+2026-02-18 14:18:32,533 - app.routers.telegram - INFO - Sending message to chat_id 8538224711: It sounds like you enjoy music and have an interes...
+2026-02-18 14:18:33,019 - app.routers.telegram - INFO - Successfully sent message to 8538224711
+2026-02-18 14:20:30,490 - app.routers.telegram - INFO - Incoming update: {'update_id': 85484288, 'message': {'message_id': 33, 'from': {'id': 8538224711, 'is_bot': False, 'first_name': 'Jim', 'last_name': 'Kali', 'language_code': 'en'}, 'chat': {'id': 8538224711, 'first_name': 'Jim', 'last_name': 'Kali', 'type': 'private'}, 'date': 1771442430, 'text': 'Hey'}}
+2026-02-18 14:20:30,490 - app.routers.telegram - INFO - Processing update for chat_id 8538224711, text: Hey
+2026-02-18 14:20:32,628 - httpx - INFO - HTTP Request: GET https://htiundwxiwwdkieevylu.supabase.co/rest/v1/profiles?select=%2A&telegram_chat_id=eq.8538224711 "HTTP/2 200 OK"
+2026-02-18 14:20:32,745 - app.routers.telegram - INFO - Calling Groq for user: User
+2026-02-18 14:20:33,375 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-18 14:20:33,376 - app.routers.telegram - INFO - Received Groq response: How's your day going so far?...
+2026-02-18 14:20:33,376 - app.routers.telegram - INFO - Sending response to chat_id 8538224711
+2026-02-18 14:20:33,376 - app.routers.telegram - INFO - Sending message to chat_id 8538224711: How's your day going so far?...
+2026-02-18 14:20:36,366 - app.routers.telegram - INFO - Successfully sent message to 8538224711
+2026-02-18 14:21:08,749 - app.routers.telegram - INFO - Incoming update: {'update_id': 85484290, 'message': {'message_id': 36, 'from': {'id': 8538224711, 'is_bot': False, 'first_name': 'Jim', 'last_name': 'Kali', 'language_code': 'en'}, 'chat': {'id': 8538224711, 'first_name': 'Jim', 'last_name': 'Kali', 'type': 'private'}, 'date': 1771442468, 'text': 'Do you need me'}}
+2026-02-18 14:21:08,749 - app.routers.telegram - INFO - Processing update for chat_id 8538224711, text: Do you need me
+2026-02-18 14:21:09,008 - httpx - INFO - HTTP Request: GET https://htiundwxiwwdkieevylu.supabase.co/rest/v1/profiles?select=%2A&telegram_chat_id=eq.8538224711 "HTTP/2 200 OK"
+2026-02-18 14:21:09,009 - app.routers.telegram - INFO - Calling Groq for user: User
+2026-02-18 14:21:09,927 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-18 14:21:09,928 - app.routers.telegram - INFO - Received Groq response: No, I'm here to help you. What's been on your mind...
+2026-02-18 14:21:09,928 - app.routers.telegram - INFO - Sending response to chat_id 8538224711
+2026-02-18 14:21:09,928 - app.routers.telegram - INFO - Sending message to chat_id 8538224711: No, I'm here to help you. What's been on your mind...
+2026-02-18 14:21:10,999 - app.routers.telegram - INFO - Successfully sent message to 8538224711
+2026-02-18 15:04:50,983 - app.routers.telegram - INFO - Incoming update: {'message': {'chat': {'id': 8538224711}, 'text': 'I really love pizza', 'from': {'id': 8538224711, 'username': 'testuser'}}}
+2026-02-18 15:04:50,983 - app.routers.telegram - INFO - Processing update for chat_id 8538224711, text: I really love pizza
+2026-02-18 15:04:52,565 - httpx - INFO - HTTP Request: GET https://htiundwxiwwdkieevylu.supabase.co/rest/v1/profiles?select=%2A&telegram_chat_id=eq.8538224711 "HTTP/2 200 OK"
+2026-02-18 15:04:53,611 - app.routers.telegram - INFO - Calling Groq for user: testuser
+2026-02-18 15:04:53,972 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-18 15:04:53,984 - app.routers.telegram - INFO - Received Groq response: Who can blame you? Pizza brings people together. W...
+2026-02-18 15:04:53,985 - app.routers.telegram - INFO - Sending response to chat_id 8538224711
+2026-02-18 15:04:53,985 - app.routers.telegram - INFO - Sending message to chat_id 8538224711: Who can blame you? Pizza brings people together. W...
+2026-02-18 15:04:54,048 - app.routers.telegram - ERROR - Failed to send message to 8538224711: HTTPSConnectionPool(host='api.telegram.org', port=443): Max retries exceeded with url: /bot8590847265:AAEhXjws5Xp1x-mERLLEX-GF3gQAnIe61Ok/sendMessage (Caused by SSLError(SSLError(1, '[SSL: SSLV3_ALERT_HANDSHAKE_FAILURE] ssl/tls alert handshake failure (_ssl.c:1010)')))
+2026-02-18 15:05:10,345 - app.routers.telegram - INFO - Incoming update: {'update_id': 85484292, 'message': {'message_id': 39, 'from': {'id': 8538224711, 'is_bot': False, 'first_name': 'Jim', 'last_name': 'Kali', 'language_code': 'en'}, 'chat': {'id': 8538224711, 'first_name': 'Jim', 'last_name': 'Kali', 'type': 'private'}, 'date': 1771445110, 'text': 'What is the capital of Finland?'}}
+2026-02-18 15:05:10,346 - app.routers.telegram - INFO - Processing update for chat_id 8538224711, text: What is the capital of Finland?
+2026-02-18 15:05:12,258 - httpx - INFO - HTTP Request: GET https://htiundwxiwwdkieevylu.supabase.co/rest/v1/profiles?select=%2A&telegram_chat_id=eq.8538224711 "HTTP/2 200 OK"
+2026-02-18 15:05:12,659 - app.routers.telegram - INFO - Calling Groq for user: User
+2026-02-18 15:05:12,882 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-18 15:05:12,884 - app.routers.telegram - INFO - Received Groq response: The capital of Finland is Helsinki. By the way, ha...
+2026-02-18 15:05:12,884 - app.routers.telegram - INFO - Sending response to chat_id 8538224711
+2026-02-18 15:05:12,884 - app.routers.telegram - INFO - Sending message to chat_id 8538224711: The capital of Finland is Helsinki. By the way, ha...
+2026-02-18 15:05:13,021 - app.routers.telegram - ERROR - Failed to send message to 8538224711: HTTPSConnectionPool(host='api.telegram.org', port=443): Max retries exceeded with url: /bot8590847265:AAEhXjws5Xp1x-mERLLEX-GF3gQAnIe61Ok/sendMessage (Caused by SSLError(SSLError(1, '[SSL: SSLV3_ALERT_HANDSHAKE_FAILURE] ssl/tls alert handshake failure (_ssl.c:1010)')))
+2026-02-18 15:05:28,085 - app.routers.telegram - INFO - Incoming update: {'message': {'chat': {'id': 8538224711}, 'text': 'Pizza is life', 'from': {'id': 8538224711, 'username': 'testuser'}}}
+2026-02-18 15:05:28,086 - app.routers.telegram - INFO - Processing update for chat_id 8538224711, text: Pizza is life
+2026-02-18 15:05:28,284 - httpx - INFO - HTTP Request: GET https://htiundwxiwwdkieevylu.supabase.co/rest/v1/profiles?select=%2A&telegram_chat_id=eq.8538224711 "HTTP/2 200 OK"
+2026-02-18 15:05:28,918 - app.routers.telegram - INFO - Calling Groq for user: testuser
+2026-02-18 15:05:29,372 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-18 15:05:29,389 - app.routers.telegram - INFO - Received Groq response: Who can blame you? Pizza has a way of bringing peo...
+2026-02-18 15:05:29,389 - app.routers.telegram - INFO - Sending response to chat_id 8538224711
+2026-02-18 15:05:29,389 - app.routers.telegram - INFO - Sending message to chat_id 8538224711: Who can blame you? Pizza has a way of bringing peo...
+2026-02-18 15:05:29,469 - app.routers.telegram - ERROR - Failed to send message to 8538224711: HTTPSConnectionPool(host='api.telegram.org', port=443): Max retries exceeded with url: /bot8590847265:AAEhXjws5Xp1x-mERLLEX-GF3gQAnIe61Ok/sendMessage (Caused by SSLError(SSLError(1, '[SSL: SSLV3_ALERT_HANDSHAKE_FAILURE] ssl/tls alert handshake failure (_ssl.c:1010)')))
+2026-02-18 15:05:36,314 - app.routers.telegram - INFO - Incoming update: {'update_id': 85484293, 'message': {'message_id': 40, 'from': {'id': 8538224711, 'is_bot': False, 'first_name': 'Jim', 'last_name': 'Kali', 'language_code': 'en'}, 'chat': {'id': 8538224711, 'first_name': 'Jim', 'last_name': 'Kali', 'type': 'private'}, 'date': 1771445136, 'text': 'What is the capital of Finland?'}}
+2026-02-18 15:05:36,315 - app.routers.telegram - INFO - Processing update for chat_id 8538224711, text: What is the capital of Finland?
+2026-02-18 15:05:36,491 - httpx - INFO - HTTP Request: GET https://htiundwxiwwdkieevylu.supabase.co/rest/v1/profiles?select=%2A&telegram_chat_id=eq.8538224711 "HTTP/2 200 OK"
+2026-02-18 15:05:36,906 - app.routers.telegram - INFO - Calling Groq for user: User
+2026-02-18 15:05:37,193 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-18 15:05:37,194 - app.routers.telegram - INFO - Received Groq response: The capital of Finland is Helsinki. But, let's get...
+2026-02-18 15:05:37,194 - app.routers.telegram - INFO - Sending response to chat_id 8538224711
+2026-02-18 15:05:37,194 - app.routers.telegram - INFO - Sending message to chat_id 8538224711: The capital of Finland is Helsinki. But, let's get...
+2026-02-18 15:05:37,264 - app.routers.telegram - ERROR - Failed to send message to 8538224711: HTTPSConnectionPool(host='api.telegram.org', port=443): Max retries exceeded with url: /bot8590847265:AAEhXjws5Xp1x-mERLLEX-GF3gQAnIe61Ok/sendMessage (Caused by SSLError(SSLError(1, '[SSL: SSLV3_ALERT_HANDSHAKE_FAILURE] ssl/tls alert handshake failure (_ssl.c:1010)')))
+2026-02-18 15:29:49,819 - app.routers.telegram - INFO - Incoming update: {'message': {'chat': {'id': 8538224711}, 'text': 'I like to talk about music', 'from': {'id': 8538224711, 'username': 'testuser'}}}
+2026-02-18 15:29:49,821 - app.routers.telegram - INFO - Processing update for chat_id 8538224711, text: I like to talk about music
+2026-02-18 15:29:51,696 - httpx - INFO - HTTP Request: GET https://htiundwxiwwdkieevylu.supabase.co/rest/v1/profiles?select=%2A&telegram_chat_id=eq.8538224711 "HTTP/2 200 OK"
+2026-02-18 15:29:52,938 - app.routers.telegram - INFO - Calling Groq for user: testuser
+2026-02-18 15:29:53,663 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-18 15:29:53,679 - app.routers.telegram - INFO - Received Groq response: Music is a great conversation starter. You could t...
+2026-02-18 15:29:53,679 - app.routers.telegram - INFO - Sending response to chat_id 8538224711
+2026-02-18 15:29:53,679 - app.routers.telegram - INFO - Sending message to chat_id 8538224711: Music is a great conversation starter. You could t...
+2026-02-18 15:29:53,737 - app.routers.telegram - ERROR - Failed to send message to 8538224711: [SSL: SSLV3_ALERT_HANDSHAKE_FAILURE] ssl/tls alert handshake failure (_ssl.c:1010)
+2026-02-18 15:36:44,099 - app.routers.telegram - INFO - Incoming update: {'message': {'chat': {'id': 8538224711}, 'text': 'I and my friend like coding', 'from': {'id': 8538224711, 'username': 'testuser'}}}
+2026-02-18 15:36:44,099 - app.routers.telegram - INFO - Processing update for chat_id 8538224711, text: I and my friend like coding
+2026-02-18 15:41:30,570 - app.routers.telegram - INFO - Incoming update: {'message': {'chat': {'id': 8538224711}, 'text': 'I really enjoy coding with python', 'from': {'id': 8538224711, 'username': 'testuser'}}}
+2026-02-18 15:41:30,571 - app.routers.telegram - INFO - Processing update for chat_id 8538224711, text: I really enjoy coding with python
+2026-02-18 15:41:32,025 - httpx - INFO - HTTP Request: GET https://htiundwxiwwdkieevylu.supabase.co/rest/v1/profiles?select=%2A&telegram_chat_id=eq.8538224711 "HTTP/2 200 OK"
+2026-02-18 15:41:32,026 - app.services.embeddings - INFO - Generating embedding for text length: 33
+2026-02-18 15:41:32,463 - app.services.embeddings - INFO - Successfully got result from pc.inference.embed
+2026-02-18 15:41:33,450 - app.routers.telegram - INFO - Calling Groq for user: testuser
+2026-02-18 15:41:34,008 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-18 15:41:34,024 - app.routers.telegram - INFO - Received Groq response: Python is an amazing language. You must have a gre...
+2026-02-18 15:41:34,024 - app.routers.telegram - INFO - Sending response to chat_id 8538224711
+2026-02-18 15:41:34,024 - app.routers.telegram - INFO - Sending message to chat_id 8538224711: Python is an amazing language. You must have a gre...
+2026-02-18 15:41:34,656 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8590847265:AAEhXjws5Xp1x-mERLLEX-GF3gQAnIe61Ok/sendMessage "HTTP/1.1 200 OK"
+2026-02-18 15:41:34,658 - app.routers.telegram - INFO - Successfully sent message to 8538224711
+2026-02-18 15:41:35,814 - app.services.pinecone - ERROR - Error saving to Pinecone: (400)
+Reason: Bad Request
+HTTP response headers: HTTPHeaderDict({'Date': 'Wed, 18 Feb 2026 20:41:35 GMT', 'Content-Type': 'application/json', 'Content-Length': '104', 'Connection': 'keep-alive', 'x-pinecone-request-latency-ms': '817', 'x-envoy-upstream-service-time': '70', 'x-pinecone-response-duration-ms': '819', 'server': 'envoy'})
+HTTP response body: {"code":3,"message":"Vector dimension 1024 does not match the dimension of the index 1536","details":[]}
+
+2026-02-18 15:41:35,814 - app.services.embeddings - INFO - Generating embedding for text length: 236
+2026-02-18 15:41:36,306 - app.services.embeddings - INFO - Successfully got result from pc.inference.embed
+2026-02-18 15:41:37,120 - app.services.pinecone - ERROR - Error saving to Pinecone: (400)
+Reason: Bad Request
+HTTP response headers: HTTPHeaderDict({'Date': 'Wed, 18 Feb 2026 20:41:37 GMT', 'Content-Type': 'application/json', 'Content-Length': '104', 'Connection': 'keep-alive', 'x-pinecone-request-latency-ms': '366', 'x-envoy-upstream-service-time': '30', 'x-pinecone-response-duration-ms': '369', 'server': 'envoy'})
+HTTP response body: {"code":3,"message":"Vector dimension 1024 does not match the dimension of the index 1536","details":[]}
+
+2026-02-18 15:41:37,120 - app.routers.telegram - INFO - Saved chat interaction to Pinecone
+2026-02-18 15:41:51,847 - app.routers.telegram - INFO - Incoming update: {'update_id': 85484294, 'message': {'message_id': 42, 'from': {'id': 8538224711, 'is_bot': False, 'first_name': 'Jim', 'last_name': 'Kali', 'language_code': 'en'}, 'chat': {'id': 8538224711, 'first_name': 'Jim', 'last_name': 'Kali', 'type': 'private'}, 'date': 1771447311, 'text': 'Yes!'}}
+2026-02-18 15:41:51,848 - app.routers.telegram - INFO - Processing update for chat_id 8538224711, text: Yes!
+2026-02-18 15:41:52,353 - httpx - INFO - HTTP Request: GET https://htiundwxiwwdkieevylu.supabase.co/rest/v1/profiles?select=%2A&telegram_chat_id=eq.8538224711 "HTTP/2 200 OK"
+2026-02-18 15:41:52,355 - app.services.embeddings - INFO - Generating embedding for text length: 4
+2026-02-18 15:41:53,186 - app.services.embeddings - INFO - Successfully got result from pc.inference.embed
+2026-02-18 15:41:54,082 - app.services.pinecone - ERROR - Error querying Pinecone: (400)
+Reason: Bad Request
+HTTP response headers: HTTPHeaderDict({'Date': 'Wed, 18 Feb 2026 20:41:54 GMT', 'Content-Type': 'application/json', 'Content-Length': '104', 'Connection': 'keep-alive', 'x-pinecone-request-latency-ms': '382', 'x-envoy-upstream-service-time': '0', 'x-pinecone-response-duration-ms': '383', 'server': 'envoy'})
+HTTP response body: {"code":3,"message":"Vector dimension 1024 does not match the dimension of the index 1536","details":[]}
+
+2026-02-18 15:41:54,082 - app.routers.telegram - INFO - Calling Groq for user: User
+2026-02-18 15:41:54,524 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-18 15:41:54,525 - app.routers.telegram - INFO - Received Groq response: Let's get this social spark ignited. What's one sm...
+2026-02-18 15:41:54,525 - app.routers.telegram - INFO - Sending response to chat_id 8538224711
+2026-02-18 15:41:54,525 - app.routers.telegram - INFO - Sending message to chat_id 8538224711: Let's get this social spark ignited. What's one sm...
+2026-02-18 15:41:55,048 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8590847265:AAEhXjws5Xp1x-mERLLEX-GF3gQAnIe61Ok/sendMessage "HTTP/1.1 200 OK"
+2026-02-18 15:41:55,049 - app.routers.telegram - INFO - Successfully sent message to 8538224711
+2026-02-18 15:41:55,442 - app.services.pinecone - ERROR - Error saving to Pinecone: (400)
+Reason: Bad Request
+HTTP response headers: HTTPHeaderDict({'Date': 'Wed, 18 Feb 2026 20:41:55 GMT', 'Content-Type': 'application/json', 'Content-Length': '104', 'Connection': 'keep-alive', 'x-pinecone-request-latency-ms': '100', 'x-envoy-upstream-service-time': '30', 'x-pinecone-response-duration-ms': '102', 'server': 'envoy'})
+HTTP response body: {"code":3,"message":"Vector dimension 1024 does not match the dimension of the index 1536","details":[]}
+
+2026-02-18 15:41:55,442 - app.services.embeddings - INFO - Generating embedding for text length: 160
+2026-02-18 15:41:55,691 - app.services.embeddings - INFO - Successfully got result from pc.inference.embed
+2026-02-18 15:41:56,082 - app.services.pinecone - ERROR - Error saving to Pinecone: (400)
+Reason: Bad Request
+HTTP response headers: HTTPHeaderDict({'Date': 'Wed, 18 Feb 2026 20:41:56 GMT', 'Content-Type': 'application/json', 'Content-Length': '104', 'Connection': 'keep-alive', 'x-pinecone-request-latency-ms': '77', 'x-envoy-upstream-service-time': '2', 'x-pinecone-response-duration-ms': '80', 'server': 'envoy'})
+HTTP response body: {"code":3,"message":"Vector dimension 1024 does not match the dimension of the index 1536","details":[]}
+
+2026-02-18 15:41:56,082 - app.routers.telegram - INFO - Saved chat interaction to Pinecone
+2026-02-18 15:44:50,464 - app.routers.telegram - INFO - Incoming update: {'update_id': 85484297, 'message': {'message_id': 46, 'from': {'id': 8538224711, 'is_bot': False, 'first_name': 'Jim', 'last_name': 'Kali', 'language_code': 'en'}, 'chat': {'id': 8538224711, 'first_name': 'Jim', 'last_name': 'Kali', 'type': 'private'}, 'date': 1771447490, 'text': 'Give me some starters'}}
+2026-02-18 15:44:50,466 - app.routers.telegram - INFO - Processing update for chat_id 8538224711, text: Give me some starters
+2026-02-18 15:44:51,687 - httpx - INFO - HTTP Request: GET https://htiundwxiwwdkieevylu.supabase.co/rest/v1/profiles?select=%2A&telegram_chat_id=eq.8538224711 "HTTP/2 200 OK"
+2026-02-18 15:44:51,688 - app.services.embeddings - INFO - Generating embedding for text length: 21
+2026-02-18 15:44:52,385 - app.services.embeddings - INFO - Successfully got result from pc.inference.embed
+2026-02-18 15:45:00,300 - app.routers.telegram - INFO - Calling Groq for user: User
+2026-02-18 15:45:08,421 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+2026-02-18 15:45:08,422 - groq._base_client - INFO - Retrying request to /openai/v1/chat/completions in 0.460902 seconds
+2026-02-18 15:45:10,010 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-18 15:45:10,026 - app.routers.telegram - INFO - Received Groq response: Let's spark some interesting conversations. Here a...
+2026-02-18 15:45:10,026 - app.routers.telegram - INFO - Sending response to chat_id 8538224711
+2026-02-18 15:45:10,026 - app.routers.telegram - INFO - Sending message to chat_id 8538224711: Let's spark some interesting conversations. Here a...
+2026-02-18 15:45:11,937 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8590847265:AAEhXjws5Xp1x-mERLLEX-GF3gQAnIe61Ok/sendMessage "HTTP/1.1 200 OK"
+2026-02-18 15:45:11,938 - app.routers.telegram - INFO - Successfully sent message to 8538224711
+2026-02-18 15:45:15,489 - app.services.embeddings - INFO - Generating embedding for text length: 307
+2026-02-18 15:45:15,935 - app.services.embeddings - INFO - Successfully got result from pc.inference.embed
+2026-02-18 15:45:17,848 - app.routers.telegram - INFO - Saved chat interaction to Pinecone
+2026-02-18 15:46:47,702 - app.routers.telegram - INFO - Incoming update: {'message': {'chat': {'id': 8538224711}, 'text': 'I really enjoy coding with python', 'from': {'id': 8538224711, 'username': 'testuser'}}}
+2026-02-18 15:46:47,706 - app.routers.telegram - INFO - Processing update for chat_id 8538224711, text: I really enjoy coding with python
+2026-02-18 15:46:51,028 - httpx - INFO - HTTP Request: GET https://htiundwxiwwdkieevylu.supabase.co/rest/v1/profiles?select=%2A&telegram_chat_id=eq.8538224711 "HTTP/2 200 OK"
+2026-02-18 15:46:51,030 - app.services.embeddings - INFO - Generating embedding for text length: 33
+2026-02-18 15:46:53,585 - app.services.embeddings - INFO - Successfully got result from pc.inference.embed
+2026-02-18 15:47:06,066 - app.routers.telegram - INFO - Retrieved 2 memories for context
+2026-02-18 15:47:06,067 - app.routers.telegram - INFO - Calling Groq for user: testuser
+2026-02-18 15:47:09,668 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-18 15:47:09,687 - app.routers.telegram - INFO - Received Groq response: Python is a fantastic language to work with. You m...
+2026-02-18 15:47:09,688 - app.routers.telegram - INFO - Sending response to chat_id 8538224711
+2026-02-18 15:47:09,688 - app.routers.telegram - INFO - Sending message to chat_id 8538224711: Python is a fantastic language to work with. You m...
+2026-02-18 15:47:11,453 - app.routers.telegram - INFO - Incoming update: {'update_id': 85484301, 'message': {'message_id': 51, 'from': {'id': 8538224711, 'is_bot': False, 'first_name': 'Jim', 'last_name': 'Kali', 'language_code': 'en'}, 'chat': {'id': 8538224711, 'first_name': 'Jim', 'last_name': 'Kali', 'type': 'private'}, 'date': 1771447631, 'text': 'Hello'}}
+2026-02-18 15:47:11,455 - app.routers.telegram - INFO - Processing update for chat_id 8538224711, text: Hello
+2026-02-18 15:47:12,021 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8590847265:AAEhXjws5Xp1x-mERLLEX-GF3gQAnIe61Ok/sendMessage "HTTP/1.1 200 OK"
+2026-02-18 15:47:12,022 - app.routers.telegram - INFO - Successfully sent message to 8538224711
+2026-02-18 15:47:12,739 - httpx - INFO - HTTP Request: GET https://htiundwxiwwdkieevylu.supabase.co/rest/v1/profiles?select=%2A&telegram_chat_id=eq.8538224711 "HTTP/2 200 OK"
+2026-02-18 15:47:12,740 - app.services.embeddings - INFO - Generating embedding for text length: 5
+2026-02-18 15:47:13,972 - app.services.embeddings - INFO - Successfully got result from pc.inference.embed
+2026-02-18 15:47:14,653 - app.services.embeddings - INFO - Generating embedding for text length: 359
+2026-02-18 15:47:16,259 - app.services.embeddings - INFO - Successfully got result from pc.inference.embed
+2026-02-18 15:47:16,756 - app.routers.telegram - INFO - Retrieved 3 memories for context
+2026-02-18 15:47:16,757 - app.routers.telegram - INFO - Calling Groq for user: User
+2026-02-18 15:47:17,995 - app.routers.telegram - INFO - Saved chat interaction to Pinecone
+2026-02-18 15:47:18,133 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-18 15:47:18,135 - app.routers.telegram - INFO - Received Groq response: It's great to reconnect. I've been thinking, since...
+2026-02-18 15:47:18,135 - app.routers.telegram - INFO - Sending response to chat_id 8538224711
+2026-02-18 15:47:18,135 - app.routers.telegram - INFO - Sending message to chat_id 8538224711: It's great to reconnect. I've been thinking, since...
+2026-02-18 15:47:19,045 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8590847265:AAEhXjws5Xp1x-mERLLEX-GF3gQAnIe61Ok/sendMessage "HTTP/1.1 200 OK"
+2026-02-18 15:47:19,046 - app.routers.telegram - INFO - Successfully sent message to 8538224711
+2026-02-18 15:47:21,675 - app.services.embeddings - INFO - Generating embedding for text length: 272
+2026-02-18 15:47:22,168 - app.services.embeddings - INFO - Successfully got result from pc.inference.embed
+2026-02-18 15:47:25,993 - app.routers.telegram - INFO - Saved chat interaction to Pinecone
+2026-02-18 15:48:14,281 - app.routers.telegram - INFO - Incoming update: {'update_id': 85484302, 'message': {'message_id': 54, 'from': {'id': 8538224711, 'is_bot': False, 'first_name': 'Jim', 'last_name': 'Kali', 'language_code': 'en'}, 'chat': {'id': 8538224711, 'first_name': 'Jim', 'last_name': 'Kali', 'type': 'private'}, 'date': 1771447693, 'text': 'What is the top 5 best subjects as a starter with a woman'}}
+2026-02-18 15:48:14,282 - app.routers.telegram - INFO - Processing update for chat_id 8538224711, text: What is the top 5 best subjects as a starter with a woman
+2026-02-18 15:48:14,649 - httpx - INFO - HTTP Request: GET https://htiundwxiwwdkieevylu.supabase.co/rest/v1/profiles?select=%2A&telegram_chat_id=eq.8538224711 "HTTP/2 200 OK"
+2026-02-18 15:48:14,650 - app.services.embeddings - INFO - Generating embedding for text length: 57
+2026-02-18 15:48:15,371 - app.services.embeddings - INFO - Successfully got result from pc.inference.embed
+2026-02-18 15:48:17,280 - app.routers.telegram - INFO - Retrieved 5 memories for context
+2026-02-18 15:48:17,281 - app.routers.telegram - INFO - Calling Groq for user: User
+2026-02-18 15:48:18,158 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-18 15:48:18,159 - app.routers.telegram - INFO - Received Groq response: When it comes to starting conversations with someo...
+2026-02-18 15:48:18,160 - app.routers.telegram - INFO - Sending response to chat_id 8538224711
+2026-02-18 15:48:18,160 - app.routers.telegram - INFO - Sending message to chat_id 8538224711: When it comes to starting conversations with someo...
+2026-02-18 15:48:18,988 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8590847265:AAEhXjws5Xp1x-mERLLEX-GF3gQAnIe61Ok/sendMessage "HTTP/1.1 200 OK"
+2026-02-18 15:48:18,990 - app.routers.telegram - INFO - Successfully sent message to 8538224711
+2026-02-18 15:48:20,791 - app.services.embeddings - INFO - Generating embedding for text length: 652
+2026-02-18 15:48:21,090 - app.services.embeddings - INFO - Successfully got result from pc.inference.embed
+2026-02-18 15:48:22,037 - app.routers.telegram - INFO - Saved chat interaction to Pinecone
+2026-02-18 15:49:42,022 - app.routers.telegram - INFO - Incoming update: {'update_id': 85484304, 'message': {'message_id': 57, 'from': {'id': 8538224711, 'is_bot': False, 'first_name': 'Jim', 'last_name': 'Kali', 'language_code': 'en'}, 'chat': {'id': 8538224711, 'first_name': 'Jim', 'last_name': 'Kali', 'type': 'private'}, 'date': 1771447781, 'text': 'That’s sound great, what else?'}}
+2026-02-18 15:49:42,023 - app.routers.telegram - INFO - Processing update for chat_id 8538224711, text: That’s sound great, what else?
+2026-02-18 15:49:42,579 - httpx - INFO - HTTP Request: GET https://htiundwxiwwdkieevylu.supabase.co/rest/v1/profiles?select=%2A&telegram_chat_id=eq.8538224711 "HTTP/2 200 OK"
+2026-02-18 15:49:42,580 - app.services.embeddings - INFO - Generating embedding for text length: 30
+2026-02-18 15:49:43,137 - app.services.embeddings - INFO - Successfully got result from pc.inference.embed
+2026-02-18 15:49:44,451 - app.routers.telegram - INFO - Retrieved 5 memories for context
+2026-02-18 15:49:44,452 - app.routers.telegram - INFO - Calling Groq for user: User
+2026-02-18 15:49:45,007 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-18 15:49:45,009 - app.routers.telegram - INFO - Received Groq response: Let's explore more conversation starters. You coul...
+2026-02-18 15:49:45,009 - app.routers.telegram - INFO - Sending response to chat_id 8538224711
+2026-02-18 15:49:45,009 - app.routers.telegram - INFO - Sending message to chat_id 8538224711: Let's explore more conversation starters. You coul...
+2026-02-18 15:49:46,183 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8590847265:AAEhXjws5Xp1x-mERLLEX-GF3gQAnIe61Ok/sendMessage "HTTP/1.1 200 OK"
+2026-02-18 15:49:46,185 - app.routers.telegram - INFO - Successfully sent message to 8538224711
+2026-02-18 15:49:48,087 - app.services.embeddings - INFO - Generating embedding for text length: 305
+2026-02-18 15:49:48,370 - app.services.embeddings - INFO - Successfully got result from pc.inference.embed
+2026-02-18 15:49:49,032 - app.routers.telegram - INFO - Saved chat interaction to Pinecone
+2026-02-18 15:50:06,653 - app.routers.telegram - INFO - Incoming update: {'update_id': 85484305, 'message': {'message_id': 59, 'from': {'id': 8538224711, 'is_bot': False, 'first_name': 'Jim', 'last_name': 'Kali', 'language_code': 'en'}, 'chat': {'id': 8538224711, 'first_name': 'Jim', 'last_name': 'Kali', 'type': 'private'}, 'date': 1771447806, 'text': 'Do you remember the top 5'}}
+2026-02-18 15:50:06,653 - app.routers.telegram - INFO - Processing update for chat_id 8538224711, text: Do you remember the top 5
+2026-02-18 15:50:07,072 - httpx - INFO - HTTP Request: GET https://htiundwxiwwdkieevylu.supabase.co/rest/v1/profiles?select=%2A&telegram_chat_id=eq.8538224711 "HTTP/2 200 OK"
+2026-02-18 15:50:07,072 - app.services.embeddings - INFO - Generating embedding for text length: 25
+2026-02-18 15:50:07,381 - app.services.embeddings - INFO - Successfully got result from pc.inference.embed
+2026-02-18 15:50:07,927 - app.routers.telegram - INFO - Retrieved 5 memories for context
+2026-02-18 15:50:07,927 - app.routers.telegram - INFO - Calling Groq for user: User
+2026-02-18 15:50:09,018 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-18 15:50:09,019 - app.routers.telegram - INFO - Received Groq response: I recall our previous conversation about the top 5...
+2026-02-18 15:50:09,019 - app.routers.telegram - INFO - Sending response to chat_id 8538224711
+2026-02-18 15:50:09,019 - app.routers.telegram - INFO - Sending message to chat_id 8538224711: I recall our previous conversation about the top 5...
+2026-02-18 15:50:09,790 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8590847265:AAEhXjws5Xp1x-mERLLEX-GF3gQAnIe61Ok/sendMessage "HTTP/1.1 200 OK"
+2026-02-18 15:50:09,791 - app.routers.telegram - INFO - Successfully sent message to 8538224711
+2026-02-18 15:50:11,479 - app.services.embeddings - INFO - Generating embedding for text length: 339
+2026-02-18 15:50:11,815 - app.services.embeddings - INFO - Successfully got result from pc.inference.embed
+2026-02-18 15:50:13,530 - app.routers.telegram - INFO - Saved chat interaction to Pinecone
+2026-02-18 15:51:47,966 - app.routers.telegram - INFO - Incoming update: {'update_id': 85484307, 'message': {'message_id': 62, 'from': {'id': 8538224711, 'is_bot': False, 'first_name': 'Jim', 'last_name': 'Kali', 'language_code': 'en'}, 'chat': {'id': 8538224711, 'first_name': 'Jim', 'last_name': 'Kali', 'type': 'private'}, 'date': 1771447907, 'text': 'Hey'}}
+2026-02-18 15:51:47,973 - app.routers.telegram - INFO - Processing update for chat_id 8538224711, text: Hey
+2026-02-18 15:51:52,021 - httpx - INFO - HTTP Request: GET https://htiundwxiwwdkieevylu.supabase.co/rest/v1/profiles?select=%2A&telegram_chat_id=eq.8538224711 "HTTP/2 200 OK"
+2026-02-18 15:51:52,023 - app.services.embeddings - INFO - Generating embedding for text length: 3
+2026-02-18 15:52:02,447 - app.services.embeddings - INFO - Successfully got result from pc.inference.embed
+2026-02-18 15:52:06,562 - app.routers.telegram - INFO - Retrieved 5 memories for context
+2026-02-18 15:52:06,562 - app.routers.telegram - INFO - Calling Groq for user: User
+2026-02-18 15:52:08,039 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-18 15:52:08,057 - app.routers.telegram - INFO - Received Groq response: It's great to catch up with you again. I recall we...
+2026-02-18 15:52:08,058 - app.routers.telegram - INFO - Sending response to chat_id 8538224711
+2026-02-18 15:52:08,058 - app.routers.telegram - INFO - Sending message to chat_id 8538224711: It's great to catch up with you again. I recall we...
+2026-02-18 15:52:08,664 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8590847265:AAEhXjws5Xp1x-mERLLEX-GF3gQAnIe61Ok/sendMessage "HTTP/1.1 200 OK"
+2026-02-18 15:52:08,665 - app.routers.telegram - INFO - Successfully sent message to 8538224711
+2026-02-18 15:52:09,793 - app.services.embeddings - INFO - Generating embedding for text length: 302
+2026-02-18 15:52:10,284 - app.services.embeddings - INFO - Successfully got result from pc.inference.embed
+2026-02-18 15:52:12,568 - app.routers.telegram - INFO - Saved chat interaction to Pinecone
+2026-02-18 16:09:16,083 - app.routers.telegram - INFO - Incoming update: {'message': {'chat': {'id': 8538224711}, 'text': 'Hey Mee, I have a networking event tonight and I am feeling pretty anxious. Any tips?', 'from': {'id': 8538224711, 'username': 'jimkalinov'}}}
+2026-02-18 16:09:16,084 - app.routers.telegram - INFO - Processing update for chat_id 8538224711, text: Hey Mee, I have a networking event tonight and I am feeling pretty anxious. Any tips?
+2026-02-18 16:09:16,084 - app.routers.telegram - INFO - Parallelizing profile fetch and embedding for 8538224711
+2026-02-18 16:09:16,106 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-18 16:09:16,125 - app.services.embeddings - WARNING - Embedding attempt 1 failed: Inference.embed() got an unexpected keyword argument 'timeout'
+2026-02-18 16:09:16,627 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 2
+2026-02-18 16:09:16,628 - app.services.embeddings - WARNING - Embedding attempt 2 failed: Inference.embed() got an unexpected keyword argument 'timeout'
+2026-02-18 16:09:17,630 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 3
+2026-02-18 16:09:17,630 - app.services.embeddings - WARNING - Embedding attempt 3 failed: Inference.embed() got an unexpected keyword argument 'timeout'
+2026-02-18 16:09:17,630 - app.services.embeddings - ERROR - Failed to generate embedding after 3 attempts: Inference.embed() got an unexpected keyword argument 'timeout'
+2026-02-18 16:09:18,429 - httpx - INFO - HTTP Request: GET https://htiundwxiwwdkieevylu.supabase.co/rest/v1/profiles?select=%2A&telegram_chat_id=eq.8538224711 "HTTP/2 200 OK"
+2026-02-18 16:09:18,431 - app.routers.telegram - INFO - Calling Groq for user: jimkalinov
+2026-02-18 16:09:20,076 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-18 16:09:20,091 - app.routers.telegram - INFO - Received Groq response: To calm those nerves, try setting a specific, achi...
+2026-02-18 16:09:20,091 - app.routers.telegram - INFO - Sending response to chat_id 8538224711
+2026-02-18 16:09:20,091 - app.routers.telegram - INFO - Sending message to chat_id 8538224711: To calm those nerves, try setting a specific, achi...
+2026-02-18 16:09:22,873 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8590847265:AAEhXjws5Xp1x-mERLLEX-GF3gQAnIe61Ok/sendMessage "HTTP/1.1 200 OK"
+2026-02-18 16:09:22,873 - app.routers.telegram - INFO - Successfully sent message to 8538224711
+2026-02-18 16:09:43,247 - app.routers.telegram - INFO - Incoming update: {'update_id': 85484309, 'message': {'message_id': 66, 'from': {'id': 8538224711, 'is_bot': False, 'first_name': 'Jim', 'last_name': 'Kali', 'language_code': 'en'}, 'chat': {'id': 8538224711, 'first_name': 'Jim', 'last_name': 'Kali', 'type': 'private'}, 'date': 1771448982, 'text': 'Yes'}}
+2026-02-18 16:09:43,248 - app.routers.telegram - INFO - Processing update for chat_id 8538224711, text: Yes
+2026-02-18 16:09:43,248 - app.routers.telegram - INFO - Parallelizing profile fetch and embedding for 8538224711
+2026-02-18 16:09:43,249 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-18 16:09:43,251 - app.services.embeddings - WARNING - Embedding attempt 1 failed: Inference.embed() got an unexpected keyword argument 'timeout'
+2026-02-18 16:09:43,752 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 2
+2026-02-18 16:09:43,752 - app.services.embeddings - WARNING - Embedding attempt 2 failed: Inference.embed() got an unexpected keyword argument 'timeout'
+2026-02-18 16:09:44,753 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 3
+2026-02-18 16:09:44,753 - app.services.embeddings - WARNING - Embedding attempt 3 failed: Inference.embed() got an unexpected keyword argument 'timeout'
+2026-02-18 16:09:44,753 - app.services.embeddings - ERROR - Failed to generate embedding after 3 attempts: Inference.embed() got an unexpected keyword argument 'timeout'
+2026-02-18 16:09:48,192 - httpx - INFO - HTTP Request: GET https://htiundwxiwwdkieevylu.supabase.co/rest/v1/profiles?select=%2A&telegram_chat_id=eq.8538224711 "HTTP/2 200 OK"
+2026-02-18 16:09:48,193 - app.routers.telegram - INFO - Calling Groq for user: User
+2026-02-18 16:09:49,543 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-18 16:09:49,545 - app.routers.telegram - INFO - Received Groq response: It looks like we're starting from scratch. When me...
+2026-02-18 16:09:49,546 - app.routers.telegram - INFO - Sending response to chat_id 8538224711
+2026-02-18 16:09:49,546 - app.routers.telegram - INFO - Sending message to chat_id 8538224711: It looks like we're starting from scratch. When me...
+2026-02-18 16:09:51,876 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8590847265:AAEhXjws5Xp1x-mERLLEX-GF3gQAnIe61Ok/sendMessage "HTTP/1.1 200 OK"
+2026-02-18 16:09:51,878 - app.routers.telegram - INFO - Successfully sent message to 8538224711
+2026-02-18 16:12:54,314 - app.routers.telegram - INFO - Incoming update: {'update_id': 85484312, 'message': {'message_id': 70, 'from': {'id': 8538224711, 'is_bot': False, 'first_name': 'Jim', 'last_name': 'Kali', 'language_code': 'en'}, 'chat': {'id': 8538224711, 'first_name': 'Jim', 'last_name': 'Kali', 'type': 'private'}, 'date': 1771449173, 'text': 'Hey'}}
+2026-02-18 16:12:54,315 - app.routers.telegram - INFO - Processing update for chat_id 8538224711, text: Hey
+2026-02-18 16:12:54,316 - app.routers.telegram - INFO - Parallelizing profile fetch and embedding for 8538224711
+2026-02-18 16:12:54,316 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-18 16:12:54,318 - app.services.embeddings - WARNING - Embedding attempt 1 failed: Inference.embed() got an unexpected keyword argument 'timeout'
+2026-02-18 16:12:54,820 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 2
+2026-02-18 16:12:54,821 - app.services.embeddings - WARNING - Embedding attempt 2 failed: Inference.embed() got an unexpected keyword argument 'timeout'
+2026-02-18 16:12:55,225 - httpx - INFO - HTTP Request: GET https://htiundwxiwwdkieevylu.supabase.co/rest/v1/profiles?select=%2A&telegram_chat_id=eq.8538224711 "HTTP/2 200 OK"
+2026-02-18 16:12:55,823 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 3
+2026-02-18 16:12:55,823 - app.services.embeddings - WARNING - Embedding attempt 3 failed: Inference.embed() got an unexpected keyword argument 'timeout'
+2026-02-18 16:12:55,824 - app.services.embeddings - ERROR - Failed to generate embedding after 3 attempts: Inference.embed() got an unexpected keyword argument 'timeout'
+2026-02-18 16:12:55,824 - app.routers.telegram - INFO - Calling Groq for user: User
+2026-02-18 16:12:56,705 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-18 16:12:56,706 - app.routers.telegram - INFO - Received Groq response: Let's get this social party started, even if it's ...
+2026-02-18 16:12:56,706 - app.routers.telegram - INFO - Sending response to chat_id 8538224711
+2026-02-18 16:12:56,706 - app.routers.telegram - INFO - Sending message to chat_id 8538224711: Let's get this social party started, even if it's ...
+2026-02-18 16:13:04,593 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8590847265:AAEhXjws5Xp1x-mERLLEX-GF3gQAnIe61Ok/sendMessage "HTTP/1.1 200 OK"
+2026-02-18 16:13:04,594 - app.routers.telegram - INFO - Successfully sent message to 8538224711
+2026-02-18 16:13:20,087 - app.routers.telegram - INFO - Incoming update: {'message': {'chat': {'id': 8538224711}, 'text': "I have to give a speech at my best friend's wedding. I am terrified of public speaking. What do I do?", 'from': {'id': 8538224711, 'username': 'jimkalinov'}}}
+2026-02-18 16:13:20,087 - app.routers.telegram - INFO - Processing update for chat_id 8538224711, text: I have to give a speech at my best friend's wedding. I am terrified of public speaking. What do I do?
+2026-02-18 16:13:20,087 - app.routers.telegram - INFO - Parallelizing profile fetch and embedding for 8538224711
+2026-02-18 16:13:20,088 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-18 16:13:20,088 - app.services.embeddings - WARNING - Embedding attempt 1 failed: Inference.embed() got an unexpected keyword argument 'timeout'
+2026-02-18 16:13:20,588 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 2
+2026-02-18 16:13:20,589 - app.services.embeddings - WARNING - Embedding attempt 2 failed: Inference.embed() got an unexpected keyword argument 'timeout'
+2026-02-18 16:13:21,590 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 3
+2026-02-18 16:13:21,591 - app.services.embeddings - WARNING - Embedding attempt 3 failed: Inference.embed() got an unexpected keyword argument 'timeout'
+2026-02-18 16:13:21,591 - app.services.embeddings - ERROR - Failed to generate embedding after 3 attempts: Inference.embed() got an unexpected keyword argument 'timeout'
+2026-02-18 16:13:22,237 - httpx - INFO - HTTP Request: GET https://htiundwxiwwdkieevylu.supabase.co/rest/v1/profiles?select=%2A&telegram_chat_id=eq.8538224711 "HTTP/2 200 OK"
+2026-02-18 16:13:22,238 - app.routers.telegram - INFO - Calling Groq for user: jimkalinov
+2026-02-18 16:13:25,138 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-18 16:13:25,140 - app.routers.telegram - INFO - Received Groq response: Instead of trying to picture the entire audience, ...
+2026-02-18 16:13:25,140 - app.routers.telegram - INFO - Sending response to chat_id 8538224711
+2026-02-18 16:13:25,140 - app.routers.telegram - INFO - Sending message to chat_id 8538224711: Instead of trying to picture the entire audience, ...
+2026-02-18 16:13:26,214 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8590847265:AAEhXjws5Xp1x-mERLLEX-GF3gQAnIe61Ok/sendMessage "HTTP/1.1 200 OK"
+2026-02-18 16:13:26,215 - app.routers.telegram - INFO - Successfully sent message to 8538224711
+2026-02-18 16:13:34,751 - app.routers.telegram - INFO - Incoming update: {'update_id': 85484313, 'message': {'message_id': 73, 'from': {'id': 8538224711, 'is_bot': False, 'first_name': 'Jim', 'last_name': 'Kali', 'language_code': 'en'}, 'chat': {'id': 8538224711, 'first_name': 'Jim', 'last_name': 'Kali', 'type': 'private'}, 'date': 1771449214, 'text': 'I understand'}}
+2026-02-18 16:13:34,751 - app.routers.telegram - INFO - Processing update for chat_id 8538224711, text: I understand
+2026-02-18 16:13:34,751 - app.routers.telegram - INFO - Parallelizing profile fetch and embedding for 8538224711
+2026-02-18 16:13:34,752 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-18 16:13:34,753 - app.services.embeddings - WARNING - Embedding attempt 1 failed: Inference.embed() got an unexpected keyword argument 'timeout'
+2026-02-18 16:13:35,255 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 2
+2026-02-18 16:13:35,256 - app.services.embeddings - WARNING - Embedding attempt 2 failed: Inference.embed() got an unexpected keyword argument 'timeout'
+2026-02-18 16:13:36,091 - httpx - INFO - HTTP Request: GET https://htiundwxiwwdkieevylu.supabase.co/rest/v1/profiles?select=%2A&telegram_chat_id=eq.8538224711 "HTTP/2 200 OK"
+2026-02-18 16:13:36,257 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 3
+2026-02-18 16:13:36,258 - app.services.embeddings - WARNING - Embedding attempt 3 failed: Inference.embed() got an unexpected keyword argument 'timeout'
+2026-02-18 16:13:36,258 - app.services.embeddings - ERROR - Failed to generate embedding after 3 attempts: Inference.embed() got an unexpected keyword argument 'timeout'
+2026-02-18 16:13:36,258 - app.routers.telegram - INFO - Calling Groq for user: User
+2026-02-18 16:13:39,546 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-18 16:13:39,548 - app.routers.telegram - INFO - Received Groq response: Let's dive right in. When meeting new people, try ...
+2026-02-18 16:13:39,548 - app.routers.telegram - INFO - Sending response to chat_id 8538224711
+2026-02-18 16:13:39,548 - app.routers.telegram - INFO - Sending message to chat_id 8538224711: Let's dive right in. When meeting new people, try ...
+2026-02-18 16:13:40,613 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8590847265:AAEhXjws5Xp1x-mERLLEX-GF3gQAnIe61Ok/sendMessage "HTTP/1.1 200 OK"
+2026-02-18 16:13:40,614 - app.routers.telegram - INFO - Successfully sent message to 8538224711
+2026-02-18 16:29:35,816 - app.routers.telegram - INFO - Incoming update: {'test': True}
+2026-02-18 16:30:40,149 - app.routers.telegram - INFO - Incoming update: {'update_id': 85484318, 'message': {'message_id': 79, 'from': {'id': 8538224711, 'is_bot': False, 'first_name': 'Jim', 'last_name': 'Kali', 'language_code': 'en'}, 'chat': {'id': 8538224711, 'first_name': 'Jim', 'last_name': 'Kali', 'type': 'private'}, 'date': 1771449854, 'text': 'Hi bro'}}
+2026-02-18 16:30:40,149 - app.routers.telegram - INFO - Processing update for chat_id 8538224711, text: Hi bro
+2026-02-18 16:30:40,149 - app.routers.telegram - INFO - Parallelizing profile fetch and embedding for 8538224711
+2026-02-18 16:30:40,166 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-18 16:30:41,555 - httpx - INFO - HTTP Request: GET https://htiundwxiwwdkieevylu.supabase.co/rest/v1/profiles?select=%2A&telegram_chat_id=eq.8538224711 "HTTP/2 200 OK"
+2026-02-18 16:30:42,199 - app.routers.telegram - INFO - Retrieved 5 memories for context
+2026-02-18 16:30:42,199 - app.routers.telegram - INFO - Calling Groq for user: User
+2026-02-18 16:30:42,995 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-18 16:30:43,011 - app.routers.telegram - INFO - Received Groq response: When meeting new people, try using the "2-question...
+2026-02-18 16:30:43,011 - app.routers.telegram - INFO - Sending response to chat_id 8538224711
+2026-02-18 16:30:43,011 - app.routers.telegram - INFO - Sending message to chat_id 8538224711: When meeting new people, try using the "2-question...
+2026-02-18 16:30:43,044 - app.routers.telegram - ERROR - Failed to send message to 8538224711: [SSL: SSLV3_ALERT_HANDSHAKE_FAILURE] ssl/tls alert handshake failure (_ssl.c:1081)
+2026-02-18 16:30:43,318 - app.services.embeddings - INFO - Generating embedding (passage) - Attempt 1
+2026-02-18 16:30:43,884 - app.routers.telegram - INFO - Saved chat interaction to Pinecone
+2026-02-18 16:30:46,445 - app.routers.telegram - INFO - Incoming update: {'test': True}
+2026-02-18 16:36:21,402 - app.routers.telegram - INFO - Incoming update: {'update_id': 1000, 'message': {'message_id': 1000, 'from': {'id': 8538224711, 'is_bot': False, 'first_name': 'Test', 'username': 'testuser'}, 'chat': {'id': 8538224711, 'first_name': 'Test', 'type': 'private'}, 'date': 1708272000, 'text': 'Hello again, verification test.'}}
+2026-02-18 16:36:21,403 - app.routers.telegram - INFO - Processing update for chat_id 8538224711, text: Hello again, verification test.
+2026-02-18 16:36:21,403 - app.routers.telegram - INFO - Parallelizing profile fetch and embedding for 8538224711
+2026-02-18 16:36:21,408 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-18 16:36:22,289 - httpx - INFO - HTTP Request: GET https://htiundwxiwwdkieevylu.supabase.co/rest/v1/profiles?select=%2A&telegram_chat_id=eq.8538224711 "HTTP/2 200 OK"
+2026-02-18 16:36:23,411 - app.routers.telegram - INFO - Retrieved 5 memories for context
+2026-02-18 16:36:23,411 - app.routers.telegram - INFO - Calling Groq for user: testuser
+2026-02-18 16:36:24,293 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-18 16:36:24,307 - app.routers.telegram - INFO - Received Groq response: Let's skip the verification test and dive right in...
+2026-02-18 16:36:24,307 - app.routers.telegram - INFO - Sending response to chat_id 8538224711
+2026-02-18 16:36:24,308 - app.routers.telegram - INFO - Sending message to chat_id 8538224711: Let's skip the verification test and dive right in...
+2026-02-18 16:36:24,932 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8590847265:AAEhXjws5Xp1x-mERLLEX-GF3gQAnIe61Ok/sendMessage "HTTP/2 200 OK"
+2026-02-18 16:36:24,934 - app.routers.telegram - INFO - Successfully sent message to 8538224711
+2026-02-18 16:36:25,432 - app.services.embeddings - INFO - Generating embedding (passage) - Attempt 1
+2026-02-18 16:36:31,298 - app.routers.telegram - INFO - Saved chat interaction to Pinecone
+2026-02-18 16:40:21,070 - app.routers.telegram - INFO - Incoming update: {'update_id': 85484325, 'message': {'message_id': 87, 'from': {'id': 8538224711, 'is_bot': False, 'first_name': 'Jim', 'last_name': 'Kali', 'language_code': 'en'}, 'chat': {'id': 8538224711, 'first_name': 'Jim', 'last_name': 'Kali', 'type': 'private'}, 'date': 1771450820, 'text': 'Hello'}}
+2026-02-18 16:40:21,070 - app.routers.telegram - INFO - Processing update for chat_id 8538224711, text: Hello
+2026-02-18 16:40:21,071 - app.routers.telegram - INFO - Parallelizing profile fetch and embedding for 8538224711
+2026-02-18 16:40:21,071 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-18 16:40:22,798 - httpx - INFO - HTTP Request: GET https://htiundwxiwwdkieevylu.supabase.co/rest/v1/profiles?select=%2A&telegram_chat_id=eq.8538224711 "HTTP/2 200 OK"
+2026-02-18 16:40:36,344 - app.routers.telegram - INFO - Retrieved 5 memories for context
+2026-02-18 16:40:36,345 - app.routers.telegram - INFO - Calling Groq for user: User
+2026-02-18 16:40:37,179 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-18 16:40:37,181 - app.routers.telegram - INFO - Received Groq response: Let's get this conversation started with a simple ...
+2026-02-18 16:40:37,181 - app.routers.telegram - INFO - Sending response to chat_id 8538224711
+2026-02-18 16:40:37,181 - app.routers.telegram - INFO - Sending message to chat_id 8538224711: Let's get this conversation started with a simple ...
+2026-02-18 16:40:38,699 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8590847265:AAEhXjws5Xp1x-mERLLEX-GF3gQAnIe61Ok/sendMessage "HTTP/2 200 OK"
+2026-02-18 16:40:38,701 - app.routers.telegram - INFO - Successfully sent message to 8538224711
+2026-02-18 16:40:41,662 - app.services.embeddings - INFO - Generating embedding (passage) - Attempt 1
+2026-02-18 16:40:45,954 - app.routers.telegram - INFO - Incoming update: {'update_id': 85484326, 'message': {'message_id': 89, 'from': {'id': 8538224711, 'is_bot': False, 'first_name': 'Jim', 'last_name': 'Kali', 'language_code': 'en'}, 'chat': {'id': 8538224711, 'first_name': 'Jim', 'last_name': 'Kali', 'type': 'private'}, 'date': 1771450845, 'text': 'Hi'}}
+2026-02-18 16:40:45,955 - app.routers.telegram - INFO - Processing update for chat_id 8538224711, text: Hi
+2026-02-18 16:40:45,955 - app.routers.telegram - INFO - Parallelizing profile fetch and embedding for 8538224711
+2026-02-18 16:40:45,955 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-18 16:40:46,698 - httpx - INFO - HTTP Request: GET https://htiundwxiwwdkieevylu.supabase.co/rest/v1/profiles?select=%2A&telegram_chat_id=eq.8538224711 "HTTP/2 200 OK"
+2026-02-18 16:40:53,721 - app.routers.telegram - INFO - Retrieved 5 memories for context
+2026-02-18 16:40:53,721 - app.routers.telegram - INFO - Calling Groq for user: User
+2026-02-18 16:40:54,751 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-18 16:40:54,752 - app.routers.telegram - INFO - Received Groq response: Let's try something different to break the cycle o...
+2026-02-18 16:40:54,752 - app.routers.telegram - INFO - Sending response to chat_id 8538224711
+2026-02-18 16:40:54,752 - app.routers.telegram - INFO - Sending message to chat_id 8538224711: Let's try something different to break the cycle o...
+2026-02-18 16:40:55,100 - app.routers.telegram - INFO - Saved chat interaction to Pinecone
+2026-02-18 16:40:57,380 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8590847265:AAEhXjws5Xp1x-mERLLEX-GF3gQAnIe61Ok/sendMessage "HTTP/2 200 OK"
+2026-02-18 16:40:57,381 - app.routers.telegram - INFO - Successfully sent message to 8538224711
+2026-02-18 16:40:58,620 - app.services.embeddings - INFO - Generating embedding (passage) - Attempt 1
+2026-02-18 16:41:04,028 - app.routers.telegram - INFO - Saved chat interaction to Pinecone
+2026-02-18 16:41:08,407 - app.routers.telegram - INFO - Incoming update: {'update_id': 85484327, 'message': {'message_id': 91, 'from': {'id': 8538224711, 'is_bot': False, 'first_name': 'Jim', 'last_name': 'Kali', 'language_code': 'en'}, 'chat': {'id': 8538224711, 'first_name': 'Jim', 'last_name': 'Kali', 'type': 'private'}, 'date': 1771450868, 'text': 'How you doing'}}
+2026-02-18 16:41:08,408 - app.routers.telegram - INFO - Processing update for chat_id 8538224711, text: How you doing
+2026-02-18 16:41:08,408 - app.routers.telegram - INFO - Parallelizing profile fetch and embedding for 8538224711
+2026-02-18 16:41:08,408 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-18 16:41:14,005 - httpx - INFO - HTTP Request: GET https://htiundwxiwwdkieevylu.supabase.co/rest/v1/profiles?select=%2A&telegram_chat_id=eq.8538224711 "HTTP/2 200 OK"
+2026-02-18 16:41:15,629 - app.routers.telegram - INFO - Retrieved 5 memories for context
+2026-02-18 16:41:15,630 - app.routers.telegram - INFO - Calling Groq for user: User
+2026-02-18 16:41:18,341 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-18 16:41:18,343 - app.routers.telegram - INFO - Received Groq response: I'm doing great, thanks for asking. Since you've s...
+2026-02-18 16:41:18,343 - app.routers.telegram - INFO - Sending response to chat_id 8538224711
+2026-02-18 16:41:18,343 - app.routers.telegram - INFO - Sending message to chat_id 8538224711: I'm doing great, thanks for asking. Since you've s...
+2026-02-18 16:41:20,986 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8590847265:AAEhXjws5Xp1x-mERLLEX-GF3gQAnIe61Ok/sendMessage "HTTP/2 200 OK"
+2026-02-18 16:41:20,987 - app.routers.telegram - INFO - Successfully sent message to 8538224711
+2026-02-18 16:41:22,520 - app.services.embeddings - INFO - Generating embedding (passage) - Attempt 1
+2026-02-18 16:41:29,305 - app.routers.telegram - INFO - Saved chat interaction to Pinecone
+2026-02-18 16:46:49,594 - app.main - INFO - Warming up embedding model...
+2026-02-18 16:46:49,595 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-18 16:46:58,786 - app.main - INFO - Embedding model warmed up
+2026-02-18 16:47:13,127 - app.main - INFO - Warming up embedding model...
+2026-02-18 16:47:13,127 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-18 16:47:27,861 - urllib3.connectionpool - WARNING - Retrying (JitterRetry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1081)'))': /embed
+2026-02-18 16:47:31,454 - app.main - INFO - Embedding model warmed up
+2026-02-18 16:47:53,313 - app.main - INFO - Warming up embedding model...
+2026-02-18 16:47:53,313 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-18 16:48:03,160 - app.main - INFO - Embedding model warmed up
+2026-02-18 16:48:07,746 - app.main - INFO - Warming up embedding model...
+2026-02-18 16:48:07,746 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-18 16:48:16,243 - app.main - INFO - Embedding model warmed up
+2026-02-18 16:53:58,467 - app.main - INFO - Warming up embedding model...
+2026-02-18 16:53:58,467 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-18 16:53:59,037 - app.main - INFO - Embedding model warmed up
+2026-02-18 16:54:08,941 - app.main - INFO - Warming up embedding model...
+2026-02-18 16:54:08,941 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-18 16:54:12,450 - app.main - INFO - Embedding model warmed up
+2026-02-18 16:54:22,143 - app.main - INFO - Warming up embedding model...
+2026-02-18 16:54:22,143 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-18 16:54:25,442 - app.main - INFO - Embedding model warmed up
+2026-02-18 16:54:33,011 - app.main - INFO - Warming up embedding model...
+2026-02-18 16:54:33,011 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-18 16:54:35,254 - app.main - INFO - Embedding model warmed up
+2026-02-18 16:59:43,992 - app.routers.telegram - INFO - Incoming update: {'update_id': 2000, 'message': {'message_id': 2000, 'from': {'id': 999999999, 'is_bot': False, 'first_name': 'GroqTest', 'username': 'groqtester'}, 'chat': {'id': 999999999, 'first_name': 'GroqTest', 'type': 'private'}, 'date': 1708275000, 'text': 'Tell me a short joke about coding.'}}
+2026-02-18 16:59:43,993 - app.routers.telegram - INFO - Processing update for chat_id 999999999, text: Tell me a short joke about coding.
+2026-02-18 16:59:43,993 - app.routers.telegram - INFO - Parallelizing profile fetch and embedding for 999999999
+2026-02-18 16:59:43,998 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-18 16:59:44,692 - httpx - INFO - HTTP Request: GET https://htiundwxiwwdkieevylu.supabase.co/rest/v1/profiles?select=%2A&telegram_chat_id=eq.999999999 "HTTP/2 200 OK"
+2026-02-18 17:00:14,715 - app.routers.telegram - INFO - Incoming update: {'update_id': 2001, 'message': {'message_id': 2001, 'from': {'id': 8538224711, 'is_bot': False, 'first_name': 'Jim', 'username': 'JimKali'}, 'chat': {'id': 8538224711, 'first_name': 'Jim', 'type': 'private'}, 'date': 1708276000, 'text': 'What is the capital of France?'}}
+2026-02-18 17:00:14,715 - app.routers.telegram - INFO - Processing update for chat_id 8538224711, text: What is the capital of France?
+2026-02-18 17:00:14,715 - app.routers.telegram - INFO - Parallelizing profile fetch and embedding for 8538224711
+2026-02-18 17:00:14,715 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-18 17:00:15,168 - httpx - INFO - HTTP Request: GET https://htiundwxiwwdkieevylu.supabase.co/rest/v1/profiles?select=%2A&telegram_chat_id=eq.8538224711 "HTTP/2 200 OK"
+2026-02-18 17:00:15,170 - app.routers.telegram - INFO - Skipping memory retrieval (New user: 0 messages)
+2026-02-18 17:00:15,171 - app.routers.telegram - INFO - Calling Groq for user: JimKali
+2026-02-18 17:00:16,020 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-18 17:00:16,038 - app.routers.telegram - INFO - Received Groq response: The capital of France is Paris, but since we're fo...
+2026-02-18 17:00:16,038 - app.routers.telegram - INFO - Sending response to chat_id 8538224711
+2026-02-18 17:00:16,038 - app.routers.telegram - INFO - Sending message to chat_id 8538224711: The capital of France is Paris, but since we're fo...
+2026-02-18 17:00:16,075 - app.routers.telegram - ERROR - Failed to send message to 8538224711: [SSL: SSLV3_ALERT_HANDSHAKE_FAILURE] ssl/tls alert handshake failure (_ssl.c:1081)
+2026-02-18 17:00:16,711 - app.services.embeddings - INFO - Generating embedding (passage) - Attempt 1
+2026-02-18 17:00:17,148 - app.routers.telegram - INFO - Saved chat interaction to Pinecone
+2026-02-18 17:00:17,315 - httpx - INFO - HTTP Request: POST https://htiundwxiwwdkieevylu.supabase.co/rest/v1/rpc/increment_message_count "HTTP/2 204 No Content"
+2026-02-18 17:02:13,025 - urllib3.connectionpool - WARNING - Retrying (JitterRetry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'OSError(65, 'No route to host')': /embed
+2026-02-18 17:02:13,398 - app.routers.telegram - WARNING - User 999999999 not linked (chat_id: 999999999)
+2026-02-18 17:02:13,399 - app.routers.telegram - INFO - Sending message to chat_id 999999999: Account not linked. Please use the link from your ...
+2026-02-18 17:02:13,433 - app.routers.telegram - ERROR - Failed to send message to 999999999: [SSL: SSLV3_ALERT_HANDSHAKE_FAILURE] ssl/tls alert handshake failure (_ssl.c:1081)
+2026-02-18 17:02:14,027 - app.main - INFO - Warming up embedding model...
+2026-02-18 17:02:14,027 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-18 17:02:14,397 - app.main - INFO - Embedding model warmed up
+2026-02-18 17:02:14,400 - app.routers.telegram - INFO - Incoming update: {'update_id': 2003, 'message': {'message_id': 2003, 'from': {'id': 8538224711, 'is_bot': False, 'first_name': 'Jim', 'username': 'JimKali'}, 'chat': {'id': 8538224711, 'first_name': 'Jim', 'type': 'private'}, 'date': 1708277000, 'text': 'Are we connected?'}}
+2026-02-18 17:02:14,401 - app.routers.telegram - INFO - Processing update for chat_id 8538224711, text: Are we connected?
+2026-02-18 17:02:14,401 - app.routers.telegram - INFO - Parallelizing profile fetch and embedding for 8538224711
+2026-02-18 17:02:14,410 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-18 17:02:14,684 - httpx - INFO - HTTP Request: GET https://htiundwxiwwdkieevylu.supabase.co/rest/v1/profiles?select=%2A&telegram_chat_id=eq.8538224711 "HTTP/2 200 OK"
+2026-02-18 17:02:14,686 - app.routers.telegram - INFO - Skipping memory retrieval (New user: 1 messages)
+2026-02-18 17:02:14,686 - app.routers.telegram - INFO - Calling Groq for user: JimKali
+2026-02-18 17:02:15,219 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-18 17:02:15,235 - app.routers.telegram - INFO - Received Groq response: We're just getting started, so not quite yet. To h...
+2026-02-18 17:02:15,235 - app.routers.telegram - INFO - Sending response to chat_id 8538224711
+2026-02-18 17:02:15,235 - app.routers.telegram - INFO - Sending message to chat_id 8538224711: We're just getting started, so not quite yet. To h...
+2026-02-18 17:02:15,266 - app.routers.telegram - ERROR - Failed to send message to 8538224711: [SSL: SSLV3_ALERT_HANDSHAKE_FAILURE] ssl/tls alert handshake failure (_ssl.c:1081)
+2026-02-18 17:02:15,742 - app.services.embeddings - INFO - Generating embedding (passage) - Attempt 1
+2026-02-18 17:02:16,189 - app.routers.telegram - INFO - Saved chat interaction to Pinecone
+2026-02-18 17:02:16,336 - httpx - INFO - HTTP Request: POST https://htiundwxiwwdkieevylu.supabase.co/rest/v1/rpc/increment_message_count "HTTP/2 204 No Content"
+2026-02-18 17:02:39,250 - app.main - INFO - Warming up embedding model...
+2026-02-18 17:02:39,250 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-18 17:02:39,473 - app.main - INFO - Embedding model warmed up
+2026-02-18 17:02:45,470 - app.routers.telegram - INFO - Incoming update: {'update_id': 2004, 'message': {'message_id': 2004, 'from': {'id': 8538224711, 'is_bot': False, 'first_name': 'Jim', 'username': 'JimKali'}, 'chat': {'id': 8538224711, 'first_name': 'Jim', 'type': 'private'}, 'date': 1708278000, 'text': 'Final system check.'}}
+2026-02-18 17:02:45,471 - app.routers.telegram - INFO - Processing update for chat_id 8538224711, text: Final system check.
+2026-02-18 17:02:45,471 - app.routers.telegram - INFO - Parallelizing profile fetch and embedding for 8538224711
+2026-02-18 17:02:45,475 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-18 17:02:45,626 - httpx - INFO - HTTP Request: GET https://htiundwxiwwdkieevylu.supabase.co/rest/v1/profiles?select=%2A&telegram_chat_id=eq.8538224711 "HTTP/2 200 OK"
+2026-02-18 17:02:45,714 - app.routers.telegram - INFO - Skipping memory retrieval (New user: 2 messages)
+2026-02-18 17:02:45,715 - app.routers.telegram - INFO - Calling Groq for user: JimKali
+2026-02-18 17:02:46,179 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-18 17:02:46,195 - app.routers.telegram - INFO - Received Groq response: Let's get this social party started. To help me ta...
+2026-02-18 17:02:46,195 - app.routers.telegram - INFO - Sending response to chat_id 8538224711
+2026-02-18 17:02:46,195 - app.routers.telegram - INFO - Sending message to chat_id 8538224711: Let's get this social party started. To help me ta...
+2026-02-18 17:02:46,275 - app.routers.telegram - ERROR - Failed to send message to 8538224711: HTTPSConnectionPool(host='api.telegram.org', port=443): Max retries exceeded with url: /bot8590847265:AAEhXjws5Xp1x-mERLLEX-GF3gQAnIe61Ok/sendMessage (Caused by SSLError(SSLError(1, '[SSL: SSLV3_ALERT_HANDSHAKE_FAILURE] ssl/tls alert handshake failure (_ssl.c:1081)')))
+2026-02-18 17:02:46,945 - app.services.embeddings - INFO - Generating embedding (passage) - Attempt 1
+2026-02-18 17:02:47,356 - app.routers.telegram - INFO - Saved chat interaction to Pinecone
+2026-02-18 17:02:47,488 - httpx - INFO - HTTP Request: POST https://htiundwxiwwdkieevylu.supabase.co/rest/v1/rpc/increment_message_count "HTTP/2 204 No Content"
+2026-02-18 17:03:04,697 - app.main - INFO - Warming up embedding model...
+2026-02-18 17:03:04,697 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-18 17:03:04,916 - app.main - INFO - Embedding model warmed up
+2026-02-18 17:03:11,238 - app.routers.telegram - INFO - Incoming update: {'update_id': 2005, 'message': {'message_id': 2005, 'from': {'id': 8538224711, 'is_bot': False, 'first_name': 'Jim', 'username': 'JimKali'}, 'chat': {'id': 8538224711, 'first_name': 'Jim', 'type': 'private'}, 'date': 1708279000, 'text': 'Did the fix work?'}}
+2026-02-18 17:03:11,239 - app.routers.telegram - INFO - Processing update for chat_id 8538224711, text: Did the fix work?
+2026-02-18 17:03:11,239 - app.routers.telegram - INFO - Parallelizing profile fetch and embedding for 8538224711
+2026-02-18 17:03:11,242 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-18 17:03:11,402 - httpx - INFO - HTTP Request: GET https://htiundwxiwwdkieevylu.supabase.co/rest/v1/profiles?select=%2A&telegram_chat_id=eq.8538224711 "HTTP/2 200 OK"
+2026-02-18 17:03:11,415 - app.routers.telegram - INFO - Skipping memory retrieval (New user: 3 messages)
+2026-02-18 17:03:11,415 - app.routers.telegram - INFO - Calling Groq for user: JimKali
+2026-02-18 17:03:11,677 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-18 17:03:11,692 - app.routers.telegram - INFO - Received Groq response: Since we've just started, I'm not aware of any fix...
+2026-02-18 17:03:11,692 - app.routers.telegram - INFO - Sending response to chat_id 8538224711
+2026-02-18 17:03:11,692 - app.routers.telegram - INFO - Sending message to chat_id 8538224711: Since we've just started, I'm not aware of any fix...
+2026-02-18 17:03:11,795 - app.routers.telegram - INFO - Successfully sent message to 8538224711 (via curl)
+2026-02-18 17:03:12,209 - app.services.embeddings - INFO - Generating embedding (passage) - Attempt 1
+2026-02-18 17:03:12,846 - app.routers.telegram - INFO - Saved chat interaction to Pinecone
+2026-02-18 17:03:13,003 - httpx - INFO - HTTP Request: POST https://htiundwxiwwdkieevylu.supabase.co/rest/v1/rpc/increment_message_count "HTTP/2 204 No Content"
+2026-02-18 17:04:50,460 - app.routers.telegram - INFO - Incoming update: {'update_id': 85484332, 'message': {'message_id': 97, 'from': {'id': 8538224711, 'is_bot': False, 'first_name': 'Jim', 'last_name': 'Kali', 'language_code': 'en'}, 'chat': {'id': 8538224711, 'first_name': 'Jim', 'last_name': 'Kali', 'type': 'private'}, 'date': 1771452290, 'text': 'Hello'}}
+2026-02-18 17:04:50,461 - app.routers.telegram - INFO - Processing update for chat_id 8538224711, text: Hello
+2026-02-18 17:04:50,461 - app.routers.telegram - INFO - Parallelizing profile fetch and embedding for 8538224711
+2026-02-18 17:04:50,461 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-18 17:04:51,278 - httpx - INFO - HTTP Request: GET https://htiundwxiwwdkieevylu.supabase.co/rest/v1/profiles?select=%2A&telegram_chat_id=eq.8538224711 "HTTP/2 200 OK"
+2026-02-18 17:04:51,645 - app.routers.telegram - INFO - Retrieved 5 memories for context
+2026-02-18 17:04:51,646 - app.routers.telegram - INFO - Calling Groq for user: User
+2026-02-18 17:04:52,090 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-18 17:04:52,093 - app.routers.telegram - INFO - Received Groq response: I've noticed you've said hello a few times already...
+2026-02-18 17:04:52,093 - app.routers.telegram - INFO - Sending response to chat_id 8538224711
+2026-02-18 17:04:52,093 - app.routers.telegram - INFO - Sending message to chat_id 8538224711: I've noticed you've said hello a few times already...
+2026-02-18 17:04:52,180 - app.routers.telegram - INFO - Successfully sent message to 8538224711 (via curl)
+2026-02-18 17:04:52,445 - app.services.embeddings - INFO - Generating embedding (passage) - Attempt 1
+2026-02-18 17:04:52,995 - app.routers.telegram - INFO - Saved chat interaction to Pinecone
+2026-02-18 17:04:53,152 - httpx - INFO - HTTP Request: POST https://htiundwxiwwdkieevylu.supabase.co/rest/v1/rpc/increment_message_count "HTTP/2 204 No Content"
+2026-02-18 17:07:42,446 - app.routers.telegram - INFO - Incoming update: {'update_id': 4000, 'message': {'message_id': 4000, 'from': {'id': 8538224711, 'is_bot': False, 'first_name': 'Jim', 'username': 'JimKali'}, 'chat': {'id': 8538224711, 'first_name': 'Jim', 'type': 'private'}, 'date': 1708282000, 'text': 'Latency check.'}}
+2026-02-18 17:07:42,448 - app.routers.telegram - INFO - Processing update for chat_id 8538224711, text: Latency check.
+2026-02-18 17:07:42,448 - app.routers.telegram - INFO - Parallelizing profile fetch and embedding for 8538224711
+2026-02-18 17:07:42,448 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-18 17:07:42,977 - httpx - INFO - HTTP Request: GET https://htiundwxiwwdkieevylu.supabase.co/rest/v1/profiles?select=%2A&telegram_chat_id=eq.8538224711 "HTTP/2 200 OK"
+2026-02-18 17:08:00,751 - urllib3.connectionpool - WARNING - Retrying (JitterRetry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'OSError(49, "Can't assign requested address")': /embed
+2026-02-18 17:08:05,418 - app.routers.telegram - INFO - Retrieved 5 memories for context
+2026-02-18 17:08:05,418 - app.routers.telegram - INFO - Calling Groq for user: JimKali
+2026-02-18 17:08:07,002 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-18 17:08:07,004 - app.routers.telegram - INFO - Received Groq response: Now that we've got the connection checks out of th...
+2026-02-18 17:08:07,004 - app.routers.telegram - INFO - Sending response to chat_id 8538224711
+2026-02-18 17:08:07,004 - app.routers.telegram - INFO - Sending message to chat_id 8538224711: Now that we've got the connection checks out of th...
+2026-02-18 17:08:07,632 - app.routers.telegram - INFO - Successfully sent message to 8538224711 (via curl)
+2026-02-18 17:08:08,653 - app.services.embeddings - INFO - Generating embedding (passage) - Attempt 1
+2026-02-18 17:08:10,406 - app.routers.telegram - INFO - Saved chat interaction to Pinecone
+2026-02-18 17:08:10,757 - httpx - INFO - HTTP Request: POST https://htiundwxiwwdkieevylu.supabase.co/rest/v1/rpc/increment_message_count "HTTP/2 204 No Content"
+2026-02-18 17:08:18,370 - app.routers.telegram - INFO - Incoming update: {'update_id': 85484339, 'message': {'message_id': 105, 'from': {'id': 8538224711, 'is_bot': False, 'first_name': 'Jim', 'last_name': 'Kali', 'language_code': 'en'}, 'chat': {'id': 8538224711, 'first_name': 'Jim', 'last_name': 'Kali', 'type': 'private'}, 'date': 1771452498, 'text': 'What going on'}}
+2026-02-18 17:08:18,371 - app.routers.telegram - INFO - Processing update for chat_id 8538224711, text: What going on
+2026-02-18 17:08:18,371 - app.routers.telegram - INFO - Parallelizing profile fetch and embedding for 8538224711
+2026-02-18 17:08:18,371 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-18 17:08:18,702 - httpx - INFO - HTTP Request: GET https://htiundwxiwwdkieevylu.supabase.co/rest/v1/profiles?select=%2A&telegram_chat_id=eq.8538224711 "HTTP/2 200 OK"
+2026-02-18 17:08:19,188 - app.routers.telegram - INFO - Retrieved 5 memories for context
+2026-02-18 17:08:19,188 - app.routers.telegram - INFO - Calling Groq for user: User
+2026-02-18 17:08:19,965 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-18 17:08:19,967 - app.routers.telegram - INFO - Received Groq response: It seems like we've had a few false starts with ou...
+2026-02-18 17:08:19,967 - app.routers.telegram - INFO - Sending response to chat_id 8538224711
+2026-02-18 17:08:19,967 - app.routers.telegram - INFO - Sending message to chat_id 8538224711: It seems like we've had a few false starts with ou...
+2026-02-18 17:08:20,683 - app.routers.telegram - INFO - Successfully sent message to 8538224711 (via curl)
+2026-02-18 17:08:21,871 - app.services.embeddings - INFO - Generating embedding (passage) - Attempt 1
+2026-02-18 17:08:23,622 - app.routers.telegram - INFO - Saved chat interaction to Pinecone
+2026-02-18 17:08:23,860 - httpx - INFO - HTTP Request: POST https://htiundwxiwwdkieevylu.supabase.co/rest/v1/rpc/increment_message_count "HTTP/2 204 No Content"
+2026-02-18 17:08:41,207 - app.routers.telegram - INFO - Incoming update: {'update_id': 85484340, 'message': {'message_id': 107, 'from': {'id': 8538224711, 'is_bot': False, 'first_name': 'Jim', 'last_name': 'Kali', 'language_code': 'en'}, 'chat': {'id': 8538224711, 'first_name': 'Jim', 'last_name': 'Kali', 'type': 'private'}, 'date': 1771452520, 'text': 'I’m going out shopping with'}}
+2026-02-18 17:08:41,208 - app.routers.telegram - INFO - Processing update for chat_id 8538224711, text: I’m going out shopping with
+2026-02-18 17:08:41,208 - app.routers.telegram - INFO - Parallelizing profile fetch and embedding for 8538224711
+2026-02-18 17:08:41,208 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-18 17:08:41,600 - httpx - INFO - HTTP Request: GET https://htiundwxiwwdkieevylu.supabase.co/rest/v1/profiles?select=%2A&telegram_chat_id=eq.8538224711 "HTTP/2 200 OK"
+2026-02-18 17:08:42,155 - app.routers.telegram - INFO - Retrieved 5 memories for context
+2026-02-18 17:08:42,155 - app.routers.telegram - INFO - Calling Groq for user: User
+2026-02-18 17:08:43,046 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-18 17:08:43,048 - app.routers.telegram - INFO - Received Groq response: You're stepping out of your comfort zone and into ...
+2026-02-18 17:08:43,048 - app.routers.telegram - INFO - Sending response to chat_id 8538224711
+2026-02-18 17:08:43,048 - app.routers.telegram - INFO - Sending message to chat_id 8538224711: You're stepping out of your comfort zone and into ...
+2026-02-18 17:08:43,643 - app.routers.telegram - INFO - Successfully sent message to 8538224711 (via curl)
+2026-02-18 17:08:44,352 - app.services.embeddings - INFO - Generating embedding (passage) - Attempt 1
+2026-02-18 17:08:45,768 - app.routers.telegram - INFO - Saved chat interaction to Pinecone
+2026-02-18 17:08:46,029 - httpx - INFO - HTTP Request: POST https://htiundwxiwwdkieevylu.supabase.co/rest/v1/rpc/increment_message_count "HTTP/2 204 No Content"
+2026-02-18 17:08:56,276 - app.routers.telegram - INFO - Incoming update: {'update_id': 85484341, 'message': {'message_id': 109, 'from': {'id': 8538224711, 'is_bot': False, 'first_name': 'Jim', 'last_name': 'Kali', 'language_code': 'en'}, 'chat': {'id': 8538224711, 'first_name': 'Jim', 'last_name': 'Kali', 'type': 'private'}, 'date': 1771452536, 'text': 'Clothes any advice?'}}
+2026-02-18 17:08:56,277 - app.routers.telegram - INFO - Processing update for chat_id 8538224711, text: Clothes any advice?
+2026-02-18 17:08:56,278 - app.routers.telegram - INFO - Parallelizing profile fetch and embedding for 8538224711
+2026-02-18 17:08:56,278 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-18 17:08:57,079 - httpx - INFO - HTTP Request: GET https://htiundwxiwwdkieevylu.supabase.co/rest/v1/profiles?select=%2A&telegram_chat_id=eq.8538224711 "HTTP/2 200 OK"
+2026-02-18 17:08:57,988 - app.routers.telegram - INFO - Retrieved 5 memories for context
+2026-02-18 17:08:57,989 - app.routers.telegram - INFO - Calling Groq for user: User
+2026-02-18 17:08:58,967 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-18 17:08:58,970 - app.routers.telegram - INFO - Received Groq response: When shopping for clothes with someone, try using ...
+2026-02-18 17:08:58,970 - app.routers.telegram - INFO - Sending response to chat_id 8538224711
+2026-02-18 17:08:58,970 - app.routers.telegram - INFO - Sending message to chat_id 8538224711: When shopping for clothes with someone, try using ...
+2026-02-18 17:08:59,540 - app.routers.telegram - INFO - Successfully sent message to 8538224711 (via curl)
+2026-02-18 17:09:00,582 - app.services.embeddings - INFO - Generating embedding (passage) - Attempt 1
+2026-02-18 17:09:01,786 - app.routers.telegram - INFO - Saved chat interaction to Pinecone
+2026-02-18 17:09:02,024 - httpx - INFO - HTTP Request: POST https://htiundwxiwwdkieevylu.supabase.co/rest/v1/rpc/increment_message_count "HTTP/2 204 No Content"
+2026-02-18 17:10:01,695 - app.routers.telegram - INFO - Incoming update: {'update_id': 85484343, 'message': {'message_id': 112, 'from': {'id': 8538224711, 'is_bot': False, 'first_name': 'Jim', 'last_name': 'Kali', 'language_code': 'en'}, 'chat': {'id': 8538224711, 'first_name': 'Jim', 'last_name': 'Kali', 'type': 'private'}, 'date': 1771452601, 'text': 'Blazers and jeans'}}
+2026-02-18 17:10:01,696 - app.routers.telegram - INFO - Processing update for chat_id 8538224711, text: Blazers and jeans
+2026-02-18 17:10:01,696 - app.routers.telegram - INFO - Parallelizing profile fetch and embedding for 8538224711
+2026-02-18 17:10:01,697 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-18 17:10:13,328 - httpx - INFO - HTTP Request: GET https://htiundwxiwwdkieevylu.supabase.co/rest/v1/profiles?select=%2A&telegram_chat_id=eq.8538224711 "HTTP/2 200 OK"
+2026-02-18 17:10:14,994 - app.routers.telegram - INFO - Retrieved 5 memories for context
+2026-02-18 17:10:14,995 - app.routers.telegram - INFO - Calling Groq for user: User
+2026-02-18 17:10:15,947 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-18 17:10:15,948 - app.routers.telegram - INFO - Received Groq response: When pairing blazers with jeans, try the "high-low...
+2026-02-18 17:10:15,948 - app.routers.telegram - INFO - Sending response to chat_id 8538224711
+2026-02-18 17:10:15,948 - app.routers.telegram - INFO - Sending message to chat_id 8538224711: When pairing blazers with jeans, try the "high-low...
+2026-02-18 17:10:17,177 - app.routers.telegram - INFO - Successfully sent message to 8538224711 (via curl)
+2026-02-18 17:10:19,127 - app.services.embeddings - INFO - Generating embedding (passage) - Attempt 1
+2026-02-18 17:10:22,463 - app.routers.telegram - INFO - Saved chat interaction to Pinecone
+2026-02-18 17:10:29,185 - httpx - INFO - HTTP Request: POST https://htiundwxiwwdkieevylu.supabase.co/rest/v1/rpc/increment_message_count "HTTP/2 204 No Content"
+2026-02-18 17:11:57,844 - app.routers.telegram - INFO - Incoming update: {'update_id': 85484344, 'message': {'message_id': 114, 'from': {'id': 8538224711, 'is_bot': False, 'first_name': 'Jim', 'last_name': 'Kali', 'language_code': 'en'}, 'chat': {'id': 8538224711, 'first_name': 'Jim', 'last_name': 'Kali', 'type': 'private'}, 'date': 1771452717, 'text': 'Night'}}
+2026-02-18 17:11:57,846 - app.routers.telegram - INFO - Processing update for chat_id 8538224711, text: Night
+2026-02-18 17:11:57,846 - app.routers.telegram - INFO - Parallelizing profile fetch and embedding for 8538224711
+2026-02-18 17:11:57,847 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-18 17:11:58,093 - httpx - INFO - HTTP Request: GET https://htiundwxiwwdkieevylu.supabase.co/rest/v1/profiles?select=%2A&telegram_chat_id=eq.8538224711 "HTTP/2 200 OK"
+2026-02-18 17:59:59,567 - urllib3.connectionpool - WARNING - Retrying (JitterRetry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'OSError(65, 'No route to host')': /embed
+2026-02-18 18:00:00,192 - urllib3.connectionpool - WARNING - Retrying (JitterRetry(total=3, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='api.pinecone.io', port=443): Failed to resolve 'api.pinecone.io' ([Errno 8] nodename nor servname provided, or not known)")': /embed
+2026-02-18 18:00:01,358 - urllib3.connectionpool - WARNING - Retrying (JitterRetry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='api.pinecone.io', port=443): Failed to resolve 'api.pinecone.io' ([Errno 8] nodename nor servname provided, or not known)")': /embed
+2026-02-18 18:00:03,346 - app.routers.telegram - INFO - Retrieved 5 memories for context
+2026-02-18 18:00:03,347 - app.routers.telegram - INFO - Calling Groq for user: User
+2026-02-18 18:00:04,357 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-18 18:00:04,359 - app.routers.telegram - INFO - Received Groq response: A simple "Night" - a great way to start winding do...
+2026-02-18 18:00:04,359 - app.routers.telegram - INFO - Sending response to chat_id 8538224711
+2026-02-18 18:00:04,359 - app.routers.telegram - INFO - Sending message to chat_id 8538224711: A simple "Night" - a great way to start winding do...
+2026-02-18 18:00:04,947 - app.routers.telegram - INFO - Successfully sent message to 8538224711 (via curl)
+2026-02-18 18:00:05,397 - app.services.embeddings - INFO - Generating embedding (passage) - Attempt 1
+2026-02-18 18:00:06,346 - app.routers.telegram - INFO - Saved chat interaction to Pinecone
+2026-02-18 18:00:07,473 - httpx - INFO - HTTP Request: POST https://htiundwxiwwdkieevylu.supabase.co/rest/v1/rpc/increment_message_count "HTTP/2 204 No Content"

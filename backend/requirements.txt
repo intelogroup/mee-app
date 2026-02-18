@@ -1,0 +1,11 @@
+
+fastapi
+uvicorn
+groq
+pinecone
+supabase
+python-dotenv
+requests
+python-telegram-bot
+flake8
+black
