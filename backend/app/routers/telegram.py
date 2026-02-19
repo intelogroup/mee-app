@@ -5,6 +5,7 @@ from app.services.groq import get_groq_response, extract_traits
 from app.services.pinecone import save_memory, get_recent_memories, pc, PINECONE_INDEX # accessing embedding logic directly or via service
 from app.services.supabase import link_telegram_account, get_user_by_telegram_id, increment_message_count, update_onboarding_step, supabase
 from app.services.embeddings import get_embedding
+from app.core.prompts import PERSONAL_DEVELOPMENT_PROTOCOL_25, TWIN_ARCHITECT_PROMPT
 import os
 
 router = APIRouter()
@@ -32,13 +33,15 @@ ONBOARDING_QUESTIONS = [
 # Protocol Definitions loaded from Environment
 PROTOCOLS = {
     "romance": os.getenv("ROMANCE_PROTOCOL", ""),
-    "confidence": os.getenv("CONFIDENCE_PROTOCOL", "")
+    "confidence": os.getenv("CONFIDENCE_PROTOCOL", ""),
+    "masculine": PERSONAL_DEVELOPMENT_PROTOCOL_25
 }
 
 # Trigger Keywords
 TRIGGERS = {
     "romance": ["girl", "woman", "girlfriend", "boyfriend", "date", "dating", "crush", "flirt", "attractive", "relationship", "love", "sex", "intimacy"],
-    "confidence": ["shy", "scared", "afraid", "nervous", "anxious", "confidence", "brave", "fear", "speak up"]
+    "confidence": ["shy", "scared", "afraid", "nervous", "anxious", "confidence", "brave", "fear", "speak up"],
+    "masculine": ["alpha", "beta", "man", "manhood", "masculine", "purpose", "discipline", "semen", "gym", "lifting", "financial", "hypergamy", "abundance"]
 }
 
 # Helper to send message
@@ -167,17 +170,17 @@ async def process_telegram_update(update: dict):
         elif any(t in text_lower for t in TRIGGERS["confidence"]):
             active_protocol = f"\n[ACTIVE PROTOCOL: CONFIDENCE]\n{PROTOCOLS['confidence']}\n"
             logger.info("Activated Confidence Protocol")
+        elif any(t in text_lower for t in TRIGGERS["masculine"]):
+            active_protocol = f"\n[ACTIVE PROTOCOL: MASCULINE DEVELOPMENT]\n{PROTOCOLS['masculine']}\n"
+            logger.info("Activated Masculine Protocol")
 
-        system_prompt = f"""You are Mee, a sharp social coach for introverts.
+        system_prompt = f"""{TWIN_ARCHITECT_PROMPT}
 
-RESPONSE STYLE:
-- Default to 1-2 sentences max. Like a friend texting.
-- Only go longer if explaining a technique, and even then keep it tight.
-- Never bullet points. Never headers. Just talk.
-- Match the user's energy — they write short, you write short.
-
-YOUR MISSION:
-Lead with one specific, actionable script or hack. No fluff.
+ADDITIONAL CONSTRAINTS:
+- Default to 1-2 sentences max. Use the behavior of a gritty twin brother.
+- Use "We" and "Us" constantly. Our win is shared.
+- Match his short text energy, but with a "!bam" or "Shish!" pop.
+- Lead with an actionable script or a mindset hardening.
 
 {active_protocol}
 
