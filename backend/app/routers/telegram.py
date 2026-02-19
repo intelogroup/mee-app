@@ -15,8 +15,13 @@ import requests
 import asyncio
 import subprocess
 import json
+from collections import defaultdict, deque
 
 logger = logging.getLogger(__name__)
+
+# In-memory sliding window for recent context (Privacy-safe, zero-latency)
+# Stores the last 6 message objects per user
+recent_context = defaultdict(lambda: deque(maxlen=6))
 
 # Helper to send message
 async def send_telegram_message(chat_id: int, text: str):
@@ -96,56 +101,53 @@ async def process_telegram_update(update: dict):
 
         # 4. Generate AI Response
         user_traits_list = user_profile.get("traits", [])
-        user_traits = ", ".join(user_traits_list) if user_traits_list else "Still getting to know this user"
+        user_traits = ", ".join(user_traits_list) if user_traits_list else "None yet."
         
-        system_prompt = f"""You are Mee, a sharp, playful, and slightly irreverent social coach 
-for introverts. Your mission is to help them navigate the social world with clever strategies, not boring advice.
+        system_prompt = f"""You are Mee, a sharp social coach for introverts.
 
-YOUR PERSONALITY:
-- Witty and perceptive. You see the subtext in every social interaction.
-- Playfully confident. You make social challenges feel like a game you've already won.
-- A "social hacker" — you prefer high-leverage "cheats" over standard self-help fluff.
+RESPONSE STYLE:
+- Default to 1-2 sentences max. Like a friend texting.
+- Only go longer if explaining a technique, and even then keep it tight.
+- Never bullet points. Never headers. Just talk.
+- Match the user's energy — they write short, you write short.
 
-YOUR VOICE:
-- Talk like a brilliant, slightly chaotic best friend who always has a plan.
-- Use sharp, punchy sentences. Avoid being preachy or "corporate."
-- Use "we" or "us" occasionally to show you're in the trenches with them.
-
-STRICT OPERATIONAL RULES:
-1. LEAD WITH ACTION: Every response MUST start with a specific, unconventional social tactic or "script."
-2. THE "WHY": Briefly explain the psychology behind it (e.g., "This works because humans are wired to...")
-3. STAY GROUNDED: Address exactly what the user said. No generic "stay positive" garbage.
-4. BREVITY IS WIT: Keep it under 4 sentences. If you're explaining a technique, you can go to 5.
-5. NO EMOJIS: Unless the user uses one first.
-6. ONE QUESTION: Ask exactly one follow-up question per turn to keep the momentum.
+YOUR MISSION:
+Lead with one specific, actionable script or hack. No fluff.
 
 CONTEXT:
-User's traits: {user_traits}
-Recent memory: {context_str if context_str else "A blank slate. Fresh start."}
+User traits: {user_traits}
+Long-term memories: {context_str if context_str else "Clean slate."}
 """
         
-        chat_history = [{"role": "system", "content": system_prompt}]
-        chat_history.append({"role": "user", "content": text})
+        # Build message history: System Prompt + Sliding Window + Current Input
+        messages = [{"role": "system", "content": system_prompt}]
+        
+        # Add sliding window from memory
+        history = list(recent_context[user_id])
+        messages.extend(history)
+        
+        # Add current user message
+        messages.append({"role": "user", "content": text})
 
-        logger.info(f"Calling Groq for user: {username}")
-        response_text = await get_groq_response(chat_history)
+        logger.info(f"Calling Groq for user: {username} with {len(history)} history messages")
+        response_text = await get_groq_response(messages)
         logger.info(f"Received Groq response: {response_text[:50]}...")
 
         # 5. Send Response
         logger.info(f"Sending response to chat_id {chat_id}")
         await send_telegram_message(chat_id, response_text)
 
-        # 6. Save Memory (Async / Background)
+        # 6. Post-Response Tasks (Async / Background)
+        # Update in-memory sliding window
+        recent_context[user_id].append({"role": "user", "content": text})
+        recent_context[user_id].append({"role": "assistant", "content": response_text})
+
         if vector:
-            # We don't necessarily need to await these before the function finishes if we just want them saved
-            # but for reliability in the background task loop, we await them here.
             await save_memory(user_id, text, "user", vector)
             resp_vector = await get_embedding(response_text, input_type="passage")
             if resp_vector:
                 await save_memory(user_id, response_text, "assistant", resp_vector)
-                logger.info("Saved chat interaction to Pinecone")
-                
-                # Increment message count for future optimization checks
+                logger.info("Saved interaction to Pinecone")
                 await increment_message_count(user_id)
 
     except Exception as e:
