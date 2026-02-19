@@ -1,12 +1,7 @@
 import { Pinecone } from '@pinecone-database/pinecone';
-import OpenAI from 'openai';
 
 const pinecone = new Pinecone({
     apiKey: process.env.PINECONE_API_KEY!,
-});
-
-const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
 });
 
 export async function saveMemory(
@@ -19,14 +14,15 @@ export async function saveMemory(
     }
 
     try {
-        // 1. Generate Embedding
-        const embeddingResponse = await openai.embeddings.create({
-            model: 'text-embedding-3-small',
-            input: text,
-            encoding_format: 'float',
-        });
+        // 1. Generate Embedding using Pinecone Inference
+        // Using multilingual-e5-large to match backend
+        const embeddingResponse = await pinecone.inference.embed(
+            'multilingual-e5-large',
+            [text],
+            { inputType: 'passage' }
+        );
 
-        const embedding = embeddingResponse.data[0].embedding;
+        const embedding = embeddingResponse[0].values;
 
         // 2. Upsert to Pinecone
         const index = pinecone.index(process.env.PINECONE_INDEX);

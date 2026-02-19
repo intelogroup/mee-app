@@ -14,10 +14,6 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
         }
 
-        if (!process.env.OPENAI_API_KEY) {
-            return NextResponse.json({ error: "Server configuration error: Missing OpenAI Key" }, { status: 500 });
-        }
-
         const result = await saveMemory(user_id, text, role);
 
         return NextResponse.json(result);
