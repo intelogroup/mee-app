@@ -34,7 +34,7 @@ ONBOARDING_QUESTIONS = [
 PROTOCOLS = {
     "romance": os.getenv("ROMANCE_PROTOCOL", ""),
     "confidence": os.getenv("CONFIDENCE_PROTOCOL", ""),
-    "masculine": PERSONAL_DEVELOPMENT_PROTOCOL_25
+    "masculine": PERSONAL_DEVELOPMENT_PROTOCOL_ELABORATED
 }
 
 # Trigger Keywords
