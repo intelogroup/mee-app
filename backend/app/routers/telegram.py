@@ -257,82 +257,96 @@ Long-term memories: {context_str if context_str else "Clean slate."}
         # We NO LONGER save raw messages to Pinecone. Only distilled traits.
         if (message_count + 1) % 3 == 0:
             logger.info("Triggering trait extraction (every 3rd message)...")
-            trait = await extract_traits(text)
+            trait_obj = await extract_traits(text)
             
-            if trait:
-                logger.info(f"Extracted trait: {trait}")
+            if trait_obj:
+                trait_text = trait_obj["trait"]
+                trait_category = trait_obj["category"]
+                logger.info(f"Extracted trait: {trait_text} (Category: {trait_category})")
                 
-                # RECONCILIATION: Search for similar existing traits to handle contradictions
-                trait_vector = await get_embedding(trait, input_type="passage")
+                # RECONCILIATION: Search for similar existing traits in the SAME category
+                trait_vector = await get_embedding(trait_text, input_type="passage")
                 if trait_vector:
-                    # 1. Search for top 3 similar traits
+                    # 1. Search for top 3 similar traits in SAME category
                     index = pc.Index(PINECONE_INDEX)
                     search_res = await asyncio.to_thread(
                         index.query,
                         namespace=str(user_id),
                         vector=trait_vector,
                         top_k=3,
-                        filter={"role": {"$eq": "trait"}},
+                        filter={
+                            "role": {"$eq": "trait"},
+                            "category": {"$eq": trait_category}
+                        },
                         include_metadata=True
                     )
                     
                     # 2. If similar traits exist, check for contradiction via Groq
                     if search_res.matches:
                         existing_traits = [m.metadata.get("text") for m in search_res.matches]
-                        logger.info(f"Checking for contradiction against: {existing_traits}")
+                        logger.info(f"Checking for contradiction in {trait_category} against: {existing_traits}")
                         
                         recon_prompt = f"""
-                        New trait: "{trait}"
-                        Existing traits: {existing_traits}
+                        New fact: "{trait_text}"
+                        Existing facts: {existing_traits}
                         
-                        Does the new trait contradict any of the existing ones? (e.g. different locations, opposite personality types).
-                        If YES, output only the ID of the ONE most conflicting trait.
+                        Does the new fact contradict any of the existing ones?
+                        If YES, output only the EXACT TEXT of the ONE most conflicting fact.
                         If NO contradiction, output "NONE".
                         
-                        Output exactly one word.
+                        Output exactly one word or the exact phrase.
                         """
                         
-                        # Use simple prompt for speed
-                        conflict_id_raw = await get_groq_response([{"role": "system", "content": recon_prompt}])
-                        conflict_id_raw = conflict_id_raw.strip().upper()
+                        conflict_text_raw = await get_groq_response([{"role": "system", "content": recon_prompt}])
+                        conflict_text = conflict_text_raw.strip()
                         
-                        # Find which match had that text if Groq returned text, or if it's a specific instruction.
-                        # For simplicity, we'll ask Groq to return the index (0, 1, 2) or NONE.
-                        
-                        # Simplified logic: If Groq detects contradiction, we clear the top match 
-                        # because Pinecone's vector search already gave us the most semantically related one.
-                        if conflict_id_raw != "NONE":
-                            old_trait_text = search_res.matches[0].metadata.get("text")
-                            old_id = search_res.matches[0].id
-                            
-                            # 1. Store a PENDING CLARIFICATION vector
-                            # This will be picked up on the next message turn
-                            clarification_id = f"pending-{int(time.time())}"
-                            await asyncio.to_thread(
-                                index.upsert,
-                                vectors=[{
-                                    "id": clarification_id,
-                                    "values": [0.1]*1024, # Metadata only
-                                    "metadata": {
-                                        "role": "pending_clarification",
-                                        "old_trait": old_trait_text,
-                                        "new_trait": trait,
-                                        "created_at": int(time.time())
-                                    }
-                                }],
-                                namespace=str(user_id)
-                            )
-                            logger.info(f"Stored pending clarification for: {old_trait_text} vs {trait}")
+                        if conflict_text != "NONE":
+                            # Match the conflict text back to an ID
+                            for match in search_res.matches:
+                                if match.metadata.get("text") == conflict_text:
+                                    # Store a PENDING CLARIFICATION vector
+                                    clarification_id = f"pending-{int(time.time())}"
+                                    await asyncio.to_thread(
+                                        index.upsert,
+                                        vectors=[{
+                                            "id": clarification_id,
+                                            "values": [0.1]*1024,
+                                            "metadata": {
+                                                "role": "pending_clarification",
+                                                "old_trait": conflict_text,
+                                                "new_trait": trait_text,
+                                                "created_at": int(time.time())
+                                            }
+                                        }],
+                                        namespace=str(user_id)
+                                    )
+                                    logger.info(f"Stored pending clarification for: {conflict_text} vs {trait_text}")
 
-                            # 2. Delete the old conflicting trait
-                            await asyncio.to_thread(index.delete, ids=[old_id], namespace=str(user_id))
-                            logger.info(f"Deleted conflicting trait: {old_trait_text}")
+                                    # Delete the old conflicting trait
+                                    await asyncio.to_thread(index.delete, ids=[match.id], namespace=str(user_id))
+                                    logger.info(f"Deleted conflicting trait: {conflict_text}")
+                                    break
 
                     # 3. Save new trait (Always happens, ensuring recency bias)
-                    await save_memory(user_id, trait, "trait", trait_vector)
-                    logger.info("Saved distilled trait to Pinecone")
+                    # We manually construct the upsert to include category
+                    memory_id = f"{int(time.time())}-trait"
+                    await asyncio.to_thread(
+                        index.upsert,
+                        vectors=[{
+                            "id": memory_id,
+                            "values": trait_vector,
+                            "metadata": {
+                                "text": trait_text,
+                                "role": "trait",
+                                "category": trait_category,
+                                "created_at": int(time.time())
+                            }
+                        }],
+                        namespace=str(user_id)
+                    )
+                    logger.info(f"Saved distilled fact to Pinecone: {trait_text}")
             else:
-                logger.info("No significant trait found.")
+                logger.info("No significant fact found.")
 
     except Exception as e:
         logger.error(f"Error processing update: {e}", exc_info=True)

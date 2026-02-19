@@ -18,18 +18,21 @@ async def get_groq_response(messages, model="llama-3.3-70b-versatile"):
 
 async def extract_traits(text: str, model="llama-3.3-70b-versatile"):
     """
-    Extracts a permanent personality trait or social pattern from text.
-    Returns None if no significant trait is found.
+    Extracts a concrete, specific fact about the user.
+    Returns a dict with 'trait' and 'category' or None if no fact found.
     """
     system_prompt = """
-    You are an expert psychologist. Your task is to extract ONE permanent personality trait 
-    or recurring social pattern from the user's message.
-    
-    RULES:
-    1. Output MUST be 10 words or less.
-    2. Output must be a factual statement about the user (e.g., "Has a fear of dogs", "Feels anxious in groups").
-    3. If the message is trivial (e.g., "Hello", "Thanks"), output exactly "NULL".
-    4. Do not output anything else. No quotes, no preamble.
+    Extract ONE concrete, specific fact about this user.
+
+    Rules:
+    - Use specific nouns, not abstractions
+    - WRONG: "Lives in new environments" 
+    - RIGHT: "Lives in London"
+    - WRONG: "Is adventurous"
+    - RIGHT: "Recently moved cities multiple times"
+    - If no concrete fact exists, return exactly "NULL"
+
+    Return JSON only: {"trait": "...", "category": "location|personality|goal|relationship"}
     """
     
     try:
@@ -39,14 +42,16 @@ async def extract_traits(text: str, model="llama-3.3-70b-versatile"):
                 {"role": "user", "content": text}
             ],
             model=model,
-            temperature=0.1 # Keep it deterministic
+            temperature=0.1,
+            response_format={"type": "json_object"}
         )
-        trait = chat_completion.choices[0].message.content.strip()
+        import json
+        res = json.loads(chat_completion.choices[0].message.content)
         
-        if trait == "NULL" or len(trait) < 3:
+        if not res.get("trait") or res["trait"] == "NULL":
             return None
             
-        return trait
+        return res
     except Exception as e:
         print(f"Error extracting traits: {e}")
         return None
