@@ -633,3 +633,45 @@ HTTP response body: {"code":3,"message":"Vector dimension 1024 does not match th
 2026-02-18 18:00:05,397 - app.services.embeddings - INFO - Generating embedding (passage) - Attempt 1
 2026-02-18 18:00:06,346 - app.routers.telegram - INFO - Saved chat interaction to Pinecone
 2026-02-18 18:00:07,473 - httpx - INFO - HTTP Request: POST https://htiundwxiwwdkieevylu.supabase.co/rest/v1/rpc/increment_message_count "HTTP/2 204 No Content"
+2026-02-18 19:06:18,250 - app.main - INFO - Warming up embedding model...
+2026-02-18 19:06:18,250 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-18 19:06:18,718 - app.main - INFO - Embedding model warmed up
+2026-02-18 19:20:20,294 - app.main - INFO - Warming up embedding model...
+2026-02-18 19:20:20,294 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-18 19:20:20,699 - app.main - INFO - Embedding model warmed up
+2026-02-18 19:20:57,539 - app.routers.telegram - INFO - Incoming update: {'update_id': 5001, 'message': {'message_id': 5001, 'from': {'id': 8538224711, 'is_bot': False, 'first_name': 'User', 'username': 'User8538224711'}, 'chat': {'id': 8538224711, 'type': 'private'}, 'date': 1771460457, 'text': 'I have a huge fear of dogs.'}}
+2026-02-18 19:20:57,539 - app.routers.telegram - INFO - Processing update for chat_id 8538224711, text: I have a huge fear of dogs.
+2026-02-18 19:20:57,539 - app.routers.telegram - INFO - Parallelizing profile fetch and embedding for 8538224711
+2026-02-18 19:20:57,543 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-18 19:20:58,237 - httpx - INFO - HTTP Request: GET https://htiundwxiwwdkieevylu.supabase.co/rest/v1/profiles?select=%2A&telegram_chat_id=eq.8538224711 "HTTP/2 200 OK"
+2026-02-18 19:20:59,387 - app.routers.telegram - INFO - Retrieved 5 memories for context
+2026-02-18 19:20:59,388 - app.routers.telegram - INFO - Calling Groq for user: User8538224711
+2026-02-18 19:21:00,100 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-18 19:21:00,112 - app.routers.telegram - INFO - Received Groq response: When encountering a dog, try using the "redirect a...
+2026-02-18 19:21:00,112 - app.routers.telegram - INFO - Sending response to chat_id 8538224711
+2026-02-18 19:21:00,112 - app.routers.telegram - INFO - Sending message to chat_id 8538224711: When encountering a dog, try using the "redirect a...
+2026-02-18 19:21:00,583 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8590847265:AAEhXjws5Xp1x-mERLLEX-GF3gQAnIe61Ok/sendMessage "HTTP/1.1 200 OK"
+2026-02-18 19:21:00,584 - app.routers.telegram - INFO - Successfully sent message to 8538224711
+2026-02-18 19:21:00,969 - app.services.embeddings - INFO - Generating embedding (passage) - Attempt 1
+2026-02-18 19:21:01,539 - app.routers.telegram - INFO - Saved chat interaction to Pinecone
+2026-02-18 19:21:01,691 - httpx - INFO - HTTP Request: POST https://htiundwxiwwdkieevylu.supabase.co/rest/v1/rpc/increment_message_count "HTTP/2 204 No Content"
+2026-02-18 19:21:02,551 - app.routers.telegram - INFO - Incoming update: {'update_id': 5002, 'message': {'message_id': 5002, 'from': {'id': 999999999, 'is_bot': False, 'first_name': 'User', 'username': 'User999999999'}, 'chat': {'id': 999999999, 'type': 'private'}, 'date': 1771460462, 'text': 'What do you know about my fears?'}}
+2026-02-18 19:21:02,552 - app.routers.telegram - INFO - Processing update for chat_id 999999999, text: What do you know about my fears?
+2026-02-18 19:21:02,552 - app.routers.telegram - INFO - Parallelizing profile fetch and embedding for 999999999
+2026-02-18 19:21:02,552 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-18 19:21:02,698 - httpx - INFO - HTTP Request: GET https://htiundwxiwwdkieevylu.supabase.co/rest/v1/profiles?select=%2A&telegram_chat_id=eq.999999999 "HTTP/2 200 OK"
+2026-02-18 19:21:02,822 - app.routers.telegram - INFO - Using HARDCODED profile for Test User 2
+2026-02-18 19:21:03,068 - app.routers.telegram - INFO - Calling Groq for user: User999999999
+2026-02-18 19:21:03,579 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-18 19:21:03,582 - app.routers.telegram - INFO - Received Groq response: Let's use the "fear mirror" technique: I'll ask yo...
+2026-02-18 19:21:03,582 - app.routers.telegram - INFO - Sending response to chat_id 999999999
+2026-02-18 19:21:03,582 - app.routers.telegram - INFO - Sending message to chat_id 999999999: Let's use the "fear mirror" technique: I'll ask yo...
+2026-02-18 19:21:04,259 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8590847265:AAEhXjws5Xp1x-mERLLEX-GF3gQAnIe61Ok/sendMessage "HTTP/1.1 400 Bad Request"
+2026-02-18 19:21:04,260 - app.routers.telegram - ERROR - Failed to send message to 999999999: Client error '400 Bad Request' for url 'https://api.telegram.org/bot8590847265:AAEhXjws5Xp1x-mERLLEX-GF3gQAnIe61Ok/sendMessage'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2026-02-18 19:21:04,745 - app.services.embeddings - INFO - Generating embedding (passage) - Attempt 1
+2026-02-18 19:21:05,305 - app.routers.telegram - INFO - Saved chat interaction to Pinecone
+2026-02-18 19:21:05,468 - httpx - INFO - HTTP Request: POST https://htiundwxiwwdkieevylu.supabase.co/rest/v1/rpc/increment_message_count "HTTP/2 400 Bad Request"
+2026-02-18 19:21:22,321 - app.main - INFO - Warming up embedding model...
+2026-02-18 19:21:22,321 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-18 19:21:22,606 - app.main - INFO - Embedding model warmed up
