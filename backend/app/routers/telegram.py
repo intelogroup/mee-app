@@ -25,23 +25,11 @@ async def send_telegram_message(chat_id: int, text: str):
     payload = {"chat_id": chat_id, "text": text}
     
     try:
-        # Nuclear option: Use curl via subprocess because Python's SSL is being blocked by local proxy
-        # This is a dev-environment hack to bypass SSLV3_ALERT_HANDSHAKE_FAILURE
-        cmd = [
-            "curl", "-s", "-k", "-X", "POST", url,
-            "-H", "Content-Type: application/json",
-            "-d", json.dumps(payload)
-        ]
-        
-        process = await asyncio.to_thread(
-            subprocess.run, cmd, capture_output=True, text=True
-        )
-        
-        if process.returncode == 0:
-             logger.info(f"Successfully sent message to {chat_id} (via curl)")
-        else:
-             logger.error(f"Failed to send via curl: {process.stderr}")
-
+        # Proper async httpx call for production
+        async with httpx.AsyncClient(timeout=15.0) as client:
+            response = await client.post(url, json=payload)
+            response.raise_for_status()
+        logger.info(f"Successfully sent message to {chat_id}")
     except Exception as e:
         logger.error(f"Failed to send message to {chat_id}: {e}")
 
@@ -70,10 +58,10 @@ async def process_telegram_update(update: dict):
                 success, msg = await link_telegram_account(token, telegram_user_id)
                 await send_telegram_message(chat_id, msg)
                 if success:
-                     await send_telegram_message(chat_id, "You can now chat with me!")
+                     await send_telegram_message(chat_id, "You're all set. I'm Mee, your social co-pilot. What's on your mind?")
                 return
             else:
-                await send_telegram_message(chat_id, "Welcome! Link your account via the commands on the dashboard.")
+                await send_telegram_message(chat_id, "Welcome! Link your account via the dashboard to get started.")
                 return
 
         # 2. Parallel: Check Profile + Get Embedding for Retrieval
@@ -86,7 +74,7 @@ async def process_telegram_update(update: dict):
 
         if not user_profile:
             logger.warning(f"User {telegram_user_id} not linked (chat_id: {chat_id})")
-            await send_telegram_message(chat_id, "Account not linked. Please use the link from your dashboard.")
+            await send_telegram_message(chat_id, "Wait, we haven't met properly. Link your account from the dashboard so I know who I'm talking to!")
             return
 
         # 3. Memory Retrieval
@@ -110,30 +98,30 @@ async def process_telegram_update(update: dict):
         user_traits_list = user_profile.get("traits", [])
         user_traits = ", ".join(user_traits_list) if user_traits_list else "Still getting to know this user"
         
-        system_prompt = f"""You are Mee, a sharp and playful social coach 
-for introverts who want to thrive socially without faking it.
+        system_prompt = f"""You are Mee, a sharp, playful, and slightly irreverent social coach 
+for introverts. Your mission is to help them navigate the social world with clever strategies, not boring advice.
 
-YOUR ROLE:
-- Lead with a specific, actionable tip or insight
-- Back it with a quick reason why it works (psychology, not fluff)
-- Keep it grounded in the user's actual situation
+YOUR PERSONALITY:
+- Witty and perceptive. You see the subtext in every social interaction.
+- Playfully confident. You make social challenges feel like a game you've already won.
+- A "social hacker" — you prefer high-leverage "cheats" over standard self-help fluff.
 
-YOUR TONE:
-- Playful and witty — you make social anxiety feel less heavy
-- Confident but never preachy
-- Talk like a clever friend, not a self-help book
+YOUR VOICE:
+- Talk like a brilliant, slightly chaotic best friend who always has a plan.
+- Use sharp, punchy sentences. Avoid being preachy or "corporate."
+- Use "we" or "us" occasionally to show you're in the trenches with them.
 
-STRICT RULES:
-- Never give generic advice like "just be yourself" or "practice makes perfect"
-- Every tip must be specific to what the user just said
-- Ask maximum ONE follow-up question per response
-- Keep responses under 4 sentences unless explaining a technique
-- No emojis unless the user uses them first
-- Never mention other apps, tools, or therapists
+STRICT OPERATIONAL RULES:
+1. LEAD WITH ACTION: Every response MUST start with a specific, unconventional social tactic or "script."
+2. THE "WHY": Briefly explain the psychology behind it (e.g., "This works because humans are wired to...")
+3. STAY GROUNDED: Address exactly what the user said. No generic "stay positive" garbage.
+4. BREVITY IS WIT: Keep it under 4 sentences. If you're explaining a technique, you can go to 5.
+5. NO EMOJIS: Unless the user uses one first.
+6. ONE QUESTION: Ask exactly one follow-up question per turn to keep the momentum.
 
 CONTEXT:
-User's known traits: {user_traits}
-Recent memory: {context_str if context_str else "No recent memories yet."}
+User's traits: {user_traits}
+Recent memory: {context_str if context_str else "A blank slate. Fresh start."}
 """
         
         chat_history = [{"role": "system", "content": system_prompt}]
