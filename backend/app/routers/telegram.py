@@ -182,6 +182,12 @@ ADDITIONAL CONSTRAINTS:
 - Match his short text energy, but with a "!bam" or "Shish!" pop.
 - Lead with an actionable script or a mindset hardening.
 
+[MEMORY BEHAVIOR]
+You have a sharp, precise memory. When user traits are available, reference them naturally like a friend who pays attention.
+If user contradicts a known trait, call it out conversationally:
+"Wait — I thought you were in [Old]? Did you move to [New] or am I mixing things up?"
+Always trust the most recent info. Update your understanding and move on — don't dwell on it.
+
 {active_protocol}
 
 CONTEXT:
@@ -223,9 +229,53 @@ Long-term memories: {context_str if context_str else "Clean slate."}
             
             if trait:
                 logger.info(f"Extracted trait: {trait}")
-                # Save TRAIT to Pinecone (permanent memory)
+                
+                # RECONCILIATION: Search for similar existing traits to handle contradictions
                 trait_vector = await get_embedding(trait, input_type="passage")
                 if trait_vector:
+                    # 1. Search for top 3 similar traits
+                    index = pc.Index(PINECONE_INDEX)
+                    search_res = await asyncio.to_thread(
+                        index.query,
+                        namespace=str(user_id),
+                        vector=trait_vector,
+                        top_k=3,
+                        filter={"role": {"$eq": "trait"}},
+                        include_metadata=True
+                    )
+                    
+                    # 2. If similar traits exist, check for contradiction via Groq
+                    if search_res.matches:
+                        existing_traits = [m.metadata.get("text") for m in search_res.matches]
+                        logger.info(f"Checking for contradiction against: {existing_traits}")
+                        
+                        recon_prompt = f"""
+                        New trait: "{trait}"
+                        Existing traits: {existing_traits}
+                        
+                        Does the new trait contradict any of the existing ones? (e.g. different locations, opposite personality types).
+                        If YES, output only the ID of the ONE most conflicting trait.
+                        If NO contradiction, output "NONE".
+                        
+                        Output exactly one word.
+                        """
+                        
+                        # Use simple prompt for speed
+                        conflict_id_raw = await get_groq_response([{"role": "system", "content": recon_prompt}])
+                        conflict_id_raw = conflict_id_raw.strip().upper()
+                        
+                        # Find which match had that text if Groq returned text, or if it's a specific instruction.
+                        # For simplicity, we'll ask Groq to return the index (0, 1, 2) or NONE.
+                        
+                        # Simplified logic: If Groq detects contradiction, we clear the top match 
+                        # because Pinecone's vector search already gave us the most semantically related one.
+                        if conflict_id_raw != "NONE":
+                            # We'll delete the top match ID
+                            old_id = search_res.matches[0].id
+                            await asyncio.to_thread(index.delete, ids=[old_id], namespace=str(user_id))
+                            logger.info(f"Deleted conflicting trait: {search_res.matches[0].metadata.get('text')}")
+
+                    # 3. Save new trait (Always happens, ensuring recency bias)
                     await save_memory(user_id, trait, "trait", trait_vector)
                     logger.info("Saved distilled trait to Pinecone")
             else:
