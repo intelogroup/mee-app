@@ -56,12 +56,15 @@ async def get_recent_memories(user_id: str, vector: list[float], top_k: int = 5)
         
         memories = []
         for match in results.matches:
-            if match.metadata:
+            if match.metadata and match.score > 0.70:
                 memories.append({
                     "text": match.metadata.get("text"),
                     "role": match.metadata.get("role"),
                     "created_at": match.metadata.get("created_at")
                 })
+        
+        if memories:
+            logger.info(f"Retrieved {len(memories)} relevant memories (score > 0.70)")
         
         return memories
     except Exception as e:

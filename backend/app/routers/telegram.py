@@ -283,9 +283,12 @@ Long-term memories: {context_str if context_str else "Clean slate."}
                     
                     # 2. If similar traits exist, check for contradiction via Groq
                     is_duplicate = False
-                    if search_res.matches:
-                        existing_traits = [m.metadata.get("text") for m in search_res.matches]
-                        logger.info(f"Checking for contradiction in {trait_category} against: {existing_traits}")
+                    # Only consider matches with high similarity (> 0.88) for reconciliation
+                    relevant_matches = [m for m in search_res.matches if m.score > 0.88]
+                    
+                    if relevant_matches:
+                        existing_traits = [m.metadata.get("text") for m in relevant_matches]
+                        logger.info(f"Checking for contradiction in {trait_category} against high-similarity traits: {existing_traits}")
                         
                         recon_prompt = f"""
                         New fact: "{trait_text}"
@@ -302,11 +305,11 @@ Long-term memories: {context_str if context_str else "Clean slate."}
                         conflict_text = conflict_text_raw.strip()
                         
                         if conflict_text == "EXISTS":
-                            logger.info(f"Fact already exists, skipping save: {trait_text}")
+                            logger.info(f"Fact already exists (score > 0.88), skipping save: {trait_text}")
                             is_duplicate = True
                         elif conflict_text != "NONE":
                             # Match the conflict text back to an ID
-                            for match in search_res.matches:
+                            for match in relevant_matches:
                                 if match.metadata.get("text") == conflict_text:
                                     # Store a PENDING CLARIFICATION vector
                                     clarification_id = f"pending-{int(time.time())}"
