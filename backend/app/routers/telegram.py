@@ -1,7 +1,7 @@
 
 from fastapi import APIRouter, Request, Header, HTTPException, BackgroundTasks
 from app.core.config import TELEGRAM_BOT_TOKEN, BOT_WEBHOOK_SECRET
-from app.services.groq import get_groq_response
+from app.services.groq import get_groq_response, extract_traits
 from app.services.pinecone import save_memory, get_recent_memories, pc, PINECONE_INDEX # accessing embedding logic directly or via service
 from app.services.supabase import link_telegram_account, get_user_by_telegram_id, increment_message_count, supabase
 from app.services.embeddings import get_embedding
@@ -141,14 +141,25 @@ Long-term memories: {context_str if context_str else "Clean slate."}
         # Update in-memory sliding window
         recent_context[user_id].append({"role": "user", "content": text})
         recent_context[user_id].append({"role": "assistant", "content": response_text})
-
-        if vector:
-            await save_memory(user_id, text, "user", vector)
-            resp_vector = await get_embedding(response_text, input_type="passage")
-            if resp_vector:
-                await save_memory(user_id, response_text, "assistant", resp_vector)
-                logger.info("Saved interaction to Pinecone")
-                await increment_message_count(user_id)
+        
+        # Increment message count first to check for trait extraction trigger
+        await increment_message_count(user_id)
+        
+        # TRAIT EXTRACTION LOGIC (Every 3rd message)
+        # We NO LONGER save raw messages to Pinecone. Only distilled traits.
+        if (message_count + 1) % 3 == 0:
+            logger.info("Triggering trait extraction (every 3rd message)...")
+            trait = await extract_traits(text)
+            
+            if trait:
+                logger.info(f"Extracted trait: {trait}")
+                # Save TRAIT to Pinecone (permanent memory)
+                trait_vector = await get_embedding(trait, input_type="passage")
+                if trait_vector:
+                    await save_memory(user_id, trait, "trait", trait_vector)
+                    logger.info("Saved distilled trait to Pinecone")
+            else:
+                logger.info("No significant trait found.")
 
     except Exception as e:
         logger.error(f"Error processing update: {e}", exc_info=True)
