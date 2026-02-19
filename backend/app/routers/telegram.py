@@ -143,17 +143,48 @@ async def process_telegram_update(update: dict):
 
         # 3. Memory Retrieval (Normal Flow)
         context_str = ""
+        clarification_prompt = ""
         
         # Check interaction count first to avoid cold start on new users
         # Uses lightweight Supabase integer read instead of heavy Pinecone scan
         message_count = user_profile.get("message_count", 0)
         
         if vector and message_count > 3:
-            memories = await get_recent_memories(user_id, vector)
-            if memories:
-                # Format memories: "User: text" or "Assistant: text"
-                context_str = "\n".join([f"- {m['role'].capitalize()}: {m['text']}" for m in memories])
-                logger.info(f"Retrieved {len(memories)} memories for context")
+            # Parallel: Get memories + Check for pending clarifications in Pinecone
+            index = pc.Index(PINECONE_INDEX)
+            
+            async def get_memories():
+                return await get_recent_memories(user_id, vector)
+                
+            async def get_pending():
+                try:
+                    return await asyncio.to_thread(
+                        index.query,
+                        namespace=str(user_id),
+                        vector=[0.1]*1024, # Dummy vector for metadata filter
+                        top_k=1,
+                        filter={"role": {"$eq": "pending_clarification"}},
+                        include_metadata=True
+                    )
+                except Exception as e:
+                    logger.error(f"Error checking pending clarifications: {e}")
+                    return None
+
+            memories_list, pending_res = await asyncio.gather(get_memories(), get_pending())
+
+            if memories_list:
+                context_str = "\n".join([f"- {m['role'].capitalize()}: {m['text']}" for m in memories_list])
+                logger.info(f"Retrieved {len(memories_list)} memories for context")
+            
+            if pending_res and pending_res.matches:
+                match = pending_res.matches[0]
+                old = match.metadata.get("old_trait", "unknown")
+                new = match.metadata.get("new_trait", "unknown")
+                clarification_prompt = f"\n[CLARIFICATION NOTE]\nSlip this in naturally: 'Wait, did you move? I remember you said {old} before, but now you're saying {new} — which one is it?'\n"
+                
+                # Delete the clarification vector after retrieval (one-time use)
+                await asyncio.to_thread(index.delete, ids=[match.id], namespace=str(user_id))
+                logger.info(f"Retrieved and cleared pending clarification: {old} vs {new}")
         else:
             logger.info(f"Skipping memory retrieval (New user: {message_count} messages)")
 
@@ -189,6 +220,7 @@ If user contradicts a known trait, call it out conversationally:
 Always trust the most recent info. Update your understanding and move on — don't dwell on it.
 
 {active_protocol}
+{clarification_prompt}
 
 CONTEXT:
 User traits: {user_traits}
@@ -270,10 +302,31 @@ Long-term memories: {context_str if context_str else "Clean slate."}
                         # Simplified logic: If Groq detects contradiction, we clear the top match 
                         # because Pinecone's vector search already gave us the most semantically related one.
                         if conflict_id_raw != "NONE":
-                            # We'll delete the top match ID
+                            old_trait_text = search_res.matches[0].metadata.get("text")
                             old_id = search_res.matches[0].id
+                            
+                            # 1. Store a PENDING CLARIFICATION vector
+                            # This will be picked up on the next message turn
+                            clarification_id = f"pending-{int(time.time())}"
+                            await asyncio.to_thread(
+                                index.upsert,
+                                vectors=[{
+                                    "id": clarification_id,
+                                    "values": [0.1]*1024, # Metadata only
+                                    "metadata": {
+                                        "role": "pending_clarification",
+                                        "old_trait": old_trait_text,
+                                        "new_trait": trait,
+                                        "created_at": int(time.time())
+                                    }
+                                }],
+                                namespace=str(user_id)
+                            )
+                            logger.info(f"Stored pending clarification for: {old_trait_text} vs {trait}")
+
+                            # 2. Delete the old conflicting trait
                             await asyncio.to_thread(index.delete, ids=[old_id], namespace=str(user_id))
-                            logger.info(f"Deleted conflicting trait: {search_res.matches[0].metadata.get('text')}")
+                            logger.info(f"Deleted conflicting trait: {old_trait_text}")
 
                     # 3. Save new trait (Always happens, ensuring recency bias)
                     await save_memory(user_id, trait, "trait", trait_vector)
