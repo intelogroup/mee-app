@@ -22,15 +22,15 @@ async def extract_traits(text: str, model="llama-3.3-70b-versatile"):
     Returns a dict with 'trait' and 'category' or None if no fact found.
     """
     system_prompt = """
-    Extract ONE concrete, specific fact about this user.
+    Extract ONE concrete, specific, and objective fact about this user.
 
-    Rules:
-    - Use specific nouns, not abstractions
-    - WRONG: "Lives in new environments" 
-    - RIGHT: "Lives in London"
-    - WRONG: "Is adventurous"
-    - RIGHT: "Recently moved cities multiple times"
-    - If no concrete fact exists, return exactly "NULL"
+    RULES:
+    1. For locations: Output only "Lives in [City Name]".
+    2. For relationships: Output only "[Relationship Type]: [Person]".
+    3. For goals: Output only "Goal: [Specific Action]".
+    4. NO descriptive adjectives (e.g., no "urban", "adventurous", "new").
+    5. NO verbs like "feels", "likes", "enjoys", "tends to".
+    6. If no concrete, objective fact exists, return exactly "NULL".
 
     Return JSON only: {"trait": "...", "category": "location|personality|goal|relationship"}
     """
