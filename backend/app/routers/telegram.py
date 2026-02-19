@@ -282,6 +282,7 @@ Long-term memories: {context_str if context_str else "Clean slate."}
                     )
                     
                     # 2. If similar traits exist, check for contradiction via Groq
+                    is_duplicate = False
                     if search_res.matches:
                         existing_traits = [m.metadata.get("text") for m in search_res.matches]
                         logger.info(f"Checking for contradiction in {trait_category} against: {existing_traits}")
@@ -290,9 +291,9 @@ Long-term memories: {context_str if context_str else "Clean slate."}
                         New fact: "{trait_text}"
                         Existing facts: {existing_traits}
                         
-                        Does the new fact contradict any of the existing ones?
-                        If YES, output only the EXACT TEXT of the ONE most conflicting fact.
-                        If NO contradiction, output "NONE".
+                        1. If the new fact is ALREADY KNOWN (semantically the same), output "EXISTS".
+                        2. If the new fact CONTRADICTS an existing one, output the EXACT TEXT of the conflicting fact.
+                        3. Otherwise, output "NONE".
                         
                         Output exactly one word or the exact phrase.
                         """
@@ -300,7 +301,10 @@ Long-term memories: {context_str if context_str else "Clean slate."}
                         conflict_text_raw = await get_groq_response([{"role": "system", "content": recon_prompt}])
                         conflict_text = conflict_text_raw.strip()
                         
-                        if conflict_text != "NONE":
+                        if conflict_text == "EXISTS":
+                            logger.info(f"Fact already exists, skipping save: {trait_text}")
+                            is_duplicate = True
+                        elif conflict_text != "NONE":
                             # Match the conflict text back to an ID
                             for match in search_res.matches:
                                 if match.metadata.get("text") == conflict_text:
@@ -327,24 +331,25 @@ Long-term memories: {context_str if context_str else "Clean slate."}
                                     logger.info(f"Deleted conflicting trait: {conflict_text}")
                                     break
 
-                    # 3. Save new trait (Always happens, ensuring recency bias)
-                    # We manually construct the upsert to include category
-                    memory_id = f"{int(time.time())}-trait"
-                    await asyncio.to_thread(
-                        index.upsert,
-                        vectors=[{
-                            "id": memory_id,
-                            "values": trait_vector,
-                            "metadata": {
-                                "text": trait_text,
-                                "role": "trait",
-                                "category": trait_category,
-                                "created_at": int(time.time())
-                            }
-                        }],
-                        namespace=str(user_id)
-                    )
-                    logger.info(f"Saved distilled fact to Pinecone: {trait_text}")
+                    # 3. Save new trait (Skip if duplicate)
+                    if not is_duplicate:
+                        # We manually construct the upsert to include category
+                        memory_id = f"{int(time.time())}-trait"
+                        await asyncio.to_thread(
+                            index.upsert,
+                            vectors=[{
+                                "id": memory_id,
+                                "values": trait_vector,
+                                "metadata": {
+                                    "text": trait_text,
+                                    "role": "trait",
+                                    "category": trait_category,
+                                    "created_at": int(time.time())
+                                }
+                            }],
+                            namespace=str(user_id)
+                        )
+                        logger.info(f"Saved distilled fact to Pinecone: {trait_text}")
             else:
                 logger.info("No significant fact found.")
 
