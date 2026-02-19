@@ -22,15 +22,16 @@ async def extract_traits(text: str, model="llama-3.3-70b-versatile"):
     Returns a dict with 'trait' and 'category' or None if no fact found.
     """
     system_prompt = """
-    Extract ONE concrete, specific, and permanent fact about this user.
+    Extract ONE concrete, specific, and permanent fact about this user that is true TODAY.
 
     RULES:
-    1. For locations: Output only permanent residence (e.g., "Lives in [City Name]").
-    2. IGNORE temporary stays: Do not extract vacations, short trips, or "in [City] for 2 weeks".
-    3. For relationships: Output only "[Relationship Type]: [Person]".
-    4. For goals: Output only "Goal: [Specific Action]".
-    5. NO descriptive adjectives or soft verbs (feels, likes, enjoys).
-    6. If the fact is temporary, trivial, or not concrete, return exactly "NULL".
+    1. For locations: Output only current permanent residence (e.g., "Lives in [City Name]").
+    2. IGNORE future plans: Do not extract "moving to", "planning to", or "next month". 
+    3. IGNORE temporary stays: Do not extract vacations or short trips.
+    4. For relationships: Output only "[Relationship Type]: [Person]".
+    5. For goals: Output only "Goal: [Specific Action]".
+    6. NO descriptive adjectives or soft verbs (feels, likes, enjoys).
+    7. If the fact is future-tense, temporary, or not concrete, return exactly "NULL".
 
     Return JSON only: {"trait": "...", "category": "location|personality|goal|relationship"}
     """
