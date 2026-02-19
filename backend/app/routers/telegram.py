@@ -37,7 +37,7 @@ PROTOCOLS = {
 
 # Trigger Keywords
 TRIGGERS = {
-    "romance": ["girlfriend", "boyfriend", "date", "dating", "crush", "flirt", "attractive", "relationship", "love", "sex", "intimacy"],
+    "romance": ["girl", "woman", "girlfriend", "boyfriend", "date", "dating", "crush", "flirt", "attractive", "relationship", "love", "sex", "intimacy"],
     "confidence": ["shy", "scared", "afraid", "nervous", "anxious", "confidence", "brave", "fear", "speak up"]
 }
 
