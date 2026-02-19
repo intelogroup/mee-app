@@ -5,7 +5,7 @@ from app.services.groq import get_groq_response, extract_traits
 from app.services.pinecone import save_memory, get_recent_memories, pc, PINECONE_INDEX # accessing embedding logic directly or via service
 from app.services.supabase import link_telegram_account, get_user_by_telegram_id, increment_message_count, update_onboarding_step, supabase
 from app.services.embeddings import get_embedding
-from app.core.prompts import PERSONAL_DEVELOPMENT_PROTOCOL_25, TWIN_ARCHITECT_PROMPT
+from app.core.prompts import ULTIMATES_TUTOR_PROTOCOL, TWIN_ARCHITECT_PROMPT
 import os
 
 router = APIRouter()
