@@ -13,7 +13,9 @@ async def get_groq_response(messages, model="llama-3.3-70b-versatile"):
         )
         return chat_completion.choices[0].message.content
     except Exception as e:
+        import traceback
         print(f"Error calling Groq: {e}")
+        traceback.print_exc()
         return "Sorry, I'm having trouble thinking right now."
 
 async def extract_traits(text: str, model="llama-3.3-70b-versatile"):

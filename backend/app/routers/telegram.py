@@ -5,7 +5,7 @@ from app.services.groq import get_groq_response, extract_traits
 from app.services.pinecone import save_memory, get_recent_memories, pc, PINECONE_INDEX # accessing embedding logic directly or via service
 from app.services.supabase import link_telegram_account, get_user_by_telegram_id, increment_message_count, update_onboarding_step, supabase
 from app.services.embeddings import get_embedding
-from app.core.prompts import ULTIMATES_TUTOR_PROTOCOL, TWIN_ARCHITECT_PROMPT
+from app.core.prompts import get_active_protocol_fragment, TWIN_ARCHITECT_PROMPT
 import os
 
 router = APIRouter()
@@ -16,6 +16,7 @@ import requests
 import asyncio
 import subprocess
 import json
+import time
 from collections import defaultdict, deque
 
 logger = logging.getLogger(__name__)
@@ -111,36 +112,22 @@ async def process_telegram_update(update: dict):
         user_id = user_profile.get("id")
         onboarding_step = user_profile.get("onboarding_step", 0)
 
+        onboarding_pillar = ""
         if onboarding_step < 4:
-            logger.info(f"User in onboarding step {onboarding_step}")
+            logger.info(f"User in organic onboarding stage (Step {onboarding_step})")
+            from app.core.prompts import PROTOCOL_PILLARS
+            onboarding_pillar = PROTOCOL_PILLARS["onboarding"]
             
-            # Step 0: User somehow missed /start linking flow or is legacy. Send Q1.
-            if onboarding_step == 0:
-                await send_telegram_message(chat_id, ONBOARDING_QUESTIONS[0])
-                await update_onboarding_step(user_id, 1)
-                return
-
-            # Step 1, 2, 3: User just answered Q1, Q2, or Q3.
-            # Extract trait from their answer immediately.
+            # Record traits if found in the user's message
             trait = await extract_traits(text)
             if trait and vector:
                 trait_vector = await get_embedding(trait, input_type="passage")
                 if trait_vector:
                     await save_memory(user_id, trait, "trait", trait_vector)
-                    logger.info(f"Onboarding trait saved: {trait}")
-
-            # Advance to next step
-            if onboarding_step == 1:
-                await send_telegram_message(chat_id, ONBOARDING_QUESTIONS[1])
-                await update_onboarding_step(user_id, 2)
-            elif onboarding_step == 2:
-                await send_telegram_message(chat_id, ONBOARDING_QUESTIONS[2])
-                await update_onboarding_step(user_id, 3)
-            elif onboarding_step == 3:
-                await send_telegram_message(chat_id, "Love it. I've got a feel for your style now. Let's get to it. What's on your mind today?")
-                await update_onboarding_step(user_id, 4)
+                    logger.info(f"Onboarding trait captured organically: {trait}")
             
-            return
+            # Increment step until 4 (where we consider "onboarding" complete)
+            await update_onboarding_step(user_id, onboarding_step + 1)
 
         # 3. Memory Retrieval (Normal Flow)
         context_str = ""
@@ -193,57 +180,76 @@ async def process_telegram_update(update: dict):
         user_traits_list = user_profile.get("traits", [])
         user_traits = ", ".join(user_traits_list) if user_traits_list else "None yet."
         
-        # Determine Active Protocol
-        active_protocol = ""
-        text_lower = text.lower()
-        if any(t in text_lower for t in TRIGGERS["romance"]):
-            active_protocol = f"\n[ACTIVE PROTOCOL: ROMANCE]\n{PROTOCOLS['romance']}\n"
-            logger.info("Activated Romance Protocol")
-        elif any(t in text_lower for t in TRIGGERS["confidence"]):
-            active_protocol = f"\n[ACTIVE PROTOCOL: CONFIDENCE]\n{PROTOCOLS['confidence']}\n"
-            logger.info("Activated Confidence Protocol")
-        elif any(t in text_lower for t in TRIGGERS["masculine"]):
-            active_protocol = f"\n[ACTIVE PROTOCOL: MASCULINE DEVELOPMENT]\n{PROTOCOLS['masculine']}\n"
-            logger.info("Activated Masculine Protocol")
+        # --- DECAY DETECTION (Solution 1 & 2) ---
+        user_history = [m["content"] for m in recent_context[user_id] if m["role"] == "user"]
+        # Check current message + last user message in window
+        consecutive_short = 0
+        def is_short(t):
+            t_clean = t.lower().strip(",.!?")
+            return len(t_clean.split()) <= 2 or any(k in t_clean for k in ["yep", "yup", "yeah", "ok", "oke", "see", "sure", "true", "right"])
+
+        if is_short(text):
+            consecutive_short = 1
+            if user_history and is_short(user_history[-1]):
+                consecutive_short = 2
+                # If we have a 3rd one in context, count it
+                if len(user_history) > 1 and is_short(user_history[-2]):
+                    consecutive_short = 3
+
+        # Determine Active Protocol Fragment (Layer 1: Slimmed Injection)
+        active_protocol = get_active_protocol_fragment(text)
+        
+        # Inject Decay Instructions if needed
+        decay_note = ""
+        allow_questions = True
+        if consecutive_short >= 2:
+            active_protocol += f"\n{PROTOCOL_PILLARS['decay']}"
+            allow_questions = False
+            # Just acknowledge and stop chasing. 
+            decay_note = "\n[DECAY MODE]\nUser is fading. Match energy. 1-2 words max. NO questions. Respond with 'oke', 'got it', or similar and let it die naturally."
+
+        logger.info(f"Decay Level: {consecutive_short}, allow_questions: {allow_questions}")
+        logger.info(f"Injected Protocol Fragment: {active_protocol.split('### ')[1].split(' ')[0] if '### ' in active_protocol else 'Default'}")
 
         system_prompt = f"""{TWIN_ARCHITECT_PROMPT}
 
-ADDITIONAL CONSTRAINTS:
-- Default to 1-2 sentences max. Use the behavior of a gritty twin brother.
-- Use "We" and "Us" constantly. Our win is shared.
-- Match his short text energy. Use interjections like "!bam", "gosh", or "Shish!" EXTREMELY sparingly — only for life-changing breakthroughs or severe failures. Default to clean, direct language.
-- Lead with an actionable script or a mindset hardening.
-
-[MEMORY BEHAVIOR]
-You have a sharp, precise memory. When user traits are available, reference them naturally like a friend who pays attention.
-If user contradicts a known trait, call it out conversationally:
-"Wait — I thought you were in [Old]? Did you move to [New] or am I mixing things up?"
-Always trust the most recent info. Update your understanding and move on — don't dwell on it.
-
 {active_protocol}
-{clarification_prompt}
+{onboarding_pillar}
 
-CONTEXT:
-User traits: {user_traits}
-Long-term memories: {context_str if context_str else "Clean slate."}
+[CONTEXT]
+User Traits: {user_traits}
+Memories: {context_str if context_str else "Clean slate."}
+{clarification_prompt}
+{decay_note}
 """
         
         # Build message history: System Prompt + Sliding Window + Current Input
         messages = [{"role": "system", "content": system_prompt}]
-        
-        # Add sliding window from memory
-        history = list(recent_context[user_id])
-        messages.extend(history)
-        
-        # Add current user message
+        messages.extend(list(recent_context[user_id]))
         messages.append({"role": "user", "content": text})
 
-        logger.info(f"Calling Groq for user: {username} with {len(history)} history messages")
+        logger.info(f"Calling Groq for user: {username} (System Prompt Len: {len(system_prompt)})")
         response_text = await get_groq_response(messages)
-        logger.info(f"Received Groq response: {response_text[:50]}...")
+        
+        # --- LAYER 2: IN-CODE GUARDRAILS ---
+        from app.core.guardrails import validate_response
+        validation = await validate_response(response_text, {"user_text": text, "allow_questions": allow_questions})
+        
+        if not validation.is_valid:
+            logger.warning(f"Guardrail Flag: {validation.reason}. Original: {response_text[:50]}...")
+            if validation.reason == "Banned phrases detected.":
+                # Automated Retry with stricter meta-prompt
+                messages.append({"role": "assistant", "content": response_text})
+                messages.append({"role": "system", "content": "CRITICAL: You just used a banned phrase or corporate AI tone. STOP. Be gritty. Be 1 sentence. Use only 'We'."})
+                response_text = await get_groq_response(messages)
+                validation = await validate_response(response_text)
+                response_text = validation.cleaned_text
+            else:
+                response_text = validation.cleaned_text
+
+        logger.info(f"Final Response Sent: {response_text[:50]}...")
 
         # 5. Send Response
-        logger.info(f"Sending response to chat_id {chat_id}")
         await send_telegram_message(chat_id, response_text)
 
         # 6. Post-Response Tasks (Async / Background)
