@@ -15,7 +15,7 @@ export async function saveMemory(
 
     try {
         // 1. Generate Embedding using Pinecone Inference
-        // Using multilingual-e5-large to match backend
+        // @ts-ignore: SDK type definition mismatch (expects 1 arg, runtime supports 3)
         const embeddingResponse = await pinecone.inference.embed(
             'multilingual-e5-large',
             [text],
