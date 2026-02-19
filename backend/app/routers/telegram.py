@@ -29,6 +29,18 @@ ONBOARDING_QUESTIONS = [
     "Last one — are you more of a one-on-one person or do you actually like groups when the vibe is right?"
 ]
 
+# Protocol Definitions loaded from Environment
+PROTOCOLS = {
+    "romance": os.getenv("ROMANCE_PROTOCOL", ""),
+    "confidence": os.getenv("CONFIDENCE_PROTOCOL", "")
+}
+
+# Trigger Keywords
+TRIGGERS = {
+    "romance": ["girlfriend", "boyfriend", "date", "dating", "crush", "flirt", "attractive", "relationship", "love", "sex", "intimacy"],
+    "confidence": ["shy", "scared", "afraid", "nervous", "anxious", "confidence", "brave", "fear", "speak up"]
+}
+
 # Helper to send message
 async def send_telegram_message(chat_id: int, text: str):
     logger.info(f"Sending message to chat_id {chat_id}: {text[:50]}...")
@@ -70,17 +82,6 @@ async def process_telegram_update(update: dict):
                 # If success, start onboarding immediately
                 if success:
                      await send_telegram_message(chat_id, ONBOARDING_QUESTIONS[0])
-                     # We need to set step to 1. But link_telegram_account is generic.
-                     # We'll rely on the user profile fetch in the next message, 
-                     # BUT wait, we need to set the step NOW for the NEXT message.
-                     # Since we don't have the user_id easily from link_token here without querying,
-                     # we'll let the user reply "Hi" or answer Q1.
-                     # Better: Update link_telegram_account to return user_id or do it here.
-                     # For now, simplistic: The user is linked. Their profile has default step 0.
-                     # Next time they reply, we check step 0 and send Q1 again? 
-                     # NO. We should set step=1 here.
-                     # Let's update profile immediately if we can.
-                     # Actually, link_telegram_account uses the token as ID.
                      await update_onboarding_step(token, 1)
                 else:
                      await send_telegram_message(chat_id, msg)
@@ -157,6 +158,16 @@ async def process_telegram_update(update: dict):
         user_traits_list = user_profile.get("traits", [])
         user_traits = ", ".join(user_traits_list) if user_traits_list else "None yet."
         
+        # Determine Active Protocol
+        active_protocol = ""
+        text_lower = text.lower()
+        if any(t in text_lower for t in TRIGGERS["romance"]):
+            active_protocol = f"\n[ACTIVE PROTOCOL: ROMANCE]\n{PROTOCOLS['romance']}\n"
+            logger.info("Activated Romance Protocol")
+        elif any(t in text_lower for t in TRIGGERS["confidence"]):
+            active_protocol = f"\n[ACTIVE PROTOCOL: CONFIDENCE]\n{PROTOCOLS['confidence']}\n"
+            logger.info("Activated Confidence Protocol")
+
         system_prompt = f"""You are Mee, a sharp social coach for introverts.
 
 RESPONSE STYLE:
@@ -167,6 +178,8 @@ RESPONSE STYLE:
 
 YOUR MISSION:
 Lead with one specific, actionable script or hack. No fluff.
+
+{active_protocol}
 
 CONTEXT:
 User traits: {user_traits}
