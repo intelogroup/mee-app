@@ -46,55 +46,19 @@ export default function BotStatusWatcher({ userId, initialLinked }: BotStatusPro
 
     if (!isLinked && !justLinked) {
         return (
-            <div
-                style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 8,
-                    padding: "10px 14px",
-                    background: "rgba(234,179,8,0.08)",
-                    border: "1px solid rgba(234,179,8,0.2)",
-                    borderRadius: 10,
-                    fontSize: 13,
-                    color: "var(--warning)",
-                    marginBottom: 16,
-                }}
-            >
-                <span style={{ fontSize: 16 }}>⏳</span>
-                <span>Waiting for you to open the bot in Telegram…</span>
-                <span
-                    style={{
-                        display: "inline-block",
-                        width: 8,
-                        height: 8,
-                        borderRadius: "50%",
-                        background: "var(--warning)",
-                        animation: "pulse 1.5s ease-in-out infinite",
-                        marginLeft: "auto",
-                    }}
-                />
+            <div className="flex items-center gap-3 p-3 mb-4 rounded-xl bg-yellow-500/10 border border-yellow-500/20 text-yellow-500 text-sm">
+                <span className="text-base">⏳</span>
+                <span>Waiting for you to open the bot in Telegram...</span>
+                <span className="ml-auto inline-block w-2 h-2 rounded-full bg-yellow-500 animate-pulse" />
             </div>
         );
     }
 
     if (justLinked) {
         return (
-            <div
-                style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 8,
-                    padding: "10px 14px",
-                    background: "rgba(34,197,94,0.08)",
-                    border: "1px solid rgba(34,197,94,0.2)",
-                    borderRadius: 10,
-                    fontSize: 13,
-                    color: "var(--success)",
-                    marginBottom: 16,
-                }}
-            >
-                <span style={{ fontSize: 16 }}>🎉</span>
-                <span>Bot linked! Refreshing your dashboard…</span>
+            <div className="flex items-center gap-3 p-3 mb-4 rounded-xl bg-green-500/10 border border-green-500/20 text-green-500 text-sm">
+                <span className="text-base">🎉</span>
+                <span>Bot linked! Refreshing your dashboard...</span>
             </div>
         );
     }

@@ -6,11 +6,12 @@ import DeactivateButton from "@/components/DeactivateButton";
 import BotStatusWatcher from "@/components/BotStatusWatcher";
 import Link from "next/link";
 
+
 async function getQRCode(url: string): Promise<string> {
     return QRCode.toDataURL(url, {
         width: 200,
         margin: 2,
-        color: { dark: "#f8fafc", light: "#111118" },
+        color: { dark: "#000000", light: "#ffffff" },
     });
 }
 
@@ -23,30 +24,38 @@ async function getProfile(userId: string) {
     return data;
 }
 
+
+
 async function getTraits(userId: string): Promise<string[]> {
-    const botApiUrl = process.env.BOT_BACKEND_API_URL;
     const botApiKey = process.env.BOT_BACKEND_API_KEY;
-    if (!botApiUrl || !botApiKey) return [];
+    // Use the backend URL directly if possible, or fallback gracefully
+    const botApiUrl = process.env.BOT_BACKEND_API_URL || "https://mee-app-backend.onrender.com";
+
+    if (!botApiKey) return [];
     try {
-        const res = await fetch(`${botApiUrl}/users/${userId}/traits`, {
+        const res = await fetch(`${botApiUrl}/api/telegram/users/${userId}/traits`, {
             headers: { Authorization: `Bearer ${botApiKey}` },
             next: { revalidate: 60 },
         });
         if (!res.ok) return [];
         const data = await res.json();
         return data.traits ?? [];
-    } catch {
+    } catch (error) {
+        console.error("Failed to fetch traits:", error);
         return [];
     }
 }
 
 export default async function DashboardPage() {
     const supabase = await createClient();
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
 
     if (!user) redirect("/login");
 
-    const botUsername = process.env.NEXT_PUBLIC_TELEGRAM_BOT_USERNAME || "YourBotName";
+    const botUsername =
+        process.env.NEXT_PUBLIC_TELEGRAM_BOT_USERNAME || "YourBotName";
     const deepLink = `https://t.me/${botUsername}?start=${user.id}`;
 
     const [profile, qrDataUrl, traits] = await Promise.all([
@@ -57,28 +66,41 @@ export default async function DashboardPage() {
 
     const isLinked = !!profile?.telegram_chat_id;
     const memberSince = user.created_at
-        ? new Date(user.created_at).toLocaleDateString("en-US", { month: "long", year: "numeric" })
+        ? new Date(user.created_at).toLocaleDateString("en-US", {
+            month: "long",
+            year: "numeric",
+        })
         : "—";
 
     return (
-        <main style={{ minHeight: "100vh", position: "relative", overflow: "hidden" }}>
-            <div className="glow-blob" style={{ width: 500, height: 500, background: "#7c3aed", top: -200, right: -100 }} />
-            <div className="glow-blob" style={{ width: 300, height: 300, background: "#0ea5e9", bottom: 0, left: -100 }} />
+        <main className="min-h-screen relative overflow-hidden bg-background text-text-primary">
+            {/* Background Noise Texture */}
+            <div className="absolute inset-0 z-0 opacity-20 pointer-events-none noise-bg"></div>
 
             {/* Navbar */}
-            <nav style={{ position: "relative", zIndex: 10, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "20px 40px", borderBottom: "1px solid var(--border)", backdropFilter: "blur(12px)" }}>
-                <Link href="/" style={{ fontSize: 22, fontWeight: 900, letterSpacing: "-0.04em", textDecoration: "none" }}>
-                    <span className="gradient-text">mee</span>
+            <nav className="relative z-10 flex items-center justify-between px-6 py-4 glass-panel border-b border-white/5">
+                <Link
+                    href="/"
+                    className="text-2xl font-bold tracking-tight text-white hover:opacity-80 transition-opacity"
+                >
+                    mee
                 </Link>
-                <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-                    <span style={{ fontSize: 13, color: "var(--text-muted)" }}>{user.email}</span>
-                    <form action={async () => {
-                        "use server";
-                        const supabase = await createClient();
-                        await supabase.auth.signOut();
-                        redirect("/");
-                    }}>
-                        <button type="submit" className="btn-ghost" style={{ padding: "8px 16px", fontSize: 13 }}>
+                <div className="flex items-center gap-4">
+                    <span className="text-sm text-text-secondary hidden sm:inline-block">
+                        {user.email}
+                    </span>
+                    <form
+                        action={async () => {
+                            "use server";
+                            const supabase = await createClient();
+                            await supabase.auth.signOut();
+                            redirect("/");
+                        }}
+                    >
+                        <button
+                            type="submit"
+                            className="px-4 py-2 text-sm font-medium text-text-secondary hover:text-white transition-colors rounded-lg hover:bg-white/5"
+                        >
                             Sign out
                         </button>
                     </form>
@@ -86,97 +108,151 @@ export default async function DashboardPage() {
             </nav>
 
             {/* Content */}
-            <div style={{ position: "relative", zIndex: 1, maxWidth: 900, margin: "0 auto", padding: "48px 24px" }}>
-                <div style={{ marginBottom: 40 }}>
-                    <h1 style={{ fontSize: 32, fontWeight: 800, letterSpacing: "-0.03em", marginBottom: 8 }}>
+            <div className="relative z-10 max-w-5xl mx-auto px-6 py-12">
+                <div className="mb-10">
+                    <h1 className="text-3xl font-bold tracking-tight text-white mb-2">
                         Your Dashboard
                     </h1>
-                    <p style={{ color: "var(--text-secondary)", fontSize: 15 }}>Member since {memberSince}</p>
+                    <p className="text-text-secondary text-sm">
+                        Member since {memberSince}
+                    </p>
                 </div>
 
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 20 }}>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {/* Bot Card */}
-                    <div className="glass-card" style={{ padding: 28 }}>
-                        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 20 }}>
-                            <h2 style={{ fontSize: 16, fontWeight: 700, letterSpacing: "-0.02em" }}>Your Mee Bot</h2>
-                            <span className={`badge ${isLinked ? "badge-success" : "badge-warning"}`}>
-                                <span className="badge-dot" />
+                    <div className="glass-card p-6 md:p-8 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl flex flex-col h-full">
+                        <div className="flex items-center justify-between mb-6">
+                            <h2 className="text-lg font-bold tracking-tight text-white">
+                                Your Mee Bot
+                            </h2>
+                            <span
+                                className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border ${isLinked
+                                    ? "bg-green-500/10 text-green-500 border-green-500/20"
+                                    : "bg-yellow-500/10 text-yellow-500 border-yellow-500/20"
+                                    }`}
+                            >
+                                <span
+                                    className={`w-1.5 h-1.5 rounded-full ${isLinked ? "bg-green-500" : "bg-yellow-500"
+                                        }`}
+                                />
                                 {isLinked ? "Linked" : "Not linked"}
                             </span>
                         </div>
 
-                        <div style={{ display: "flex", justifyContent: "center", marginBottom: 20 }}>
-                            <div style={{ padding: 12, background: "#111118", borderRadius: 12, border: "1px solid var(--border)" }}>
+                        <div className="flex justify-center mb-6">
+                            <div className="p-3 bg-white rounded-xl shadow-lg">
                                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                                <img src={qrDataUrl} alt="Telegram bot QR code" width={180} height={180} style={{ display: "block", borderRadius: 6 }} />
+                                <img
+                                    src={qrDataUrl}
+                                    alt="Telegram bot QR code"
+                                    className="block rounded-lg w-40 h-40 object-cover"
+                                />
                             </div>
                         </div>
 
-                        <p style={{ fontSize: 12, color: "var(--text-muted)", textAlign: "center", marginBottom: 16, lineHeight: 1.6 }}>
-                            Scan to open your personal Mee bot in Telegram
+                        <p className="text-xs text-text-muted text-center mb-6 leading-relaxed">
+                            Scan to open your personal Mee bot in Telegram, or click the
+                            button below.
                         </p>
 
                         {/* Real-time bot link watcher */}
                         <BotStatusWatcher userId={user.id} initialLinked={isLinked} />
 
-                        <a href={deepLink} target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ width: "100%", fontSize: 14 }}>
-                            <span>✈</span> Open in Telegram
-                        </a>
+                        <div className="mt-auto">
+                            <a
+                                href={deepLink}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center justify-center gap-2 w-full py-3 px-4 bg-white text-black font-semibold rounded-xl hover:bg-white/90 transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-white/5 text-sm"
+                            >
+                                <span>✈</span> Open in Telegram
+                            </a>
 
-                        <div style={{ marginTop: 12, padding: "8px 12px", background: "rgba(255,255,255,0.03)", borderRadius: 8, border: "1px solid var(--border)", fontSize: 11, color: "var(--text-muted)", wordBreak: "break-all", fontFamily: "monospace" }}>
-                            {deepLink}
+                            <div className="mt-4 p-3 bg-black/20 rounded-lg border border-white/5 text-[10px] text-text-muted font-mono break-all text-center select-all">
+                                {deepLink}
+                            </div>
                         </div>
                     </div>
 
-                    {/* Right column */}
-                    <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-                        {/* Profile */}
-                        <div className="glass-card" style={{ padding: 28 }}>
-                            <h2 style={{ fontSize: 16, fontWeight: 700, letterSpacing: "-0.02em", marginBottom: 16 }}>Profile</h2>
-                            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-                                {[
-                                    { label: "Email", value: user.email },
-                                    { label: "User ID", value: user.id, mono: true },
-                                    { label: "Bot status", value: isLinked ? "Connected" : "Awaiting link", color: isLinked ? "var(--success)" : "var(--warning)" },
-                                ].map((row, i) => (
-                                    <div key={i}>
-                                        {i > 0 && <div style={{ height: 1, background: "var(--border)", marginBottom: 12 }} />}
-                                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                                            <span style={{ fontSize: 13, color: "var(--text-muted)" }}>{row.label}</span>
-                                            <span style={{ fontSize: row.mono ? 11 : 13, color: row.color ?? "var(--text-secondary)", fontFamily: row.mono ? "monospace" : undefined, maxWidth: 180, overflow: "hidden", textOverflow: "ellipsis" }}>
-                                                {row.value}
-                                            </span>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-
+                    {/* Right column (spans 2 columns on large screens if needed, otherwise distinct) */}
+                    <div className="lg:col-span-2 flex flex-col gap-6">
                         {/* Traits */}
-                        <div className="glass-card" style={{ padding: 28 }}>
-                            <h2 style={{ fontSize: 16, fontWeight: 700, letterSpacing: "-0.02em", marginBottom: 16 }}>Your Traits</h2>
+                        <div className="glass-card p-6 md:p-8 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl">
+                            <h2 className="text-lg font-bold tracking-tight text-white mb-4">
+                                Your Traits
+                            </h2>
                             {traits.length > 0 ? (
-                                <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                                <div className="flex flex-wrap gap-2">
                                     {traits.map((trait) => (
-                                        <span key={trait} style={{ padding: "5px 12px", background: "rgba(124,58,237,0.1)", border: "1px solid rgba(124,58,237,0.2)", borderRadius: 20, fontSize: 12, color: "var(--accent-light)", fontWeight: 500 }}>
+                                        <span
+                                            key={trait}
+                                            className="px-3 py-1.5 bg-violet-500/10 border border-violet-500/20 rounded-full text-xs font-medium text-violet-400"
+                                        >
                                             {trait}
                                         </span>
                                     ))}
                                 </div>
                             ) : (
-                                <p style={{ fontSize: 13, color: "var(--text-muted)", lineHeight: 1.7 }}>
-                                    {isLinked ? "Mee is still learning about you. Keep chatting!" : "Link your Telegram account to start building your profile."}
+                                <p className="text-sm text-text-muted leading-relaxed">
+                                    {isLinked
+                                        ? "Mee is still learning about you. Keep chatting to unlock your personality traits!"
+                                        : "Link your Telegram account to start building your unique profile."}
                                 </p>
                             )}
                         </div>
 
-                        {/* Danger zone */}
-                        <div className="glass-card" style={{ padding: 24, border: "1px solid rgba(239,68,68,0.15)" }}>
-                            <h2 style={{ fontSize: 14, fontWeight: 700, marginBottom: 8, color: "var(--danger)" }}>Danger Zone</h2>
-                            <p style={{ fontSize: 13, color: "var(--text-muted)", marginBottom: 16, lineHeight: 1.6 }}>
-                                Deactivating your account will stop Mee from responding. Your data is preserved.
-                            </p>
-                            <DeactivateButton />
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 h-full">
+                            {/* Profile */}
+                            <div className="glass-card p-6 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl h-full">
+                                <h2 className="text-lg font-bold tracking-tight text-white mb-4">
+                                    Profile
+                                </h2>
+                                <div className="space-y-4">
+                                    <div>
+                                        <span className="block text-xs text-text-muted mb-1">
+                                            Email
+                                        </span>
+                                        <span className="text-sm text-white font-medium">
+                                            {user.email}
+                                        </span>
+                                    </div>
+                                    <div className="h-px bg-white/5" />
+                                    <div>
+                                        <span className="block text-xs text-text-muted mb-1">
+                                            User ID
+                                        </span>
+                                        <span className="text-xs text-text-secondary font-mono">
+                                            {user.id}
+                                        </span>
+                                    </div>
+                                    <div className="h-px bg-white/5" />
+                                    <div>
+                                        <span className="block text-xs text-text-muted mb-1">
+                                            Status
+                                        </span>
+                                        <span
+                                            className={`text-sm font-medium ${isLinked ? "text-green-500" : "text-yellow-500"
+                                                }`}
+                                        >
+                                            {isLinked ? "Connected" : "Awaiting link"}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Danger Connect - using slightly different style */}
+                            <div className="glass-card p-6 rounded-3xl border border-red-500/10 bg-red-500/5 backdrop-blur-xl h-full flex flex-col">
+                                <h2 className="text-sm font-bold tracking-tight text-red-500 mb-2">
+                                    Danger Zone
+                                </h2>
+                                <p className="text-xs text-text-muted leading-relaxed mb-6">
+                                    Deactivating your account will stop Mee from responding. Your
+                                    data is preserved.
+                                </p>
+                                <div className="mt-auto">
+                                    <DeactivateButton />
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

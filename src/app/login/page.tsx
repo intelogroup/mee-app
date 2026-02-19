@@ -28,6 +28,7 @@ function LoginForm() {
 
             if (signInError) {
                 setError("Invalid email or password.");
+                setLoading(false);
                 return;
             }
 
@@ -35,52 +36,35 @@ function LoginForm() {
             router.refresh();
         } catch {
             setError("Network error. Please try again.");
-        } finally {
             setLoading(false);
         }
     };
 
     return (
-        <main
-            style={{
-                minHeight: "100vh",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                padding: 24,
-                position: "relative",
-                overflow: "hidden",
-            }}
-        >
-            <div
-                className="glow-blob"
-                style={{ width: 500, height: 500, background: "#7c3aed", top: -150, right: -150 }}
-            />
-            <div
-                className="glow-blob"
-                style={{ width: 300, height: 300, background: "#0ea5e9", bottom: -100, left: -50 }}
-            />
+        <main className="flex min-h-screen items-center justify-center relative overflow-hidden px-6 py-12">
+            {/* Background Noise Texture (optional, inherits from body but ensures coverage) */}
+            <div className="absolute inset-0 z-0 opacity-20 pointer-events-none noise-bg"></div>
 
-            <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: 420 }}>
-                <div style={{ textAlign: "center", marginBottom: 32 }}>
-                    <Link href="/" style={{ fontSize: 28, fontWeight: 900, letterSpacing: "-0.04em", textDecoration: "none" }}>
-                        <span className="gradient-text">mee</span>
+            <div className="w-full max-w-md relative z-10 flex flex-col items-center">
+                <div className="text-center mb-8">
+                    <Link href="/" className="inline-block text-4xl font-bold tracking-tight text-white mb-2 hover:opacity-80 transition-opacity">
+                        mee
                     </Link>
-                    <p style={{ marginTop: 8, color: "var(--text-secondary)", fontSize: 15 }}>
+                    <p className="text-text-secondary">
                         Welcome back
                     </p>
                 </div>
 
-                <div className="glass-card" style={{ padding: 32 }}>
-                    <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+                <div className="w-full glass-card p-8 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl">
+                    <form onSubmit={handleSubmit} className="flex flex-col gap-5">
                         <div>
-                            <label htmlFor="email" style={{ display: "block", fontSize: 13, fontWeight: 500, marginBottom: 6, color: "var(--text-secondary)" }}>
+                            <label htmlFor="email" className="block text-sm font-medium text-text-secondary mb-2">
                                 Email address
                             </label>
                             <input
                                 id="email"
                                 type="email"
-                                className="input-field"
+                                className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-white/20 focus:bg-white/10 transition-all"
                                 placeholder="you@example.com"
                                 value={form.email}
                                 onChange={(e) => setForm({ ...form, email: e.target.value })}
@@ -90,13 +74,13 @@ function LoginForm() {
                         </div>
 
                         <div>
-                            <label htmlFor="password" style={{ display: "block", fontSize: 13, fontWeight: 500, marginBottom: 6, color: "var(--text-secondary)" }}>
+                            <label htmlFor="password" className="block text-sm font-medium text-text-secondary mb-2">
                                 Password
                             </label>
                             <input
                                 id="password"
                                 type="password"
-                                className="input-field"
+                                className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-white/20 focus:bg-white/10 transition-all"
                                 placeholder="Your password"
                                 value={form.password}
                                 onChange={(e) => setForm({ ...form, password: e.target.value })}
@@ -106,22 +90,26 @@ function LoginForm() {
                         </div>
 
                         {error && (
-                            <div style={{ padding: "10px 14px", background: "rgba(239,68,68,0.1)", border: "1px solid rgba(239,68,68,0.2)", borderRadius: 8, fontSize: 13, color: "var(--danger)" }}>
+                            <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-sm">
                                 {error}
                             </div>
                         )}
 
-                        <button type="submit" className="btn-primary" disabled={loading} style={{ width: "100%", marginTop: 4 }}>
-                            {loading ? "Signing in…" : "Sign in"}
+                        <button
+                            type="submit"
+                            disabled={loading}
+                            className="mt-2 w-full py-3.5 px-4 bg-white text-black font-semibold rounded-xl hover:bg-white/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white transition-all transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed shadow-lg shadow-white/5"
+                        >
+                            {loading ? "Signing in..." : "Sign in"}
                         </button>
                     </form>
 
-                    <p style={{ textAlign: "center", marginTop: 20, fontSize: 13, color: "var(--text-muted)" }}>
+                    <div className="mt-6 text-center text-sm text-text-muted">
                         Don&apos;t have an account?{" "}
-                        <Link href="/signup" style={{ color: "var(--accent-light)", textDecoration: "none", fontWeight: 500 }}>
+                        <Link href="/signup" className="text-white hover:underline font-medium transition-colors">
                             Sign up
                         </Link>
-                    </p>
+                    </div>
                 </div>
             </div>
         </main>

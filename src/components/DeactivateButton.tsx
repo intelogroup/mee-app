@@ -33,24 +33,34 @@ export default function DeactivateButton() {
     if (confirming) {
         return (
             <div>
-                <p style={{ fontSize: 13, color: "var(--danger)", marginBottom: 12, fontWeight: 500 }}>
+                <p className="text-sm text-red-400 mb-3 font-medium">
                     Are you sure? This will stop Mee from responding.
                 </p>
-                <div style={{ display: "flex", gap: 8 }}>
-                    <button onClick={handleDeactivate} disabled={loading} className="btn-danger" style={{ flex: 1 }}>
-                        {loading ? "Deactivating…" : "Yes, deactivate"}
+                <div className="flex gap-2">
+                    <button
+                        onClick={handleDeactivate}
+                        disabled={loading}
+                        className="flex-1 px-4 py-2 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 rounded-lg text-sm transition-colors"
+                    >
+                        {loading ? "Deactivating..." : "Yes, deactivate"}
                     </button>
-                    <button onClick={() => setConfirming(false)} className="btn-ghost" style={{ flex: 1, padding: "10px 16px", fontSize: 14 }}>
+                    <button
+                        onClick={() => setConfirming(false)}
+                        className="flex-1 px-4 py-2 hover:bg-white/5 text-text-secondary rounded-lg text-sm transition-colors"
+                    >
                         Cancel
                     </button>
                 </div>
-                {error && <p style={{ marginTop: 8, fontSize: 12, color: "var(--danger)" }}>{error}</p>}
+                {error && <p className="mt-2 text-xs text-red-500">{error}</p>}
             </div>
         );
     }
 
     return (
-        <button onClick={() => setConfirming(true)} className="btn-danger" style={{ width: "100%" }}>
+        <button
+            onClick={() => setConfirming(true)}
+            className="w-full px-4 py-2 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 rounded-lg text-sm font-medium transition-colors"
+        >
             Deactivate account
         </button>
     );

@@ -34,6 +34,7 @@ export default function SignupPage() {
 
             if (signUpError) {
                 setError(signUpError.message);
+                setLoading(false);
                 return;
             }
 
@@ -53,52 +54,35 @@ export default function SignupPage() {
             router.refresh();
         } catch {
             setError("Network error. Please try again.");
-        } finally {
             setLoading(false);
         }
     };
 
     return (
-        <main
-            style={{
-                minHeight: "100vh",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                padding: 24,
-                position: "relative",
-                overflow: "hidden",
-            }}
-        >
-            <div
-                className="glow-blob"
-                style={{ width: 500, height: 500, background: "#7c3aed", top: -150, left: -150 }}
-            />
-            <div
-                className="glow-blob"
-                style={{ width: 300, height: 300, background: "#2563eb", bottom: -100, right: -50 }}
-            />
+        <main className="flex min-h-screen items-center justify-center relative overflow-hidden px-6 py-12">
+            {/* Background Noise Texture */}
+            <div className="absolute inset-0 z-0 opacity-20 pointer-events-none noise-bg"></div>
 
-            <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: 420 }}>
-                <div style={{ textAlign: "center", marginBottom: 32 }}>
-                    <Link href="/" style={{ fontSize: 28, fontWeight: 900, letterSpacing: "-0.04em", textDecoration: "none" }}>
-                        <span className="gradient-text">mee</span>
+            <div className="w-full max-w-md relative z-10 flex flex-col items-center">
+                <div className="text-center mb-8">
+                    <Link href="/" className="inline-block text-4xl font-bold tracking-tight text-white mb-2 hover:opacity-80 transition-opacity">
+                        mee
                     </Link>
-                    <p style={{ marginTop: 8, color: "var(--text-secondary)", fontSize: 15 }}>
+                    <p className="text-text-secondary">
                         Create your account
                     </p>
                 </div>
 
-                <div className="glass-card" style={{ padding: 32 }}>
-                    <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+                <div className="w-full glass-card p-8 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl">
+                    <form onSubmit={handleSubmit} className="flex flex-col gap-5">
                         <div>
-                            <label htmlFor="email" style={{ display: "block", fontSize: 13, fontWeight: 500, marginBottom: 6, color: "var(--text-secondary)" }}>
+                            <label htmlFor="email" className="block text-sm font-medium text-text-secondary mb-2">
                                 Email address
                             </label>
                             <input
                                 id="email"
                                 type="email"
-                                className="input-field"
+                                className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-white/20 focus:bg-white/10 transition-all"
                                 placeholder="you@example.com"
                                 value={form.email}
                                 onChange={(e) => setForm({ ...form, email: e.target.value })}
@@ -108,13 +92,13 @@ export default function SignupPage() {
                         </div>
 
                         <div>
-                            <label htmlFor="password" style={{ display: "block", fontSize: 13, fontWeight: 500, marginBottom: 6, color: "var(--text-secondary)" }}>
+                            <label htmlFor="password" className="block text-sm font-medium text-text-secondary mb-2">
                                 Password
                             </label>
                             <input
                                 id="password"
                                 type="password"
-                                className="input-field"
+                                className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-white/20 focus:bg-white/10 transition-all"
                                 placeholder="Min. 8 characters"
                                 value={form.password}
                                 onChange={(e) => setForm({ ...form, password: e.target.value })}
@@ -124,13 +108,13 @@ export default function SignupPage() {
                         </div>
 
                         <div>
-                            <label htmlFor="confirm" style={{ display: "block", fontSize: 13, fontWeight: 500, marginBottom: 6, color: "var(--text-secondary)" }}>
+                            <label htmlFor="confirm" className="block text-sm font-medium text-text-secondary mb-2">
                                 Confirm password
                             </label>
                             <input
                                 id="confirm"
                                 type="password"
-                                className="input-field"
+                                className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-white/20 focus:bg-white/10 transition-all"
                                 placeholder="Repeat your password"
                                 value={form.confirm}
                                 onChange={(e) => setForm({ ...form, confirm: e.target.value })}
@@ -140,22 +124,26 @@ export default function SignupPage() {
                         </div>
 
                         {error && (
-                            <div style={{ padding: "10px 14px", background: "rgba(239,68,68,0.1)", border: "1px solid rgba(239,68,68,0.2)", borderRadius: 8, fontSize: 13, color: "var(--danger)" }}>
+                            <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-sm">
                                 {error}
                             </div>
                         )}
 
-                        <button type="submit" className="btn-primary" disabled={loading} style={{ width: "100%", marginTop: 4 }}>
-                            {loading ? "Creating account…" : "Create account"}
+                        <button
+                            type="submit"
+                            disabled={loading}
+                            className="mt-2 w-full py-3.5 px-4 bg-white text-black font-semibold rounded-xl hover:bg-white/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white transition-all transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed shadow-lg shadow-white/5"
+                        >
+                            {loading ? "Creating account..." : "Create account"}
                         </button>
                     </form>
 
-                    <p style={{ textAlign: "center", marginTop: 20, fontSize: 13, color: "var(--text-muted)" }}>
+                    <div className="mt-6 text-center text-sm text-text-muted">
                         Already have an account?{" "}
-                        <Link href="/login" style={{ color: "var(--accent-light)", textDecoration: "none", fontWeight: 500 }}>
+                        <Link href="/login" className="text-white hover:underline font-medium transition-colors">
                             Sign in
                         </Link>
-                    </p>
+                    </div>
                 </div>
             </div>
         </main>
