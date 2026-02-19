@@ -101,5 +101,3 @@ def get_active_protocol_fragment(user_text: str) -> str:
         
     return "\n".join(active_pillars)
 
-# Deprecated legacy names
-ULTIMATES_TUTOR_PROTOCOL = "DEPRECATED: Use get_active_protocol_fragment()"

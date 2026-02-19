@@ -5,16 +5,14 @@ from app.services.groq import get_groq_response, extract_traits
 from app.services.pinecone import save_memory, get_recent_memories, pc, PINECONE_INDEX # accessing embedding logic directly or via service
 from app.services.supabase import link_telegram_account, get_user_by_telegram_id, increment_message_count, update_onboarding_step, supabase
 from app.services.embeddings import get_embedding
-from app.core.prompts import get_active_protocol_fragment, TWIN_ARCHITECT_PROMPT
-import os
+from app.core.prompts import get_active_protocol_fragment, TWIN_ARCHITECT_PROMPT, PROTOCOL_PILLARS
+from app.core.guardrails import validate_response
 
 router = APIRouter()
 
 import logging
 import httpx
-import requests
 import asyncio
-import subprocess
 import json
 import time
 from collections import defaultdict, deque
@@ -31,20 +29,6 @@ ONBOARDING_QUESTIONS = [
     "Got it. And what would feel like a win for you — like what's the one social thing you wish came easier?",
     "Last one — are you more of a one-on-one person or do you actually like groups when the vibe is right?"
 ]
-
-# Protocol Definitions loaded from Environment
-PROTOCOLS = {
-    "romance": os.getenv("ROMANCE_PROTOCOL", ""),
-    "confidence": os.getenv("CONFIDENCE_PROTOCOL", ""),
-    "masculine": ULTIMATES_TUTOR_PROTOCOL
-}
-
-# Trigger Keywords
-TRIGGERS = {
-    "romance": ["girl", "woman", "girlfriend", "boyfriend", "date", "dating", "crush", "flirt", "attractive", "relationship", "love", "sex", "intimacy"],
-    "confidence": ["shy", "scared", "afraid", "nervous", "anxious", "confidence", "brave", "fear", "speak up"],
-    "masculine": ["alpha", "beta", "man", "manhood", "masculine", "purpose", "discipline", "semen", "gym", "lifting", "financial", "hypergamy", "abundance"]
-}
 
 # Helper to send message
 async def send_telegram_message(chat_id: int, text: str):
@@ -115,7 +99,6 @@ async def process_telegram_update(update: dict):
         onboarding_pillar = ""
         if onboarding_step < 4:
             logger.info(f"User in organic onboarding stage (Step {onboarding_step})")
-            from app.core.prompts import PROTOCOL_PILLARS
             onboarding_pillar = PROTOCOL_PILLARS["onboarding"]
             
             # Record traits if found in the user's message
@@ -232,7 +215,6 @@ Memories: {context_str if context_str else "Clean slate."}
         response_text = await get_groq_response(messages)
         
         # --- LAYER 2: IN-CODE GUARDRAILS ---
-        from app.core.guardrails import validate_response
         validation = await validate_response(response_text, {"user_text": text, "allow_questions": allow_questions})
         
         if not validation.is_valid:
