@@ -3,7 +3,7 @@ from fastapi import APIRouter, Request, Header, HTTPException, BackgroundTasks
 from app.core.config import TELEGRAM_BOT_TOKEN, BOT_WEBHOOK_SECRET
 from app.services.groq import get_groq_response, extract_traits
 from app.services.pinecone import save_memory, get_recent_memories, pc, PINECONE_INDEX # accessing embedding logic directly or via service
-from app.services.supabase import link_telegram_account, get_user_by_telegram_id, increment_message_count, supabase
+from app.services.supabase import link_telegram_account, get_user_by_telegram_id, increment_message_count, update_onboarding_step, supabase
 from app.services.embeddings import get_embedding
 import os
 
@@ -22,6 +22,12 @@ logger = logging.getLogger(__name__)
 # In-memory sliding window for recent context (Privacy-safe, zero-latency)
 # Stores the last 6 message objects per user
 recent_context = defaultdict(lambda: deque(maxlen=6))
+
+ONBOARDING_QUESTIONS = [
+    "Hey! I'm Mee 👋 Quick one — what's the social situation you find most draining?",
+    "Got it. And what would feel like a win for you — like what's the one social thing you wish came easier?",
+    "Last one — are you more of a one-on-one person or do you actually like groups when the vibe is right?"
+]
 
 # Helper to send message
 async def send_telegram_message(chat_id: int, text: str):
@@ -61,9 +67,23 @@ async def process_telegram_update(update: dict):
             if len(parts) > 1:
                 token = parts[1]
                 success, msg = await link_telegram_account(token, telegram_user_id)
-                await send_telegram_message(chat_id, msg)
+                # If success, start onboarding immediately
                 if success:
-                     await send_telegram_message(chat_id, "You're all set. I'm Mee, your social co-pilot. What's on your mind?")
+                     await send_telegram_message(chat_id, ONBOARDING_QUESTIONS[0])
+                     # We need to set step to 1. But link_telegram_account is generic.
+                     # We'll rely on the user profile fetch in the next message, 
+                     # BUT wait, we need to set the step NOW for the NEXT message.
+                     # Since we don't have the user_id easily from link_token here without querying,
+                     # we'll let the user reply "Hi" or answer Q1.
+                     # Better: Update link_telegram_account to return user_id or do it here.
+                     # For now, simplistic: The user is linked. Their profile has default step 0.
+                     # Next time they reply, we check step 0 and send Q1 again? 
+                     # NO. We should set step=1 here.
+                     # Let's update profile immediately if we can.
+                     # Actually, link_telegram_account uses the token as ID.
+                     await update_onboarding_step(token, 1)
+                else:
+                     await send_telegram_message(chat_id, msg)
                 return
             else:
                 await send_telegram_message(chat_id, "Welcome! Link your account via the dashboard to get started.")
@@ -82,8 +102,42 @@ async def process_telegram_update(update: dict):
             await send_telegram_message(chat_id, "Wait, we haven't met properly. Link your account from the dashboard so I know who I'm talking to!")
             return
 
-        # 3. Memory Retrieval
+        # ONBOARDING FLOW
         user_id = user_profile.get("id")
+        onboarding_step = user_profile.get("onboarding_step", 0)
+
+        if onboarding_step < 4:
+            logger.info(f"User in onboarding step {onboarding_step}")
+            
+            # Step 0: User somehow missed /start linking flow or is legacy. Send Q1.
+            if onboarding_step == 0:
+                await send_telegram_message(chat_id, ONBOARDING_QUESTIONS[0])
+                await update_onboarding_step(user_id, 1)
+                return
+
+            # Step 1, 2, 3: User just answered Q1, Q2, or Q3.
+            # Extract trait from their answer immediately.
+            trait = await extract_traits(text)
+            if trait and vector:
+                trait_vector = await get_embedding(trait, input_type="passage")
+                if trait_vector:
+                    await save_memory(user_id, trait, "trait", trait_vector)
+                    logger.info(f"Onboarding trait saved: {trait}")
+
+            # Advance to next step
+            if onboarding_step == 1:
+                await send_telegram_message(chat_id, ONBOARDING_QUESTIONS[1])
+                await update_onboarding_step(user_id, 2)
+            elif onboarding_step == 2:
+                await send_telegram_message(chat_id, ONBOARDING_QUESTIONS[2])
+                await update_onboarding_step(user_id, 3)
+            elif onboarding_step == 3:
+                await send_telegram_message(chat_id, "Love it. I've got a feel for your style now. Let's get to it. What's on your mind today?")
+                await update_onboarding_step(user_id, 4)
+            
+            return
+
+        # 3. Memory Retrieval (Normal Flow)
         context_str = ""
         
         # Check interaction count first to avoid cold start on new users

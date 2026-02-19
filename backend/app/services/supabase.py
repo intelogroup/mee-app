@@ -63,3 +63,11 @@ async def increment_message_count(user_id: str):
     except Exception as e:
         # Non-critical, just log it
         print(f"Failed to increment message count: {e}")
+
+async def update_onboarding_step(user_id: str, step: int):
+    try:
+        await asyncio.to_thread(
+            supabase.table("profiles").update({"onboarding_step": step}).eq("id", user_id).execute
+        )
+    except Exception as e:
+        print(f"Failed to update onboarding step: {e}")
