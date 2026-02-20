@@ -24,7 +24,25 @@ async function getProfile(userId: string) {
     return data;
 }
 
-// ... existing traits fetch ...
+async function getTraits(userId: string): Promise<string[]> {
+    const botApiKey = process.env.BOT_BACKEND_API_KEY;
+    // Use the backend URL directly if possible, or fallback gracefully
+    const botApiUrl = process.env.BOT_BACKEND_API_URL || "https://mee-app-backend.onrender.com";
+
+    if (!botApiKey) return [];
+    try {
+        const res = await fetch(`${botApiUrl}/api/telegram/users/${userId}/traits`, {
+            headers: { Authorization: `Bearer ${botApiKey}` },
+            next: { revalidate: 60 },
+        });
+        if (!res.ok) return [];
+        const data = await res.json();
+        return data.traits ?? [];
+    } catch (error) {
+        console.error("Failed to fetch traits:", error);
+        return [];
+    }
+}
 
 export default async function DashboardPage() {
     const supabase = await createClient();
@@ -47,7 +65,7 @@ export default async function DashboardPage() {
     const isLinked = !!profile?.telegram_chat_id;
     const messageCount = profile?.message_count || 0;
     const onboardingStep = profile?.onboarding_step || 0;
-    const onboardingProgress = Math.min((onboarding_step / 4) * 100, 100);
+    const onboardingProgress = Math.min((onboardingStep / 4) * 100, 100);
 
     const memberSince = user.created_at
         ? new Date(user.created_at).toLocaleDateString("en-US", {
@@ -177,11 +195,11 @@ export default async function DashboardPage() {
                     {/* Right column */}
                     <div className="lg:col-span-2 flex flex-col gap-6">
                         {/* Onboarding Progress (if not finished) */}
-                        {isLinked && onboarding_step < 4 && (
+                        {isLinked && onboardingStep < 4 && (
                             <div className="glass-card p-6 rounded-3xl border border-accent/20 bg-accent/5 backdrop-blur-xl">
                                 <div className="flex justify-between items-center mb-3">
                                     <h2 className="text-sm font-bold text-white">Onboarding Progress</h2>
-                                    <span className="text-xs text-accent font-mono">{onboarding_step}/4 Questions</span>
+                                    <span className="text-xs text-accent font-mono">{onboardingStep}/4 Questions</span>
                                 </div>
                                 <div className="w-full bg-white/10 rounded-full h-1.5 overflow-hidden">
                                     <div 
