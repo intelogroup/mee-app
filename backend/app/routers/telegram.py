@@ -185,7 +185,7 @@ async def process_telegram_update(update: dict):
         # Inject Decay Instructions if needed
         decay_note = ""
         allow_questions = True
-        if consecutive_short >= 2:
+        if consecutive_short >= 3:
             active_protocol += f"\n{PROTOCOL_PILLARS['decay']}"
             allow_questions = False
             # Just acknowledge and stop chasing. 

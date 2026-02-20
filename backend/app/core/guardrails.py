@@ -29,7 +29,7 @@ class ValidationResult:
         self.cleaned_text = cleaned_text
         self.reason = reason
 
-def enforce_length(text: str, max_sentences: int = 5) -> str:
+def enforce_length(text: str, max_sentences: int = 12) -> str:
     # Use regex to split by sentence-ending punctuation followed by whitespace
     sentences = re.split(r'(?<=[.!?])\s+', text.strip())
     if len(sentences) > max_sentences:
