@@ -5,6 +5,7 @@ groq
 pinecone
 supabase
 python-dotenv
+httpx
 requests
 python-telegram-bot
 flake8

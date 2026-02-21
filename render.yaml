@@ -14,7 +14,7 @@ services:
         sync: false
       - key: PINECONE_INDEX
         sync: false
-      - key: OPENAI_API_KEY
+      - key: TAVILY_API_KEY
         sync: false
       - key: SUPABASE_URL
         sync: false
