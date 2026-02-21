@@ -2,6 +2,7 @@
 import asyncio
 import os
 import sys
+import pytest
 
 # Add backend to path
 sys.path.append(os.path.join(os.getcwd(), "backend"))
@@ -9,7 +10,8 @@ sys.path.append(os.path.join(os.getcwd(), "backend"))
 from app.services.groq import get_groq_response
 from app.core.prompts import TWIN_ARCHITECT_PROMPT, PROTOCOL_PILLARS, get_active_protocol_fragment
 
-async def simulate_organic_onboarding():
+@pytest.mark.asyncio
+async def test_simulate_organic_onboarding():
     print("--- Simulating Organic Onboarding Flow ---")
     
     user_text = "hello ima ask to help me with a woman i get a date tonight"

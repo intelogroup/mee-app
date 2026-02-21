@@ -2,11 +2,13 @@
 import asyncio
 import os
 import sys
+import pytest
 from unittest.mock import MagicMock, patch
 
 # Add backend to path
 sys.path.append(os.path.join(os.getcwd(), "backend"))
 
+@pytest.mark.asyncio
 async def test_decay_trigger_threshold():
     print("--- Testing Decay Trigger Threshold (3 Consecutive Short Messages) ---")
 

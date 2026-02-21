@@ -2,12 +2,14 @@
 import asyncio
 import os
 import sys
+import pytest
 
 # Add backend to path
 sys.path.append(os.path.join(os.getcwd(), "backend"))
 
 from app.core.guardrails import validate_response
 
+@pytest.mark.asyncio
 async def test_response_length_guardrails():
     print("--- Testing Response Length Guardrails ---")
 
@@ -40,6 +42,7 @@ async def test_response_length_guardrails():
     assert len(sentences3) == 10
     print("Step 3: PASS")
 
+@pytest.mark.asyncio
 async def test_keyword_logic():
     print("\n--- Testing Keyword Logic (max_sentences calculation) ---")
     
@@ -55,6 +58,7 @@ async def test_keyword_logic():
     print("Keyword Logic: PASS")
 
 
+@pytest.mark.asyncio
 async def test_groq_client_without_key(monkeypatch):
     """Ensure that the groq client path handles a missing API key gracefully.
 
