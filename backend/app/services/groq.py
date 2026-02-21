@@ -63,7 +63,7 @@ async def extract_traits(text: str, model="llama-3.3-70b-versatile"):
     3. IGNORE temporary stays: Do not extract vacations or short trips.
     4. For relationships: Output only "[Relationship Type]: [Person]".
     5. For goals: Output only "Goal: [Specific Action]".
-    6. NO descriptive adjectives or soft verbs (feels, likes, enjoys).
+    6. For preferences: convert "likes/enjoys/hates" into a static trait (e.g. "Enjoys hiking" -> "Hobby: Hiking" or "Is a hiker").
     7. If the fact is future-tense, temporary, or not concrete, return exactly "NULL".
 
     Return JSON only: {"trait": "...", "category": "location|personality|goal|relationship"}

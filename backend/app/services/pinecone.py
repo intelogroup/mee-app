@@ -14,11 +14,19 @@ def get_index():
     return pc.Index(PINECONE_INDEX)
 
 
-async def save_memory(user_id: str, text: str, role: str, vector: list[float]):
+async def save_memory(user_id: str, text: str, role: str, vector: list[float], extra_metadata: dict = None):
     try:
         index = get_index()
         memory_id = f"{int(time.time())}-{role}"
         
+        metadata = {
+            "text": text,
+            "role": role,
+            "created_at": int(time.time())
+        }
+        if extra_metadata:
+            metadata.update(extra_metadata)
+
         # index.upsert is synchronous, wrap in to_thread
         await asyncio.to_thread(
             index.upsert,
@@ -26,11 +34,7 @@ async def save_memory(user_id: str, text: str, role: str, vector: list[float]):
                 {
                     "id": memory_id,
                     "values": vector,
-                    "metadata": {
-                        "text": text,
-                        "role": role,
-                        "created_at": int(time.time())
-                    }
+                    "metadata": metadata
                 }
             ],
             namespace=str(user_id)

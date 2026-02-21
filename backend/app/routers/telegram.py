@@ -137,12 +137,14 @@ async def process_telegram_update(update: dict, background_tasks: BackgroundTask
             onboarding_pillar = PROTOCOL_PILLARS["onboarding"]
             
             # Record traits if found in the user's message
-            trait = await extract_traits(text)
-            if trait and vector:
-                trait_vector = await get_embedding(trait, input_type="passage")
+            trait_obj = await extract_traits(text)
+            if trait_obj and vector:
+                trait_text = trait_obj["trait"]
+                trait_category = trait_obj["category"]
+                trait_vector = await get_embedding(trait_text, input_type="passage")
                 if trait_vector:
-                    await save_memory(user_id, trait, "trait", trait_vector)
-                    logger.info(f"Onboarding trait captured organically: {trait}")
+                    await save_memory(user_id, trait_text, "trait", trait_vector, {"category": trait_category})
+                    logger.info(f"Onboarding trait captured organically: {trait_text} ({trait_category})")
             
             # Increment step until 4 (where we consider "onboarding" complete)
             await update_onboarding_step(user_id, onboarding_step + 1)
@@ -317,110 +319,107 @@ Memories: {context_str if context_str else "Clean slate."}
         recent_context[user_id].append({"role": "assistant", "content": response_text})
         
         # Increment message count first to check for trait extraction trigger
-        await increment_message_count(user_id)
-        
-        # TRAIT EXTRACTION LOGIC (Every 3rd message)
+        # TRAIT EXTRACTION LOGIC (Trigger on every message for maximum responsiveness)
         # We NO LONGER save raw messages to Pinecone. Only distilled traits.
-        if (message_count + 1) % 3 == 0:
-            logger.info("Triggering trait extraction (every 3rd message)...")
-            trait_obj = await extract_traits(text)
+        logger.info("Triggering trait extraction...")
+        trait_obj = await extract_traits(text)
+        
+        if trait_obj:
+            trait_text = trait_obj["trait"]
+            trait_category = trait_obj["category"]
+            logger.info(f"Extracted trait: {trait_text} (Category: {trait_category})")
             
-            if trait_obj:
-                trait_text = trait_obj["trait"]
-                trait_category = trait_obj["category"]
-                logger.info(f"Extracted trait: {trait_text} (Category: {trait_category})")
+            # RECONCILIATION: Search for similar existing traits in the SAME category
+            trait_vector = await get_embedding(trait_text, input_type="passage")
+            if trait_vector:
+                # 1. Search for top 3 similar traits in SAME category
+                index = pc.Index(PINECONE_INDEX)
+                search_res = await asyncio.to_thread(
+                    index.query,
+                    namespace=str(user_id),
+                    vector=trait_vector,
+                    top_k=3,
+                    filter={
+                        "role": {"$eq": "trait"},
+                        "category": {"$eq": trait_category}
+                    },
+                    include_metadata=True
+                )
                 
-                # RECONCILIATION: Search for similar existing traits in the SAME category
-                trait_vector = await get_embedding(trait_text, input_type="passage")
-                if trait_vector:
-                    # 1. Search for top 3 similar traits in SAME category
-                    index = pc.Index(PINECONE_INDEX)
-                    search_res = await asyncio.to_thread(
-                        index.query,
-                        namespace=str(user_id),
-                        vector=trait_vector,
-                        top_k=3,
-                        filter={
-                            "role": {"$eq": "trait"},
-                            "category": {"$eq": trait_category}
-                        },
-                        include_metadata=True
+                # 2. If similar traits exist, check for contradiction via Groq
+                is_duplicate = False
+                # Only consider matches with high similarity (> 0.88) for reconciliation
+                relevant_matches = [m for m in search_res.matches if m.score > 0.88]
+                
+                if relevant_matches:
+                    existing_traits = [m.metadata.get("text") for m in relevant_matches]
+                    logger.info(f"Checking for contradiction in {trait_category} against high-similarity traits: {existing_traits}")
+                    
+                    recon_prompt = f"""
+                    New fact: "{trait_text}"
+                    Existing facts: {existing_traits}
+                    
+                    1. If the new fact is ALREADY KNOWN (semantically the same), output "EXISTS".
+                    2. If the new fact CONTRADICTS an existing one, output the EXACT TEXT of the conflicting fact.
+                    3. Otherwise, output "NONE".
+                    
+                    Output exactly one word or the exact phrase.
+                    """
+                    
+                    conflict_text_raw = await get_groq_response([{"role": "system", "content": recon_prompt}])
+                    conflict_text = conflict_text_raw.strip()
+                    
+                    if conflict_text == "EXISTS":
+                        logger.info(f"Fact already exists (score > 0.88), skipping save: {trait_text}")
+                        is_duplicate = True
+                    elif conflict_text != "NONE":
+                        # Match the conflict text back to an ID
+                        for match in relevant_matches:
+                            if match.metadata.get("text") == conflict_text:
+                                # Store a PENDING CLARIFICATION vector
+                                clarification_id = f"pending-{int(time.time())}"
+                                await asyncio.to_thread(
+                                    index.upsert,
+                                    vectors=[{
+                                        "id": clarification_id,
+                                        "values": [0.1]*1024,
+                                        "metadata": {
+                                            "role": "pending_clarification",
+                                            "old_trait": conflict_text,
+                                            "new_trait": trait_text,
+                                            "created_at": int(time.time())
+                                        }
+                                    }],
+                                    namespace=str(user_id)
+                                )
+                                logger.info(f"Stored pending clarification for: {conflict_text} vs {trait_text}")
+
+                                # Delete the old conflicting trait
+                                await asyncio.to_thread(index.delete, ids=[match.id], namespace=str(user_id))
+                                logger.info(f"Deleted conflicting trait: {conflict_text}")
+                                break
+
+                # 3. Save new trait (Skip if duplicate)
+                if not is_duplicate:
+                    # We manually construct the upsert to include category
+                    memory_id = f"{int(time.time())}-trait"
+                    await asyncio.to_thread(
+                        index.upsert,
+                        vectors=[{
+                            "id": memory_id,
+                            "values": trait_vector,
+                            "metadata": {
+                                "text": trait_text,
+                                "role": "trait",
+                                "category": trait_category,
+                                "created_at": int(time.time())
+                            }
+                        }],
+                        namespace=str(user_id)
                     )
-                    
-                    # 2. If similar traits exist, check for contradiction via Groq
-                    is_duplicate = False
-                    # Only consider matches with high similarity (> 0.88) for reconciliation
-                    relevant_matches = [m for m in search_res.matches if m.score > 0.88]
-                    
-                    if relevant_matches:
-                        existing_traits = [m.metadata.get("text") for m in relevant_matches]
-                        logger.info(f"Checking for contradiction in {trait_category} against high-similarity traits: {existing_traits}")
-                        
-                        recon_prompt = f"""
-                        New fact: "{trait_text}"
-                        Existing facts: {existing_traits}
-                        
-                        1. If the new fact is ALREADY KNOWN (semantically the same), output "EXISTS".
-                        2. If the new fact CONTRADICTS an existing one, output the EXACT TEXT of the conflicting fact.
-                        3. Otherwise, output "NONE".
-                        
-                        Output exactly one word or the exact phrase.
-                        """
-                        
-                        conflict_text_raw = await get_groq_response([{"role": "system", "content": recon_prompt}])
-                        conflict_text = conflict_text_raw.strip()
-                        
-                        if conflict_text == "EXISTS":
-                            logger.info(f"Fact already exists (score > 0.88), skipping save: {trait_text}")
-                            is_duplicate = True
-                        elif conflict_text != "NONE":
-                            # Match the conflict text back to an ID
-                            for match in relevant_matches:
-                                if match.metadata.get("text") == conflict_text:
-                                    # Store a PENDING CLARIFICATION vector
-                                    clarification_id = f"pending-{int(time.time())}"
-                                    await asyncio.to_thread(
-                                        index.upsert,
-                                        vectors=[{
-                                            "id": clarification_id,
-                                            "values": [0.1]*1024,
-                                            "metadata": {
-                                                "role": "pending_clarification",
-                                                "old_trait": conflict_text,
-                                                "new_trait": trait_text,
-                                                "created_at": int(time.time())
-                                            }
-                                        }],
-                                        namespace=str(user_id)
-                                    )
-                                    logger.info(f"Stored pending clarification for: {conflict_text} vs {trait_text}")
-
-                                    # Delete the old conflicting trait
-                                    await asyncio.to_thread(index.delete, ids=[match.id], namespace=str(user_id))
-                                    logger.info(f"Deleted conflicting trait: {conflict_text}")
-                                    break
-
-                    # 3. Save new trait (Skip if duplicate)
-                    if not is_duplicate:
-                        # We manually construct the upsert to include category
-                        memory_id = f"{int(time.time())}-trait"
-                        await asyncio.to_thread(
-                            index.upsert,
-                            vectors=[{
-                                "id": memory_id,
-                                "values": trait_vector,
-                                "metadata": {
-                                    "text": trait_text,
-                                    "role": "trait",
-                                    "category": trait_category,
-                                    "created_at": int(time.time())
-                                }
-                            }],
-                            namespace=str(user_id)
-                        )
-                        logger.info(f"Saved distilled fact to Pinecone: {trait_text}")
-            else:
-                logger.info("No significant fact found.")
+                    logger.info(f"Saved distilled fact to Pinecone: {trait_text}")
+        else:
+            logger.info("No significant permanent fact found in this message.")
 
     except Exception as e:
         logger.error(f"Error processing update: {e}", exc_info=True)
