@@ -87,6 +87,14 @@ function LoginForm() {
                                 required
                                 autoComplete="current-password"
                             />
+                            <div className="flex justify-end mt-1">
+                                <Link
+                                    href="/forgot-password"
+                                    className="text-xs text-text-muted hover:text-white transition-colors"
+                                >
+                                    Forgot password?
+                                </Link>
+                            </div>
                         </div>
 
                         {error && (
