@@ -2,7 +2,7 @@
 fastapi
 uvicorn
 groq
-pinecone-client
+pinecone
 supabase
 python-dotenv
 httpx
