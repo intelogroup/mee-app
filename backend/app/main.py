@@ -1,7 +1,7 @@
 import logging
 import os
 from fastapi import FastAPI
-from app.routers import telegram
+from app.routers import telegram, dashboard
 from app.services.embeddings import get_embedding
 from dotenv import load_dotenv
 
@@ -21,6 +21,7 @@ logger = logging.getLogger(__name__)
 app = FastAPI(title="Mee App Bot Backend")
 
 app.include_router(telegram.router, prefix="/api/telegram", tags=["telegram"])
+app.include_router(dashboard.router, prefix="/api/dashboard", tags=["dashboard"])
 
 @app.on_event("startup")
 async def warmup():

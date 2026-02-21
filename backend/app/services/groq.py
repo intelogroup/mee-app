@@ -35,13 +35,19 @@ def _get_client() -> AsyncGroq:
         _client = AsyncGroq(api_key=GROQ_API_KEY)
     return _client
 
-async def get_groq_response(messages, model="llama-3.3-70b-versatile"):
+async def get_groq_response(messages, model="llama-3.3-70b-versatile", json_mode=False):
     try:
         client = _get_client()
-        chat_completion = await client.chat.completions.create(
-            messages=messages,
-            model=model,
-        )
+        
+        # Build kwargs dynamically to avoid passing None or extra keys
+        kwargs = {
+            "messages": messages,
+            "model": model,
+        }
+        if json_mode:
+            kwargs["response_format"] = {"type": "json_object"}
+            
+        chat_completion = await client.chat.completions.create(**kwargs)
         return chat_completion.choices[0].message.content
     except Exception as e:
         import traceback
@@ -49,7 +55,7 @@ async def get_groq_response(messages, model="llama-3.3-70b-versatile"):
         traceback.print_exc()
         return "Sorry, I'm having trouble thinking right now."
 
-async def extract_traits(text: str, model="llama-3.3-70b-versatile"):
+async def extract_traits(text: str, model="llama-3.1-8b-instant"):
     """
     Extracts a concrete, specific fact about the user.
     Returns a dict with 'trait' and 'category' or None if no fact found.

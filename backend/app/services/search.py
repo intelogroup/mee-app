@@ -17,7 +17,7 @@ async def search_web(query: str, search_depth: str = "basic") -> str:
     payload = {
         "api_key": TAVILY_API_KEY,
         "query": query,
-        "search_depth": search_depth,
+        "search_depth": "basic",
         "include_answer": False,
         "max_results": 3
     }

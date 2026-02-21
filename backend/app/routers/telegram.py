@@ -54,6 +54,61 @@ async def trigger_summaries(background_tasks: BackgroundTasks, x_cron_secret: st
     logger.info(f"[CRON] Triggered episodic summarizer for {triggered_count} users.")
     return {"status": "ok", "triggered": triggered_count}
 
+@router.post("/cron/process-pings")
+async def process_pings(background_tasks: BackgroundTasks, x_cron_secret: str = Header(None)):
+    """
+    Triggered by Supabase pg_cron (e.g., every 15 mins).
+    Checks for pending 'scheduled_messages' that are due and sends them.
+    """
+    # Simple secret check
+    EXPECTED_SECRET = "mee-cron-secret-123"
+    if x_cron_secret != EXPECTED_SECRET:
+        raise HTTPException(status_code=401, detail="Unauthorized Cron Access")
+
+    try:
+        from datetime import datetime, timezone
+        now = datetime.now(timezone.utc).isoformat()
+        
+        # Fetch pending pings due for delivery
+        # We need to join with profiles to get the telegram_chat_id
+        res = await asyncio.to_thread(
+            supabase.table("scheduled_messages")
+            .select("*, profiles(telegram_chat_id)")
+            .eq("status", "pending")
+            .lte("scheduled_at", now)
+            .execute
+        )
+        
+        pings = res.data
+        if not pings:
+            return {"status": "ok", "processed": 0}
+
+        processed_count = 0
+        for ping in pings:
+            chat_id = ping.get("profiles", {}).get("telegram_chat_id")
+            if chat_id:
+                # Send the ping
+                message_text = f"🎗️ Memory Ping: {ping['content']}"
+                await send_telegram_message(chat_id, message_text)
+                
+                # Mark as sent
+                await asyncio.to_thread(
+                     supabase.table("scheduled_messages").update({"status": "sent"}).eq("id", ping['id']).execute
+                )
+                processed_count += 1
+            else:
+                 # Mark failed (User has no linked telegram ID)
+                 await asyncio.to_thread(
+                     supabase.table("scheduled_messages").update({"status": "failed"}).eq("id", ping['id']).execute
+                )
+        
+        logger.info(f"[CRON] Processed {processed_count} memory pings.")
+        return {"status": "ok", "processed": processed_count}
+
+    except Exception as e:
+        logger.error(f"[CRON] Error processing pings: {e}")
+        return {"status": "error", "detail": str(e)}
+
 # In-memory sliding window for recent context (Privacy-safe, zero-latency)
 # Stores the last 6 message objects per user
 # Redeploy Trigger: Fix prompt imports
@@ -200,23 +255,52 @@ async def process_telegram_update(update: dict, background_tasks: BackgroundTask
         user_traits_list = user_profile.get("traits", [])
         user_traits = ", ".join(user_traits_list) if user_traits_list else "None yet."
         
-        # AGENTIC SEARCH DECISION
+        # AGENTIC SEARCH DECISION (GATED)
         web_context = ""
-        search_decision_prompt = f"""
-        User Message: "{text}"
-        Does this message require real-time web information (e.g., local events, current weather, specific locations, news)?
-        If YES, output only a short search query.
-        If NO, output exactly "NONE".
-        """
-        search_query = await get_groq_response([{"role": "system", "content": search_decision_prompt}])
-        search_query = search_query.strip().strip('"')
+        # Only run search decision if message is likely a question or specific query
+        should_check_search = "?" in text or len(text.split()) > 3
         
-        if search_query.upper() != "NONE":
-            logger.info(f"Mee decided to search the web for: {search_query}")
-            search_results = await search_web(search_query)
-            if search_results:
-                web_context = f"\n[LIVE WEB SEARCH RESULTS]\n{search_results}\n"
-                logger.info("Injected web context into response")
+        if should_check_search:
+            search_decision_prompt = f"""
+            User Message: "{text}"
+            Analyze if this requires EXTERNAL search.
+            
+            RULES:
+            1. Return {{"search": false, "query": null}} for:
+               - General knowledge & History (e.g., "Nobel 2001", "Capital of France").
+               - Coding, creative writing, or casual chat.
+               - Facts known pre-2023.
+               
+            2. Return {{"search": true, "query": "..."}} for:
+               - Real-time info (Weather, Stocks, Scores).
+               - Events from 2024-2026.
+               - Local events in a specific city.
+            
+            OUTPUT JSON ONLY. NO EXPLANATION.
+            """
+            response = await get_groq_response(
+                [{"role": "system", "content": search_decision_prompt}], 
+                model="llama-3.1-8b-instant",
+                json_mode=True
+            )
+            
+            try:
+                import json
+                # Clean response for potential markdown block
+                clean_res = response.strip().replace("```json", "").replace("```", "").strip()
+                res_data = json.loads(clean_res)
+                search_query = res_data.get("query") if res_data.get("search") else "NONE"
+            except Exception:
+                search_query = "NONE" # Fallback
+            
+            if search_query and search_query.upper() != "NONE":
+                logger.info(f"Mee decided to search the web for: {search_query}")
+                search_results = await search_web(search_query)
+                if search_results:
+                    web_context = f"\n[LIVE WEB SEARCH RESULTS]\n{search_results}\n"
+                    logger.info("Injected web context into response")
+        else:
+            logger.info("Skipping search decision (message too short or no question)")
 
         # --- DECAY DETECTION (Solution 1 & 2) ---
         user_history = [m["content"] for m in recent_context[user_id] if m["role"] == "user"]
@@ -366,7 +450,7 @@ Memories: {context_str if context_str else "Clean slate."}
                     Output exactly one word or the exact phrase.
                     """
                     
-                    conflict_text_raw = await get_groq_response([{"role": "system", "content": recon_prompt}])
+                    conflict_text_raw = await get_groq_response([{"role": "system", "content": recon_prompt}], model="llama-3.1-8b-instant")
                     conflict_text = conflict_text_raw.strip()
                     
                     if conflict_text == "EXISTS":
