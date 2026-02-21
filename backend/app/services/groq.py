@@ -15,6 +15,9 @@ message.
 
 from groq import AsyncGroq
 from app.core.config import GROQ_API_KEY
+import logging
+
+logger = logging.getLogger(__name__)
 
 # The client is created on demand so that importing this module doesn't
 # blow up when the environment isn't configured yet.  This happens in
@@ -100,22 +103,26 @@ async def extract_traits(text: str, model="llama-3.1-8b-instant"):
 async def transcribe_audio(audio_bytes: bytes, filename: str = "voice.oga"):
     """
     Transcribes audio bytes using Groq Whisper.
+    Uses whisper-large-v3 for multilingual support.
     Returns the transcribed text or None if failed.
     """
     try:
         client = _get_client()
-        # Groq expects a file-like object with a name
-        # We use a binary stream
-        import io
-        audio_file = io.BytesIO(audio_bytes)
-        audio_file.name = filename
+        logger.info(f"Sending {len(audio_bytes)} bytes to Groq Whisper for transcription...")
         
+        # Using a tuple (filename, bytes) is often more robust for the Groq/OpenAI client
+        # than a BytesIO object in some async contexts.
         transcription = await client.audio.transcriptions.create(
-            file=audio_file,
-            model="distil-whisper-large-v3-en",
+            file=(filename, audio_bytes),
+            model="whisper-large-v3", # Use the powerful multilingual model
             response_format="json",
         )
+        
+        if not transcription or not transcription.text:
+            logger.warning("Groq Whisper returned an empty transcription.")
+            return None
+            
         return transcription.text
     except Exception as e:
-        print(f"Error transcribing audio: {e}")
+        logger.error(f"Error transcribing audio via Groq: {e}", exc_info=True)
         return None
