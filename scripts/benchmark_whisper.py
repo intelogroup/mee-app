@@ -17,7 +17,7 @@ if not API_KEY:
 
 client = AsyncGroq(api_key=API_KEY)
 
-async def benchmark_model(model_name, iterations=5):
+async def benchmark_model(model_name, iterations=3):
     print(f"\n--- Benchmarking: {model_name} ---")
     latencies = []
     
@@ -59,11 +59,11 @@ async def benchmark_model(model_name, iterations=5):
 async def run_benchmarks():
     print(f"Using Audio File: {AUDIO_FILE}")
     
-    # 1. Distil Whisper (Current)
-    await benchmark_model("distil-whisper-large-v3-en")
-    
-    # 2. Whisper Large V3 Turbo (New Candidate)
+    # 1. Whisper Large V3 Turbo (Re-test)
     await benchmark_model("whisper-large-v3-turbo")
+    
+    # 2. Whisper Large V3 (Standard)
+    await benchmark_model("whisper-large-v3")
 
 if __name__ == "__main__":
     asyncio.run(run_benchmarks())

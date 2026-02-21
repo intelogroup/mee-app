@@ -113,8 +113,8 @@ async def transcribe_audio(audio_bytes: bytes, filename: str = "voice.oga"):
         # Using a tuple (filename, bytes) is often more robust for the Groq/OpenAI client
         # than a BytesIO object in some async contexts.
         transcription = await client.audio.transcriptions.create(
-            file=(filename, audio_bytes),
-            model="whisper-large-v3", # Use the powerful multilingual model
+            file=(filename, audio_bytes), # Using the passed audio_bytes directly
+            model="whisper-large-v3-turbo",
             response_format="json",
         )
         
