@@ -71,6 +71,9 @@ async def test_groq_client_without_key(monkeypatch):
 
     import app.services.groq as groq_mod
 
+    # Reset the cached client to force re-initialization
+    groq_mod._client = None
+    
     # simulate a missing environment variable by clearing the value used
     # by our config module; the library caches it at import time so we need
     # to update the attribute directly.
