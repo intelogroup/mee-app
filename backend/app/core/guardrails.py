@@ -65,6 +65,7 @@ async def validate_response(response: str, context: Dict = None) -> ValidationRe
     """
     context = context or {}
     allow_questions = context.get("allow_questions", True)
+    max_sentences = context.get("max_sentences", 12)
     
     # 1. Strip banned phrases
     has_banned = any(phrase in response.lower() for phrase in BANNED_PHRASES)
@@ -72,7 +73,7 @@ async def validate_response(response: str, context: Dict = None) -> ValidationRe
     cleaned = strip_banned_phrases(response)
     
     # 2. Enforce length
-    cleaned = enforce_length(cleaned)
+    cleaned = enforce_length(cleaned, max_sentences=max_sentences)
     
     # 3. Enforce question limit
     cleaned = enforce_question_limit(cleaned, allow_questions=allow_questions)

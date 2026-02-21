@@ -235,19 +235,28 @@ Memories: {context_str if context_str else "Clean slate."}
         response_text = await get_groq_response(messages)
         
         # --- LAYER 2: IN-CODE GUARDRAILS ---
-        validation = await validate_response(response_text, {"user_text": text, "allow_questions": allow_questions})
+        is_long_needed = any(word in text.lower() for word in ["plan", "explain", "detail", "strategy", "how", "why"])
+        max_sentences = 10 if is_long_needed else 1
+        
+        validation = await validate_response(response_text, {
+            "user_text": text, 
+            "allow_questions": allow_questions,
+            "max_sentences": max_sentences
+        })
         
         if not validation.is_valid:
             logger.warning(f"Guardrail Flag: {validation.reason}. Original: {response_text[:50]}...")
             if validation.reason == "Banned phrases detected.":
                 # Automated Retry with stricter meta-prompt
                 messages.append({"role": "assistant", "content": response_text})
-                messages.append({"role": "system", "content": "CRITICAL: You just used a banned phrase or corporate AI tone. STOP. Be gritty. Be 1 sentence. Use only 'We'."})
+                messages.append({"role": "system", "content": f"CRITICAL: You just used a banned phrase or corporate AI tone. STOP. Be gritty. Be {max_sentences} sentence(s). Use only 'We'."})
                 response_text = await get_groq_response(messages)
-                validation = await validate_response(response_text)
+                validation = await validate_response(response_text, {"max_sentences": max_sentences})
                 response_text = validation.cleaned_text
             else:
                 response_text = validation.cleaned_text
+        else:
+            response_text = validation.cleaned_text
 
         logger.info(f"Final Response Sent: {response_text[:50]}...")
 
