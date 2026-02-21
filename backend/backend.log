@@ -3663,3 +3663,36 @@ INFO:     Waiting for application startup.
 2026-02-21 18:18:32,957 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
 2026-02-21 18:18:33,389 - app.main - INFO - Embedding model warmed up
 INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/telegram.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [64908]
+INFO:     Started server process [66026]
+INFO:     Waiting for application startup.
+2026-02-21 18:25:10,800 - app.main - INFO - Warming up embedding model...
+2026-02-21 18:25:10,800 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-21 18:25:11,435 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/telegram.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [66026]
+INFO:     Started server process [66141]
+INFO:     Waiting for application startup.
+2026-02-21 18:29:53,371 - app.main - INFO - Warming up embedding model...
+2026-02-21 18:29:53,372 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-21 18:29:53,826 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/telegram.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [66141]
+INFO:     Started server process [66205]
+INFO:     Waiting for application startup.
+2026-02-21 18:33:14,038 - app.main - INFO - Warming up embedding model...
+2026-02-21 18:33:14,038 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-21 18:33:14,669 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.

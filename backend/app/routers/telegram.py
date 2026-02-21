@@ -155,37 +155,7 @@ async def download_telegram_file(file_id: str) -> bytes:
     try:
         # 1. Get file path from Telegram
         get_file_url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/getFile"
-        async with httpx.AsyncClient(timeout=10.0) as client:
-            resp = await client.get(get_file_url, params={"file_id": file_id})
-            resp.raise_for_status()
-            file_data = resp.json()
-            
-            if not file_data.get("ok"):
-                logger.error(f"Telegram getFile failed: {file_data}")
-                return None
-                
-            file_path = file_data["result"]["file_path"]
-            
-            # 2. Download the actual file
-            download_url = f"https://api.telegram.org/file/bot{TELEGRAM_BOT_TOKEN}/{file_path}"
-            download_resp = await client.get(download_url)
-            download_resp.raise_for_status()
-            return download_resp.content
-            
-    except Exception as e:
-        logger.error(f"Error downloading Telegram file: {e}")
-        return None
-
-import io
-
-async def download_telegram_file(file_id: str) -> bytes:
-    """
-    Downloads a file from Telegram using its file_id.
-    """
-    try:
-        # 1. Get file path from Telegram
-        get_file_url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/getFile"
-        async with httpx.AsyncClient(timeout=10.0) as client:
+        async with httpx.AsyncClient(timeout=15.0) as client:
             resp = await client.get(get_file_url, params={"file_id": file_id})
             resp.raise_for_status()
             file_data = resp.json()
@@ -226,23 +196,30 @@ async def process_telegram_update(update: dict, background_tasks: BackgroundTask
 
         # HANDLE VOICE NOTES
         if voice:
-            logger.info(f"Received voice note from {username} (file_id: {voice['file_id']})")
-            # Step A: Download
-            audio_bytes = await download_telegram_file(voice["file_id"])
-            if not audio_bytes:
-                await send_telegram_message(chat_id, "Sorry, I couldn't download your voice note.")
-                return
-            
-            # Step B: Transcribe
-            from app.services.groq import transcribe_audio
-            text = await transcribe_audio(audio_bytes)
-            
-            if not text:
-                await send_telegram_message(chat_id, "Sorry, I couldn't understand that audio.")
-                return
+            try:
+                logger.info(f"Received voice note from {username} (file_id: {voice['file_id']})")
+                # Notify user we are listening
+                await send_chat_action(chat_id, "upload_voice")
                 
-            logger.info(f"Transcribed voice note: {text}")
-            # We now treat 'text' as if it was typed, so the rest of the flow continues normally
+                # Step A: Download
+                audio_bytes = await download_telegram_file(voice["file_id"])
+                if not audio_bytes:
+                    await send_telegram_message(chat_id, "Sorry, I couldn't download your voice note.")
+                    return
+                
+                # Step B: Transcribe (Use .ogg extension which is more universally recognized by Groq/Whisper)
+                text = await transcribe_audio(audio_bytes, filename="voice.ogg")
+                
+                if not text:
+                    await send_telegram_message(chat_id, "Sorry, I couldn't understand that audio.")
+                    return
+                    
+                logger.info(f"Transcribed voice note: {text}")
+                # We now treat 'text' as if it was typed, so the rest of the flow continues normally
+            except Exception as e:
+                logger.error(f"Error processing voice note: {e}", exc_info=True)
+                await send_telegram_message(chat_id, "Something went wrong while listening to your voice note. Please try again.")
+                return
 
         logger.info(f"Processing update for chat_id {chat_id}, text: {text}")
 
