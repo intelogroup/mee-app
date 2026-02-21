@@ -2,6 +2,7 @@
 import asyncio
 import os
 import sys
+import pytest
 
 # Add backend to path
 sys.path.append(os.path.join(os.getcwd(), "backend"))
@@ -9,6 +10,7 @@ sys.path.append(os.path.join(os.getcwd(), "backend"))
 from app.core.prompts import get_active_protocol_fragment, PROTOCOL_PILLARS
 from app.core.guardrails import validate_response
 
+@pytest.mark.asyncio
 async def test_decay_logic():
     print("--- Testing Conversational Decay Logic ---")
 

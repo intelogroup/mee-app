@@ -855,3 +855,6 @@ For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/St
 2026-02-21 12:11:57,592 - app.main - INFO - Warming up embedding model...
 2026-02-21 12:11:57,592 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
 2026-02-21 12:11:58,029 - app.main - INFO - Embedding model warmed up
+2026-02-21 12:19:42,590 - app.main - INFO - Warming up embedding model...
+2026-02-21 12:19:42,591 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-21 12:19:43,098 - app.main - INFO - Embedding model warmed up
