@@ -215,6 +215,10 @@ async def process_telegram_update(update: dict, background_tasks: BackgroundTask
                     return
                     
                 logger.info(f"Transcribed voice note: {text}")
+                
+                # Immediate feedback: Show the user what we transcribed
+                await send_telegram_message(chat_id, f"🎤 *Heard:* _{text}_")
+                
                 # We now treat 'text' as if it was typed, so the rest of the flow continues normally
             except Exception as e:
                 logger.error(f"Error processing voice note: {e}", exc_info=True)
