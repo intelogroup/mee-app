@@ -2,6 +2,7 @@
 from fastapi import APIRouter, Request, Header, HTTPException, BackgroundTasks
 from app.core.config import TELEGRAM_BOT_TOKEN, BOT_WEBHOOK_SECRET
 from app.services.groq import get_groq_response, extract_traits
+from app.services.search import search_web
 from app.services.pinecone import save_memory, get_recent_memories, pc, PINECONE_INDEX # accessing embedding logic directly or via service
 from app.services.supabase import link_telegram_account, get_user_by_telegram_id, increment_message_count, update_onboarding_step, supabase
 from app.services.embeddings import get_embedding
@@ -163,6 +164,24 @@ async def process_telegram_update(update: dict):
         user_traits_list = user_profile.get("traits", [])
         user_traits = ", ".join(user_traits_list) if user_traits_list else "None yet."
         
+        # AGENTIC SEARCH DECISION
+        web_context = ""
+        search_decision_prompt = f"""
+        User Message: "{text}"
+        Does this message require real-time web information (e.g., local events, current weather, specific locations, news)?
+        If YES, output only a short search query.
+        If NO, output exactly "NONE".
+        """
+        search_query = await get_groq_response([{"role": "system", "content": search_decision_prompt}])
+        search_query = search_query.strip().strip('"')
+        
+        if search_query.upper() != "NONE":
+            logger.info(f"Mee decided to search the web for: {search_query}")
+            search_results = await search_web(search_query)
+            if search_results:
+                web_context = f"\n[LIVE WEB SEARCH RESULTS]\n{search_results}\n"
+                logger.info("Injected web context into response")
+
         # --- DECAY DETECTION (Solution 1 & 2) ---
         user_history = [m["content"] for m in recent_context[user_id] if m["role"] == "user"]
         # Check current message + last user message in window
@@ -202,6 +221,7 @@ async def process_telegram_update(update: dict):
 [CONTEXT]
 User Traits: {user_traits}
 Memories: {context_str if context_str else "Clean slate."}
+{web_context}
 {clarification_prompt}
 {decay_note}
 """
