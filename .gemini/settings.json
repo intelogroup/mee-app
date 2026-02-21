@@ -7,6 +7,10 @@
         "-y,tavily-mcp@0.1.3"
       ],
       "env": {}
+    },
+    "supabase": {
+      "url": "https://mcp.supabase.com/mcp?project_ref=htiundwxiwwdkieevylu&features=docs%2Caccount%2Cdatabase%2Cdebugging%2Cdevelopment%2Cfunctions%2Cstorage",
+      "type": "http"
     }
   }
 }

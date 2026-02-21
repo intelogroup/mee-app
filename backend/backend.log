@@ -3465,3 +3465,157 @@ INFO:     Waiting for application startup.
 2026-02-21 13:31:29,850 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
 2026-02-21 13:31:30,499 - app.main - INFO - Embedding model warmed up
 INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/telegram.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [49921]
+INFO:     Started server process [59391]
+INFO:     Waiting for application startup.
+2026-02-21 16:28:33,654 - app.main - INFO - Warming up embedding model...
+2026-02-21 16:28:33,654 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-21 16:28:34,271 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/services/search.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [59391]
+INFO:     Started server process [59473]
+INFO:     Waiting for application startup.
+2026-02-21 16:33:43,000 - app.main - INFO - Warming up embedding model...
+2026-02-21 16:33:43,001 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-21 16:33:43,497 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/telegram.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [59473]
+INFO:     Started server process [59487]
+INFO:     Waiting for application startup.
+2026-02-21 16:34:36,208 - app.main - INFO - Warming up embedding model...
+2026-02-21 16:34:36,208 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-21 16:34:36,747 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/telegram.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [59487]
+INFO:     Started server process [59532]
+INFO:     Waiting for application startup.
+2026-02-21 16:37:56,499 - app.main - INFO - Warming up embedding model...
+2026-02-21 16:37:56,499 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-21 16:37:57,052 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/telegram.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [59532]
+INFO:     Started server process [59561]
+INFO:     Waiting for application startup.
+2026-02-21 16:39:35,257 - app.main - INFO - Warming up embedding model...
+2026-02-21 16:39:35,257 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-21 16:39:35,748 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/services/groq.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [59561]
+INFO:     Started server process [59589]
+INFO:     Waiting for application startup.
+2026-02-21 16:40:48,715 - app.main - INFO - Warming up embedding model...
+2026-02-21 16:40:48,715 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-21 16:40:49,191 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/telegram.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [59589]
+INFO:     Started server process [59597]
+INFO:     Waiting for application startup.
+2026-02-21 16:41:09,159 - app.main - INFO - Warming up embedding model...
+2026-02-21 16:41:09,159 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-21 16:41:09,484 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/services/memory.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [59597]
+INFO:     Started server process [62193]
+INFO:     Waiting for application startup.
+2026-02-21 16:53:15,930 - app.main - INFO - Warming up embedding model...
+2026-02-21 16:53:15,931 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-21 16:53:16,380 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [62193]
+INFO:     Started server process [62207]
+INFO:     Waiting for application startup.
+2026-02-21 16:53:41,913 - app.main - INFO - Warming up embedding model...
+2026-02-21 16:53:41,913 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-21 16:53:42,405 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/telegram.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [62207]
+INFO:     Started server process [62251]
+INFO:     Waiting for application startup.
+2026-02-21 16:56:09,144 - app.main - INFO - Warming up embedding model...
+2026-02-21 16:56:09,144 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-21 16:56:09,599 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/services/memory.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [62251]
+INFO:     Started server process [62315]
+INFO:     Waiting for application startup.
+2026-02-21 16:59:08,184 - app.main - INFO - Warming up embedding model...
+2026-02-21 16:59:08,184 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-21 16:59:08,695 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/telegram.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [62315]
+INFO:     Started server process [63141]
+INFO:     Waiting for application startup.
+2026-02-21 17:11:48,307 - app.main - INFO - Warming up embedding model...
+2026-02-21 17:11:48,307 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-21 17:11:48,988 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/services/groq.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [63141]
+INFO:     Started server process [63287]
+INFO:     Waiting for application startup.
+2026-02-21 17:20:16,973 - app.main - INFO - Warming up embedding model...
+2026-02-21 17:20:16,974 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-21 17:20:17,527 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/telegram.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [63287]
+INFO:     Started server process [63303]
+INFO:     Waiting for application startup.
+2026-02-21 17:20:28,706 - app.main - INFO - Warming up embedding model...
+2026-02-21 17:20:28,706 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-21 17:20:29,164 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.

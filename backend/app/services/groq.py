@@ -96,3 +96,26 @@ async def extract_traits(text: str, model="llama-3.1-8b-instant"):
     except Exception as e:
         print(f"Error extracting traits: {e}")
         return None
+
+async def transcribe_audio(audio_bytes: bytes, filename: str = "voice.oga"):
+    """
+    Transcribes audio bytes using Groq Whisper.
+    Returns the transcribed text or None if failed.
+    """
+    try:
+        client = _get_client()
+        # Groq expects a file-like object with a name
+        # We use a binary stream
+        import io
+        audio_file = io.BytesIO(audio_bytes)
+        audio_file.name = filename
+        
+        transcription = await client.audio.transcriptions.create(
+            file=audio_file,
+            model="distil-whisper-large-v3-en",
+            response_format="json",
+        )
+        return transcription.text
+    except Exception as e:
+        print(f"Error transcribing audio: {e}")
+        return None

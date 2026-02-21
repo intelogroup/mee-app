@@ -135,6 +135,47 @@ async def send_telegram_message(chat_id: int, text: str):
     except Exception as e:
         logger.error(f"Failed to send message to {chat_id}: {e}")
 
+async def send_chat_action(chat_id: int, action: str = "typing"):
+    """
+    Sends a chat action (typing, upload_photo, etc.) to Telegram.
+    This tells the user the bot is 'thinking'.
+    """
+    url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendChatAction"
+    payload = {"chat_id": chat_id, "action": action}
+    try:
+        async with httpx.AsyncClient(timeout=5.0) as client:
+            await client.post(url, json=payload)
+    except Exception as e:
+        logger.warning(f"Failed to send chat action: {e}")
+
+async def download_telegram_file(file_id: str) -> bytes:
+    """
+    Downloads a file from Telegram using its file_id.
+    """
+    try:
+        # 1. Get file path from Telegram
+        get_file_url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/getFile"
+        async with httpx.AsyncClient(timeout=10.0) as client:
+            resp = await client.get(get_file_url, params={"file_id": file_id})
+            resp.raise_for_status()
+            file_data = resp.json()
+            
+            if not file_data.get("ok"):
+                logger.error(f"Telegram getFile failed: {file_data}")
+                return None
+                
+            file_path = file_data["result"]["file_path"]
+            
+            # 2. Download the actual file
+            download_url = f"https://api.telegram.org/file/bot{TELEGRAM_BOT_TOKEN}/{file_path}"
+            download_resp = await client.get(download_url)
+            download_resp.raise_for_status()
+            return download_resp.content
+            
+    except Exception as e:
+        logger.error(f"Error downloading Telegram file: {e}")
+        return None
+
 async def process_telegram_update(update: dict, background_tasks: BackgroundTasks = None):
     try:
         message = update.get("message")
@@ -143,11 +184,35 @@ async def process_telegram_update(update: dict, background_tasks: BackgroundTask
 
         chat_id = message.get("chat", {}).get("id")
         text = message.get("text")
+        voice = message.get("voice")
         username = message.get("from", {}).get("username", "User")
         telegram_user_id = str(message.get("from", {}).get("id"))
 
-        if not text:
+        if not text and not voice:
             return
+
+        # UX: Show typing immediately
+        await send_chat_action(chat_id, "typing")
+
+        # HANDLE VOICE NOTES
+        if voice:
+            logger.info(f"Received voice note from {username} (file_id: {voice['file_id']})")
+            # Step A: Download
+            audio_bytes = await download_telegram_file(voice["file_id"])
+            if not audio_bytes:
+                await send_telegram_message(chat_id, "Sorry, I couldn't download your voice note.")
+                return
+            
+            # Step B: Transcribe
+            from app.services.groq import transcribe_audio
+            text = await transcribe_audio(audio_bytes)
+            
+            if not text:
+                await send_telegram_message(chat_id, "Sorry, I couldn't understand that audio.")
+                return
+                
+            logger.info(f"Transcribed voice note: {text}")
+            # We now treat 'text' as if it was typed, so the rest of the flow continues normally
 
         logger.info(f"Processing update for chat_id {chat_id}, text: {text}")
 
