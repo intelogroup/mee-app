@@ -54,6 +54,31 @@ async def test_keyword_logic():
     assert get_max_sentences("Just a normal chat") == 1
     print("Keyword Logic: PASS")
 
+
+async def test_groq_client_without_key(monkeypatch):
+    """Ensure that the groq client path handles a missing API key gracefully.
+
+    Previously the module would attempt to instantiate ``AsyncGroq`` during
+    import, causing the entire application to crash if the environment
+    variable was unset.  With the new lazy initialization we expect the
+    import to succeed and the helper functions to return a harmless error
+    string rather than blowing up.
+    """
+
+    import app.services.groq as groq_mod
+
+    # simulate a missing environment variable by clearing the value used
+    # by our config module; the library caches it at import time so we need
+    # to update the attribute directly.
+    monkeypatch.setattr(groq_mod, "GROQ_API_KEY", "")
+
+    result = await groq_mod.get_groq_response([{"role": "system", "content": "hi"}])
+    # the helper returns the generic failure message on error
+    assert "trouble" in result.lower() or "sorry" in result.lower()
+    print("Groq missing key handling: PASS")
+
 if __name__ == "__main__":
     asyncio.run(test_response_length_guardrails())
     asyncio.run(test_keyword_logic())
+    # run groq client behaviour test last since it may print error logs
+    asyncio.run(test_groq_client_without_key(__import__('pytest').MonkeyPatch()))

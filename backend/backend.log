@@ -610,3 +610,2693 @@ INFO:     Waiting for application startup.
 2026-02-18 21:14:33,869 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
 2026-02-18 21:14:34,285 - app.main - INFO - Embedding model warmed up
 INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/telegram.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [38401]
+INFO:     Started server process [64218]
+INFO:     Waiting for application startup.
+2026-02-19 09:36:27,032 - app.main - INFO - Warming up embedding model...
+2026-02-19 09:36:27,032 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-19 09:36:27,416 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/prompts.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [64218]
+INFO:     Started server process [68544]
+INFO:     Waiting for application startup.
+2026-02-19 10:45:37,843 - app.main - INFO - Warming up embedding model...
+2026-02-19 10:45:37,843 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-19 10:45:38,264 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/prompts.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [68544]
+INFO:     Started server process [68866]
+INFO:     Waiting for application startup.
+2026-02-19 10:47:20,717 - app.main - INFO - Warming up embedding model...
+2026-02-19 10:47:20,717 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-19 10:47:20,981 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/prompts.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [68866]
+INFO:     Started server process [70065]
+INFO:     Waiting for application startup.
+2026-02-19 10:51:05,380 - app.main - INFO - Warming up embedding model...
+2026-02-19 10:51:05,380 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-19 10:51:05,672 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/prompts.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [70065]
+Process SpawnProcess-34:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 204, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 79, in serve
+    await self._serve(sockets)
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 86, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/config.py", line 441, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1398, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1342, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 938, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 759, in exec_module
+  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/main.py", line 4, in <module>
+    from app.routers import telegram
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/routers/telegram.py", line 8, in <module>
+    from app.core.prompts import PERSONAL_DEVELOPMENT_PROTOCOL_25, TWIN_ARCHITECT_PROMPT
+ImportError: cannot import name 'PERSONAL_DEVELOPMENT_PROTOCOL_25' from 'app.core.prompts' (/Users/kalinovdameus/Developer/mee-app/backend/app/core/prompts.py)
+WARNING:  StatReload detected changes in 'app/core/prompts.py'. Reloading...
+Process SpawnProcess-35:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 204, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 79, in serve
+    await self._serve(sockets)
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 86, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/config.py", line 441, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1398, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1342, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 938, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 759, in exec_module
+  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/main.py", line 4, in <module>
+    from app.routers import telegram
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/routers/telegram.py", line 8, in <module>
+    from app.core.prompts import PERSONAL_DEVELOPMENT_PROTOCOL_25, TWIN_ARCHITECT_PROMPT
+ImportError: cannot import name 'PERSONAL_DEVELOPMENT_PROTOCOL_25' from 'app.core.prompts' (/Users/kalinovdameus/Developer/mee-app/backend/app/core/prompts.py)
+WARNING:  StatReload detected changes in 'app/routers/telegram.py'. Reloading...
+Process SpawnProcess-36:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 204, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 79, in serve
+    await self._serve(sockets)
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 86, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/config.py", line 441, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1398, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1342, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 938, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 759, in exec_module
+  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/main.py", line 4, in <module>
+    from app.routers import telegram
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/routers/telegram.py", line 8, in <module>
+    from app.core.prompts import PERSONAL_DEVELOPMENT_PROTOCOL_25, TWIN_ARCHITECT_PROMPT
+ImportError: cannot import name 'PERSONAL_DEVELOPMENT_PROTOCOL_25' from 'app.core.prompts' (/Users/kalinovdameus/Developer/mee-app/backend/app/core/prompts.py)
+WARNING:  StatReload detected changes in 'app/core/prompts.py'. Reloading...
+Process SpawnProcess-37:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 204, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 79, in serve
+    await self._serve(sockets)
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 86, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/config.py", line 441, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1398, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1342, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 938, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 759, in exec_module
+  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/main.py", line 4, in <module>
+    from app.routers import telegram
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/routers/telegram.py", line 8, in <module>
+    from app.core.prompts import PERSONAL_DEVELOPMENT_PROTOCOL_25, TWIN_ARCHITECT_PROMPT
+ImportError: cannot import name 'PERSONAL_DEVELOPMENT_PROTOCOL_25' from 'app.core.prompts' (/Users/kalinovdameus/Developer/mee-app/backend/app/core/prompts.py)
+WARNING:  StatReload detected changes in 'app/core/prompts.py'. Reloading...
+Process SpawnProcess-38:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 204, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 79, in serve
+    await self._serve(sockets)
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 86, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/config.py", line 441, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1398, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1342, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 938, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 759, in exec_module
+  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/main.py", line 4, in <module>
+    from app.routers import telegram
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/routers/telegram.py", line 8, in <module>
+    from app.core.prompts import PERSONAL_DEVELOPMENT_PROTOCOL_25, TWIN_ARCHITECT_PROMPT
+ImportError: cannot import name 'PERSONAL_DEVELOPMENT_PROTOCOL_25' from 'app.core.prompts' (/Users/kalinovdameus/Developer/mee-app/backend/app/core/prompts.py)
+WARNING:  StatReload detected changes in 'app/routers/telegram.py'. Reloading...
+Process SpawnProcess-39:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 204, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 79, in serve
+    await self._serve(sockets)
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 86, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/config.py", line 441, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1398, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1342, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 938, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 759, in exec_module
+  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/main.py", line 4, in <module>
+    from app.routers import telegram
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/routers/telegram.py", line 8, in <module>
+    from app.core.prompts import PERSONAL_DEVELOPMENT_PROTOCOL_25, TWIN_ARCHITECT_PROMPT
+ImportError: cannot import name 'PERSONAL_DEVELOPMENT_PROTOCOL_25' from 'app.core.prompts' (/Users/kalinovdameus/Developer/mee-app/backend/app/core/prompts.py)
+WARNING:  StatReload detected changes in 'app/core/prompts.py'. Reloading...
+Process SpawnProcess-40:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 204, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 79, in serve
+    await self._serve(sockets)
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 86, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/config.py", line 441, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1398, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1342, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 938, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 759, in exec_module
+  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/main.py", line 4, in <module>
+    from app.routers import telegram
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/routers/telegram.py", line 8, in <module>
+    from app.core.prompts import PERSONAL_DEVELOPMENT_PROTOCOL_25, TWIN_ARCHITECT_PROMPT
+ImportError: cannot import name 'PERSONAL_DEVELOPMENT_PROTOCOL_25' from 'app.core.prompts' (/Users/kalinovdameus/Developer/mee-app/backend/app/core/prompts.py)
+WARNING:  StatReload detected changes in 'app/core/prompts.py'. Reloading...
+Process SpawnProcess-41:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 204, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 79, in serve
+    await self._serve(sockets)
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 86, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/config.py", line 441, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1398, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1342, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 938, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 759, in exec_module
+  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/main.py", line 4, in <module>
+    from app.routers import telegram
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/routers/telegram.py", line 8, in <module>
+    from app.core.prompts import PERSONAL_DEVELOPMENT_PROTOCOL_25, TWIN_ARCHITECT_PROMPT
+ImportError: cannot import name 'PERSONAL_DEVELOPMENT_PROTOCOL_25' from 'app.core.prompts' (/Users/kalinovdameus/Developer/mee-app/backend/app/core/prompts.py)
+WARNING:  StatReload detected changes in 'app/core/prompts.py'. Reloading...
+Process SpawnProcess-42:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 204, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 79, in serve
+    await self._serve(sockets)
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 86, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/config.py", line 441, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1398, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1342, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 938, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 759, in exec_module
+  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/main.py", line 4, in <module>
+    from app.routers import telegram
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/routers/telegram.py", line 8, in <module>
+    from app.core.prompts import PERSONAL_DEVELOPMENT_PROTOCOL_25, TWIN_ARCHITECT_PROMPT
+ImportError: cannot import name 'PERSONAL_DEVELOPMENT_PROTOCOL_25' from 'app.core.prompts' (/Users/kalinovdameus/Developer/mee-app/backend/app/core/prompts.py)
+WARNING:  StatReload detected changes in 'app/core/prompts.py'. Reloading...
+Process SpawnProcess-43:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 204, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 79, in serve
+    await self._serve(sockets)
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 86, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/config.py", line 441, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1398, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1342, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 938, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 759, in exec_module
+  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/main.py", line 4, in <module>
+    from app.routers import telegram
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/routers/telegram.py", line 8, in <module>
+    from app.core.prompts import PERSONAL_DEVELOPMENT_PROTOCOL_25, TWIN_ARCHITECT_PROMPT
+ImportError: cannot import name 'PERSONAL_DEVELOPMENT_PROTOCOL_25' from 'app.core.prompts' (/Users/kalinovdameus/Developer/mee-app/backend/app/core/prompts.py)
+WARNING:  StatReload detected changes in 'app/core/prompts.py'. Reloading...
+Process SpawnProcess-44:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 204, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 79, in serve
+    await self._serve(sockets)
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 86, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/config.py", line 441, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1398, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1342, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 938, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 759, in exec_module
+  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/main.py", line 4, in <module>
+    from app.routers import telegram
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/routers/telegram.py", line 8, in <module>
+    from app.core.prompts import PERSONAL_DEVELOPMENT_PROTOCOL_25, TWIN_ARCHITECT_PROMPT
+ImportError: cannot import name 'PERSONAL_DEVELOPMENT_PROTOCOL_25' from 'app.core.prompts' (/Users/kalinovdameus/Developer/mee-app/backend/app/core/prompts.py)
+WARNING:  StatReload detected changes in 'app/core/prompts.py'. Reloading...
+Process SpawnProcess-45:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 204, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 79, in serve
+    await self._serve(sockets)
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 86, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/config.py", line 441, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1398, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1342, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 938, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 759, in exec_module
+  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/main.py", line 4, in <module>
+    from app.routers import telegram
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/routers/telegram.py", line 8, in <module>
+    from app.core.prompts import PERSONAL_DEVELOPMENT_PROTOCOL_25, TWIN_ARCHITECT_PROMPT
+ImportError: cannot import name 'PERSONAL_DEVELOPMENT_PROTOCOL_25' from 'app.core.prompts' (/Users/kalinovdameus/Developer/mee-app/backend/app/core/prompts.py)
+WARNING:  StatReload detected changes in 'app/core/prompts.py'. Reloading...
+Process SpawnProcess-46:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 204, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 79, in serve
+    await self._serve(sockets)
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 86, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/config.py", line 441, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1398, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1342, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 938, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 759, in exec_module
+  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/main.py", line 4, in <module>
+    from app.routers import telegram
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/routers/telegram.py", line 8, in <module>
+    from app.core.prompts import PERSONAL_DEVELOPMENT_PROTOCOL_25, TWIN_ARCHITECT_PROMPT
+ImportError: cannot import name 'PERSONAL_DEVELOPMENT_PROTOCOL_25' from 'app.core.prompts' (/Users/kalinovdameus/Developer/mee-app/backend/app/core/prompts.py)
+WARNING:  StatReload detected changes in 'app/core/prompts.py'. Reloading...
+Process SpawnProcess-47:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 204, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 79, in serve
+    await self._serve(sockets)
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 86, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/config.py", line 441, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1398, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1342, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 938, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 759, in exec_module
+  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/main.py", line 4, in <module>
+    from app.routers import telegram
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/routers/telegram.py", line 8, in <module>
+    from app.core.prompts import PERSONAL_DEVELOPMENT_PROTOCOL_25, TWIN_ARCHITECT_PROMPT
+ImportError: cannot import name 'PERSONAL_DEVELOPMENT_PROTOCOL_25' from 'app.core.prompts' (/Users/kalinovdameus/Developer/mee-app/backend/app/core/prompts.py)
+WARNING:  StatReload detected changes in 'app/core/prompts.py'. Reloading...
+Process SpawnProcess-48:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 204, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 79, in serve
+    await self._serve(sockets)
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 86, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/config.py", line 441, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1398, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1342, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 938, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 759, in exec_module
+  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/main.py", line 4, in <module>
+    from app.routers import telegram
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/routers/telegram.py", line 8, in <module>
+    from app.core.prompts import PERSONAL_DEVELOPMENT_PROTOCOL_25, TWIN_ARCHITECT_PROMPT
+ImportError: cannot import name 'PERSONAL_DEVELOPMENT_PROTOCOL_25' from 'app.core.prompts' (/Users/kalinovdameus/Developer/mee-app/backend/app/core/prompts.py)
+WARNING:  StatReload detected changes in 'app/core/prompts.py'. Reloading...
+Process SpawnProcess-49:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 204, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 79, in serve
+    await self._serve(sockets)
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 86, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/config.py", line 441, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1398, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1342, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 938, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 759, in exec_module
+  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/main.py", line 4, in <module>
+    from app.routers import telegram
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/routers/telegram.py", line 8, in <module>
+    from app.core.prompts import PERSONAL_DEVELOPMENT_PROTOCOL_25, TWIN_ARCHITECT_PROMPT
+ImportError: cannot import name 'PERSONAL_DEVELOPMENT_PROTOCOL_25' from 'app.core.prompts' (/Users/kalinovdameus/Developer/mee-app/backend/app/core/prompts.py)
+WARNING:  StatReload detected changes in 'app/routers/telegram.py'. Reloading...
+Process SpawnProcess-50:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 204, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 79, in serve
+    await self._serve(sockets)
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 86, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/config.py", line 441, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1398, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1342, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 938, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 759, in exec_module
+  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/main.py", line 4, in <module>
+    from app.routers import telegram
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/routers/telegram.py", line 8, in <module>
+    from app.core.prompts import PERSONAL_DEVELOPMENT_PROTOCOL_25, TWIN_ARCHITECT_PROMPT
+ImportError: cannot import name 'PERSONAL_DEVELOPMENT_PROTOCOL_25' from 'app.core.prompts' (/Users/kalinovdameus/Developer/mee-app/backend/app/core/prompts.py)
+WARNING:  StatReload detected changes in 'app/routers/telegram.py'. Reloading...
+Process SpawnProcess-51:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 204, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 79, in serve
+    await self._serve(sockets)
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 86, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/config.py", line 441, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1398, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1342, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 938, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 759, in exec_module
+  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/main.py", line 4, in <module>
+    from app.routers import telegram
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/routers/telegram.py", line 8, in <module>
+    from app.core.prompts import PERSONAL_DEVELOPMENT_PROTOCOL_25, TWIN_ARCHITECT_PROMPT
+ImportError: cannot import name 'PERSONAL_DEVELOPMENT_PROTOCOL_25' from 'app.core.prompts' (/Users/kalinovdameus/Developer/mee-app/backend/app/core/prompts.py)
+WARNING:  StatReload detected changes in 'app/routers/telegram.py'. Reloading...
+Process SpawnProcess-52:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 204, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 79, in serve
+    await self._serve(sockets)
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 86, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/config.py", line 441, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1398, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1342, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 938, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 759, in exec_module
+  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/main.py", line 4, in <module>
+    from app.routers import telegram
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/routers/telegram.py", line 8, in <module>
+    from app.core.prompts import PERSONAL_DEVELOPMENT_PROTOCOL_25, TWIN_ARCHITECT_PROMPT
+ImportError: cannot import name 'PERSONAL_DEVELOPMENT_PROTOCOL_25' from 'app.core.prompts' (/Users/kalinovdameus/Developer/mee-app/backend/app/core/prompts.py)
+WARNING:  StatReload detected changes in 'app/routers/telegram.py'. Reloading...
+Process SpawnProcess-53:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 204, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 79, in serve
+    await self._serve(sockets)
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 86, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/config.py", line 441, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1398, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1342, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 938, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 759, in exec_module
+  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/main.py", line 4, in <module>
+    from app.routers import telegram
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/routers/telegram.py", line 8, in <module>
+    from app.core.prompts import PERSONAL_DEVELOPMENT_PROTOCOL_25, TWIN_ARCHITECT_PROMPT
+ImportError: cannot import name 'PERSONAL_DEVELOPMENT_PROTOCOL_25' from 'app.core.prompts' (/Users/kalinovdameus/Developer/mee-app/backend/app/core/prompts.py)
+WARNING:  StatReload detected changes in 'app/services/groq.py'. Reloading...
+Process SpawnProcess-54:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 204, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 79, in serve
+    await self._serve(sockets)
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 86, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/config.py", line 441, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1398, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1342, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 938, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 759, in exec_module
+  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/main.py", line 4, in <module>
+    from app.routers import telegram
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/routers/telegram.py", line 8, in <module>
+    from app.core.prompts import PERSONAL_DEVELOPMENT_PROTOCOL_25, TWIN_ARCHITECT_PROMPT
+ImportError: cannot import name 'PERSONAL_DEVELOPMENT_PROTOCOL_25' from 'app.core.prompts' (/Users/kalinovdameus/Developer/mee-app/backend/app/core/prompts.py)
+WARNING:  StatReload detected changes in 'app/routers/telegram.py'. Reloading...
+Process SpawnProcess-55:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 204, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 79, in serve
+    await self._serve(sockets)
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 86, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/config.py", line 441, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1398, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1342, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 938, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 759, in exec_module
+  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/main.py", line 4, in <module>
+    from app.routers import telegram
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/routers/telegram.py", line 8, in <module>
+    from app.core.prompts import PERSONAL_DEVELOPMENT_PROTOCOL_25, TWIN_ARCHITECT_PROMPT
+ImportError: cannot import name 'PERSONAL_DEVELOPMENT_PROTOCOL_25' from 'app.core.prompts' (/Users/kalinovdameus/Developer/mee-app/backend/app/core/prompts.py)
+WARNING:  StatReload detected changes in 'app/routers/telegram.py'. Reloading...
+Process SpawnProcess-56:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 204, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 79, in serve
+    await self._serve(sockets)
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 86, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/config.py", line 441, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1398, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1342, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 938, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 759, in exec_module
+  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/main.py", line 4, in <module>
+    from app.routers import telegram
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/routers/telegram.py", line 8, in <module>
+    from app.core.prompts import PERSONAL_DEVELOPMENT_PROTOCOL_25, TWIN_ARCHITECT_PROMPT
+ImportError: cannot import name 'PERSONAL_DEVELOPMENT_PROTOCOL_25' from 'app.core.prompts' (/Users/kalinovdameus/Developer/mee-app/backend/app/core/prompts.py)
+WARNING:  StatReload detected changes in 'app/routers/telegram.py'. Reloading...
+Process SpawnProcess-57:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 204, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 79, in serve
+    await self._serve(sockets)
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 86, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/config.py", line 441, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1398, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1342, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 938, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 759, in exec_module
+  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/main.py", line 4, in <module>
+    from app.routers import telegram
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/routers/telegram.py", line 8, in <module>
+    from app.core.prompts import PERSONAL_DEVELOPMENT_PROTOCOL_25, TWIN_ARCHITECT_PROMPT
+ImportError: cannot import name 'PERSONAL_DEVELOPMENT_PROTOCOL_25' from 'app.core.prompts' (/Users/kalinovdameus/Developer/mee-app/backend/app/core/prompts.py)
+WARNING:  StatReload detected changes in 'app/services/pinecone.py'. Reloading...
+Process SpawnProcess-58:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 204, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 79, in serve
+    await self._serve(sockets)
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 86, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/config.py", line 441, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1398, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1342, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 938, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 759, in exec_module
+  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/main.py", line 4, in <module>
+    from app.routers import telegram
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/routers/telegram.py", line 8, in <module>
+    from app.core.prompts import PERSONAL_DEVELOPMENT_PROTOCOL_25, TWIN_ARCHITECT_PROMPT
+ImportError: cannot import name 'PERSONAL_DEVELOPMENT_PROTOCOL_25' from 'app.core.prompts' (/Users/kalinovdameus/Developer/mee-app/backend/app/core/prompts.py)
+WARNING:  StatReload detected changes in 'app/routers/telegram.py'. Reloading...
+Process SpawnProcess-59:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 204, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 79, in serve
+    await self._serve(sockets)
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 86, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/config.py", line 441, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1398, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1342, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 938, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 759, in exec_module
+  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/main.py", line 4, in <module>
+    from app.routers import telegram
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/routers/telegram.py", line 8, in <module>
+    from app.core.prompts import PERSONAL_DEVELOPMENT_PROTOCOL_25, TWIN_ARCHITECT_PROMPT
+ImportError: cannot import name 'PERSONAL_DEVELOPMENT_PROTOCOL_25' from 'app.core.prompts' (/Users/kalinovdameus/Developer/mee-app/backend/app/core/prompts.py)
+WARNING:  StatReload detected changes in 'app/core/prompts.py'. Reloading...
+Process SpawnProcess-60:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 204, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 79, in serve
+    await self._serve(sockets)
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 86, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/config.py", line 441, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1398, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1342, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 938, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 759, in exec_module
+  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/main.py", line 4, in <module>
+    from app.routers import telegram
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/routers/telegram.py", line 8, in <module>
+    from app.core.prompts import PERSONAL_DEVELOPMENT_PROTOCOL_25, TWIN_ARCHITECT_PROMPT
+ImportError: cannot import name 'PERSONAL_DEVELOPMENT_PROTOCOL_25' from 'app.core.prompts' (/Users/kalinovdameus/Developer/mee-app/backend/app/core/prompts.py)
+WARNING:  StatReload detected changes in 'app/services/groq.py'. Reloading...
+Process SpawnProcess-61:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 204, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 79, in serve
+    await self._serve(sockets)
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 86, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/config.py", line 441, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1398, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1342, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 938, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 759, in exec_module
+  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/main.py", line 4, in <module>
+    from app.routers import telegram
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/routers/telegram.py", line 8, in <module>
+    from app.core.prompts import PERSONAL_DEVELOPMENT_PROTOCOL_25, TWIN_ARCHITECT_PROMPT
+ImportError: cannot import name 'PERSONAL_DEVELOPMENT_PROTOCOL_25' from 'app.core.prompts' (/Users/kalinovdameus/Developer/mee-app/backend/app/core/prompts.py)
+WARNING:  StatReload detected changes in 'app/core/prompts.py'. Reloading...
+Process SpawnProcess-62:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 204, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 79, in serve
+    await self._serve(sockets)
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 86, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/config.py", line 441, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1398, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1342, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 938, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 759, in exec_module
+  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/main.py", line 4, in <module>
+    from app.routers import telegram
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/routers/telegram.py", line 8, in <module>
+    from app.core.prompts import PERSONAL_DEVELOPMENT_PROTOCOL_25, TWIN_ARCHITECT_PROMPT
+ImportError: cannot import name 'PERSONAL_DEVELOPMENT_PROTOCOL_25' from 'app.core.prompts' (/Users/kalinovdameus/Developer/mee-app/backend/app/core/prompts.py)
+WARNING:  StatReload detected changes in 'app/core/prompts.py'. Reloading...
+Process SpawnProcess-63:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 204, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 79, in serve
+    await self._serve(sockets)
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 86, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/config.py", line 441, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1398, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1342, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 938, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 759, in exec_module
+  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/main.py", line 4, in <module>
+    from app.routers import telegram
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/routers/telegram.py", line 8, in <module>
+    from app.core.prompts import PERSONAL_DEVELOPMENT_PROTOCOL_25, TWIN_ARCHITECT_PROMPT
+ImportError: cannot import name 'PERSONAL_DEVELOPMENT_PROTOCOL_25' from 'app.core.prompts' (/Users/kalinovdameus/Developer/mee-app/backend/app/core/prompts.py)
+WARNING:  StatReload detected changes in 'app/core/prompts.py'. Reloading...
+Process SpawnProcess-64:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 204, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 79, in serve
+    await self._serve(sockets)
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 86, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/config.py", line 441, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1398, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1342, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 938, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 759, in exec_module
+  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/main.py", line 4, in <module>
+    from app.routers import telegram
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/routers/telegram.py", line 8, in <module>
+    from app.core.prompts import PERSONAL_DEVELOPMENT_PROTOCOL_25, TWIN_ARCHITECT_PROMPT
+ImportError: cannot import name 'PERSONAL_DEVELOPMENT_PROTOCOL_25' from 'app.core.prompts' (/Users/kalinovdameus/Developer/mee-app/backend/app/core/prompts.py)
+WARNING:  StatReload detected changes in 'app/routers/telegram.py'. Reloading...
+INFO:     Started server process [93481]
+INFO:     Waiting for application startup.
+2026-02-19 13:27:40,091 - app.main - INFO - Warming up embedding model...
+2026-02-19 13:27:40,092 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-19 13:27:40,502 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/prompts.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [93481]
+INFO:     Started server process [94823]
+INFO:     Waiting for application startup.
+2026-02-19 13:30:51,957 - app.main - INFO - Warming up embedding model...
+2026-02-19 13:30:51,957 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-19 13:30:52,413 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/prompts.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [94823]
+INFO:     Started server process [95020]
+INFO:     Waiting for application startup.
+2026-02-19 13:31:09,987 - app.main - INFO - Warming up embedding model...
+2026-02-19 13:31:09,987 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-19 13:31:10,242 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/telegram.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [95020]
+INFO:     Started server process [99125]
+INFO:     Waiting for application startup.
+2026-02-19 13:41:39,418 - app.main - INFO - Warming up embedding model...
+2026-02-19 13:41:39,418 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-19 13:41:39,732 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/prompts.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [99125]
+INFO:     Started server process [99530]
+INFO:     Waiting for application startup.
+2026-02-19 13:42:41,227 - app.main - INFO - Warming up embedding model...
+2026-02-19 13:42:41,227 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-19 13:42:41,853 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/services/groq.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [99530]
+INFO:     Started server process [1886]
+INFO:     Waiting for application startup.
+2026-02-19 13:48:04,647 - app.main - INFO - Warming up embedding model...
+2026-02-19 13:48:04,647 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-19 13:48:05,020 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/services/groq.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [1886]
+INFO:     Started server process [2760]
+INFO:     Waiting for application startup.
+2026-02-19 13:50:14,421 - app.main - INFO - Warming up embedding model...
+2026-02-19 13:50:14,421 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-19 13:50:14,725 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/prompts.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [2760]
+INFO:     Started server process [17053]
+INFO:     Waiting for application startup.
+2026-02-19 16:11:06,957 - app.main - INFO - Warming up embedding model...
+2026-02-19 16:11:06,957 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-19 16:11:07,376 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/telegram.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [17053]
+INFO:     Started server process [17071]
+INFO:     Waiting for application startup.
+2026-02-19 16:11:08,703 - app.main - INFO - Warming up embedding model...
+2026-02-19 16:11:08,703 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-19 16:11:09,047 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/prompts.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [17071]
+INFO:     Started server process [17192]
+INFO:     Waiting for application startup.
+2026-02-19 16:11:26,739 - app.main - INFO - Warming up embedding model...
+2026-02-19 16:11:26,739 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-19 16:11:27,046 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/services/groq.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [17192]
+INFO:     Started server process [22061]
+INFO:     Waiting for application startup.
+2026-02-19 16:21:24,515 - app.main - INFO - Warming up embedding model...
+2026-02-19 16:21:24,515 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-19 16:21:24,792 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/telegram.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [22061]
+INFO:     Started server process [23351]
+INFO:     Waiting for application startup.
+2026-02-19 16:24:00,639 - app.main - INFO - Warming up embedding model...
+2026-02-19 16:24:00,639 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-19 16:24:01,149 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/prompts.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [23351]
+INFO:     Started server process [25884]
+INFO:     Waiting for application startup.
+2026-02-19 16:29:49,502 - app.main - INFO - Warming up embedding model...
+2026-02-19 16:29:49,502 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-19 16:29:49,896 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/prompts.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [25884]
+Process SpawnProcess-78:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 204, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 79, in serve
+    await self._serve(sockets)
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 86, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/config.py", line 441, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1398, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1342, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 938, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 759, in exec_module
+  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/main.py", line 4, in <module>
+    from app.routers import telegram
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/routers/telegram.py", line 8, in <module>
+    from app.core.prompts import ULTIMATES_TUTOR_PROTOCOL, TWIN_ARCHITECT_PROMPT
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/core/prompts.py", line 1
+    - **Rule 1: You are the most important person in the relationship.** This is the "Oxygen Mask" principle. You cannot provide for, lead, or protect another if you are not first secure and prioritized in your own life. It is about a radical, unapologetic self-priority that ensures you never compromise your core values for a temporary whim.
+IndentationError: unexpected indent
+WARNING:  StatReload detected changes in 'app/core/prompts.py'. Reloading...
+INFO:     Started server process [27946]
+INFO:     Waiting for application startup.
+2026-02-19 16:36:35,701 - app.main - INFO - Warming up embedding model...
+2026-02-19 16:36:35,701 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-19 16:36:36,266 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/telegram.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [27946]
+INFO:     Started server process [27995]
+INFO:     Waiting for application startup.
+2026-02-19 16:36:47,920 - app.main - INFO - Warming up embedding model...
+2026-02-19 16:36:47,920 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-19 16:36:48,143 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/telegram.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [27995]
+Process SpawnProcess-81:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 204, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 79, in serve
+    await self._serve(sockets)
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 86, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/config.py", line 441, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1398, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1342, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 938, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 759, in exec_module
+  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/main.py", line 4, in <module>
+    from app.routers import telegram
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/routers/telegram.py", line 39, in <module>
+    "masculine": ULTIMATES_TUTOR_PROTOCOL
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+NameError: name 'ULTIMATES_TUTOR_PROTOCOL' is not defined
+WARNING:  StatReload detected changes in 'app/core/guardrails.py'. Reloading...
+Process SpawnProcess-82:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 204, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 79, in serve
+    await self._serve(sockets)
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 86, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/config.py", line 441, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1398, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1342, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 938, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 759, in exec_module
+  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/main.py", line 4, in <module>
+    from app.routers import telegram
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/routers/telegram.py", line 39, in <module>
+    "masculine": ULTIMATES_TUTOR_PROTOCOL
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+NameError: name 'ULTIMATES_TUTOR_PROTOCOL' is not defined
+WARNING:  StatReload detected changes in 'app/core/guardrails.py'. Reloading...
+Process SpawnProcess-83:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 204, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 79, in serve
+    await self._serve(sockets)
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 86, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/config.py", line 441, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1398, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1342, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 938, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 759, in exec_module
+  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/main.py", line 4, in <module>
+    from app.routers import telegram
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/routers/telegram.py", line 39, in <module>
+    "masculine": ULTIMATES_TUTOR_PROTOCOL
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+NameError: name 'ULTIMATES_TUTOR_PROTOCOL' is not defined
+WARNING:  StatReload detected changes in 'app/core/prompts.py'. Reloading...
+Process SpawnProcess-84:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 204, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 79, in serve
+    await self._serve(sockets)
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 86, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/config.py", line 441, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1398, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1342, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 938, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 759, in exec_module
+  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/main.py", line 4, in <module>
+    from app.routers import telegram
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/routers/telegram.py", line 39, in <module>
+    "masculine": ULTIMATES_TUTOR_PROTOCOL
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+NameError: name 'ULTIMATES_TUTOR_PROTOCOL' is not defined
+WARNING:  StatReload detected changes in 'app/core/prompts.py'. Reloading...
+Process SpawnProcess-85:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 204, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 79, in serve
+    await self._serve(sockets)
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 86, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/config.py", line 441, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1398, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1342, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 938, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 759, in exec_module
+  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/main.py", line 4, in <module>
+    from app.routers import telegram
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/routers/telegram.py", line 39, in <module>
+    "masculine": ULTIMATES_TUTOR_PROTOCOL
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+NameError: name 'ULTIMATES_TUTOR_PROTOCOL' is not defined
+WARNING:  StatReload detected changes in 'app/core/guardrails.py'. Reloading...
+Process SpawnProcess-86:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 204, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 79, in serve
+    await self._serve(sockets)
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 86, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/config.py", line 441, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1398, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1342, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 938, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 759, in exec_module
+  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/main.py", line 4, in <module>
+    from app.routers import telegram
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/routers/telegram.py", line 39, in <module>
+    "masculine": ULTIMATES_TUTOR_PROTOCOL
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+NameError: name 'ULTIMATES_TUTOR_PROTOCOL' is not defined
+WARNING:  StatReload detected changes in 'app/routers/telegram.py'. Reloading...
+Process SpawnProcess-87:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 204, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 79, in serve
+    await self._serve(sockets)
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 86, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/config.py", line 441, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1398, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1342, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 938, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 759, in exec_module
+  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/main.py", line 4, in <module>
+    from app.routers import telegram
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/routers/telegram.py", line 39, in <module>
+    "masculine": ULTIMATES_TUTOR_PROTOCOL
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+NameError: name 'ULTIMATES_TUTOR_PROTOCOL' is not defined
+WARNING:  StatReload detected changes in 'app/core/prompts.py'. Reloading...
+Process SpawnProcess-88:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 204, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 79, in serve
+    await self._serve(sockets)
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 86, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/config.py", line 441, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1398, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1342, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 938, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 759, in exec_module
+  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/main.py", line 4, in <module>
+    from app.routers import telegram
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/routers/telegram.py", line 39, in <module>
+    "masculine": ULTIMATES_TUTOR_PROTOCOL
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+NameError: name 'ULTIMATES_TUTOR_PROTOCOL' is not defined
+WARNING:  StatReload detected changes in 'app/routers/telegram.py'. Reloading...
+Process SpawnProcess-89:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 204, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 79, in serve
+    await self._serve(sockets)
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 86, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/config.py", line 441, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1398, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1342, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 938, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 759, in exec_module
+  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/main.py", line 4, in <module>
+    from app.routers import telegram
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/routers/telegram.py", line 39, in <module>
+    "masculine": ULTIMATES_TUTOR_PROTOCOL
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+NameError: name 'ULTIMATES_TUTOR_PROTOCOL' is not defined
+WARNING:  StatReload detected changes in 'app/core/prompts.py'. Reloading...
+Process SpawnProcess-90:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 204, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 79, in serve
+    await self._serve(sockets)
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 86, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/config.py", line 441, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1398, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1342, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 938, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 759, in exec_module
+  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/main.py", line 4, in <module>
+    from app.routers import telegram
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/routers/telegram.py", line 39, in <module>
+    "masculine": ULTIMATES_TUTOR_PROTOCOL
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+NameError: name 'ULTIMATES_TUTOR_PROTOCOL' is not defined
+WARNING:  StatReload detected changes in 'app/routers/telegram.py'. Reloading...
+Process SpawnProcess-91:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 204, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 79, in serve
+    await self._serve(sockets)
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 86, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/config.py", line 441, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1398, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1342, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 938, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 759, in exec_module
+  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/main.py", line 4, in <module>
+    from app.routers import telegram
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/routers/telegram.py", line 39, in <module>
+    "masculine": ULTIMATES_TUTOR_PROTOCOL
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+NameError: name 'ULTIMATES_TUTOR_PROTOCOL' is not defined
+WARNING:  StatReload detected changes in 'app/routers/telegram.py'. Reloading...
+Process SpawnProcess-92:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 204, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 79, in serve
+    await self._serve(sockets)
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 86, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/config.py", line 441, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1398, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1342, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 938, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 759, in exec_module
+  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/main.py", line 4, in <module>
+    from app.routers import telegram
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/routers/telegram.py", line 39, in <module>
+    "masculine": ULTIMATES_TUTOR_PROTOCOL
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+NameError: name 'ULTIMATES_TUTOR_PROTOCOL' is not defined
+WARNING:  StatReload detected changes in 'app/routers/telegram.py'. Reloading...
+INFO:     Started server process [37765]
+INFO:     Waiting for application startup.
+2026-02-19 17:10:40,401 - app.main - INFO - Warming up embedding model...
+2026-02-19 17:10:40,401 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-19 17:10:40,813 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/prompts.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [37765]
+INFO:     Started server process [37797]
+INFO:     Waiting for application startup.
+2026-02-19 17:10:48,598 - app.main - INFO - Warming up embedding model...
+2026-02-19 17:10:48,598 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-19 17:10:48,792 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/telegram.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [37797]
+INFO:     Started server process [37879]
+INFO:     Waiting for application startup.
+2026-02-19 17:11:08,454 - app.main - INFO - Warming up embedding model...
+2026-02-19 17:11:08,454 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-19 17:11:08,779 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/telegram.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [37879]
+INFO:     Started server process [37902]
+INFO:     Waiting for application startup.
+2026-02-19 17:11:14,137 - app.main - INFO - Warming up embedding model...
+2026-02-19 17:11:14,137 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-19 17:11:14,559 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/telegram.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [37902]
+INFO:     Started server process [37938]
+INFO:     Waiting for application startup.
+2026-02-19 17:11:24,264 - app.main - INFO - Warming up embedding model...
+2026-02-19 17:11:24,264 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-19 17:11:24,491 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/telegram.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [37938]
+INFO:     Started server process [51399]
+INFO:     Waiting for application startup.
+2026-02-20 10:35:26,716 - app.main - INFO - Warming up embedding model...
+2026-02-20 10:35:26,716 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-20 10:35:27,189 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/prompts.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [51399]
+INFO:     Started server process [52970]
+INFO:     Waiting for application startup.
+2026-02-20 10:42:35,031 - app.main - INFO - Warming up embedding model...
+2026-02-20 10:42:35,031 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-20 10:42:35,483 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/guardrails.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [52970]
+INFO:     Started server process [53042]
+INFO:     Waiting for application startup.
+2026-02-20 10:42:54,620 - app.main - INFO - Warming up embedding model...
+2026-02-20 10:42:54,620 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-20 10:42:54,999 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/prompts.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [53042]
+INFO:     Started server process [53205]
+INFO:     Waiting for application startup.
+2026-02-20 10:43:43,226 - app.main - INFO - Warming up embedding model...
+2026-02-20 10:43:43,226 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-20 10:43:43,620 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/prompts.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [53205]
+INFO:     Started server process [53235]
+INFO:     Waiting for application startup.
+2026-02-20 10:43:49,964 - app.main - INFO - Warming up embedding model...
+2026-02-20 10:43:49,964 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-20 10:43:50,244 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/guardrails.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [53235]
+INFO:     Started server process [53259]
+INFO:     Waiting for application startup.
+2026-02-20 10:43:55,625 - app.main - INFO - Warming up embedding model...
+2026-02-20 10:43:55,625 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-20 10:43:55,940 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/config.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [53259]
+INFO:     Started server process [6642]
+INFO:     Waiting for application startup.
+2026-02-21 10:46:15,812 - app.main - INFO - Warming up embedding model...
+2026-02-21 10:46:15,812 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-21 10:46:16,405 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/telegram.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [6642]
+INFO:     Started server process [6687]
+INFO:     Waiting for application startup.
+2026-02-21 10:46:29,504 - app.main - INFO - Warming up embedding model...
+2026-02-21 10:46:29,504 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-21 10:46:29,790 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/telegram.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [6687]
+INFO:     Started server process [6863]
+INFO:     Waiting for application startup.
+2026-02-21 10:47:26,188 - app.main - INFO - Warming up embedding model...
+2026-02-21 10:47:26,188 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-21 10:47:26,638 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/telegram.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [6863]
+INFO:     Started server process [6878]
+INFO:     Waiting for application startup.
+2026-02-21 10:47:30,569 - app.main - INFO - Warming up embedding model...
+2026-02-21 10:47:30,569 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-21 10:47:31,097 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/prompts.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [6878]
+INFO:     Started server process [7445]
+INFO:     Waiting for application startup.
+2026-02-21 10:50:26,876 - app.main - INFO - Warming up embedding model...
+2026-02-21 10:50:26,876 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-21 10:50:27,347 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/guardrails.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [7445]
+INFO:     Started server process [7683]
+INFO:     Waiting for application startup.
+2026-02-21 10:51:42,580 - app.main - INFO - Warming up embedding model...
+2026-02-21 10:51:42,580 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-21 10:51:42,948 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/telegram.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [7683]
+INFO:     Started server process [7798]
+INFO:     Waiting for application startup.
+2026-02-21 10:52:19,836 - app.main - INFO - Warming up embedding model...
+2026-02-21 10:52:19,837 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-21 10:52:20,112 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/telegram.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [7798]
+Process SpawnProcess-111:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 204, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 79, in serve
+    await self._serve(sockets)
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/server.py", line 86, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/config.py", line 441, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/kalinovdameus/Developer/mee-app/.venv/lib/python3.14/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1398, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1342, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 938, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 759, in exec_module
+  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/main.py", line 4, in <module>
+    from app.routers import telegram
+  File "/Users/kalinovdameus/Developer/mee-app/backend/app/routers/telegram.py", line 237
+    else:
+IndentationError: unexpected indent
+WARNING:  StatReload detected changes in 'app/routers/telegram.py'. Reloading...
+INFO:     Started server process [8012]
+INFO:     Waiting for application startup.
+2026-02-21 10:53:28,469 - app.main - INFO - Warming up embedding model...
+2026-02-21 10:53:28,469 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-21 10:53:28,893 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/prompts.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [8012]
+INFO:     Started server process [14674]
+INFO:     Waiting for application startup.
+2026-02-21 11:19:36,210 - app.main - INFO - Warming up embedding model...
+2026-02-21 11:19:36,210 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-21 11:19:36,716 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/services/supabase.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [14674]
+INFO:     Started server process [16302]
+INFO:     Waiting for application startup.
+2026-02-21 11:39:16,957 - app.main - INFO - Warming up embedding model...
+2026-02-21 11:39:16,957 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-21 11:39:17,486 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/telegram.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [16302]
+INFO:     Started server process [16315]
+INFO:     Waiting for application startup.
+2026-02-21 11:39:30,725 - app.main - INFO - Warming up embedding model...
+2026-02-21 11:39:30,725 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-21 11:39:31,141 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/telegram.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [16315]
+INFO:     Started server process [16321]
+INFO:     Waiting for application startup.
+2026-02-21 11:39:38,115 - app.main - INFO - Warming up embedding model...
+2026-02-21 11:39:38,115 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-21 11:39:38,571 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/telegram.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [16321]
+INFO:     Started server process [16327]
+INFO:     Waiting for application startup.
+2026-02-21 11:39:42,922 - app.main - INFO - Warming up embedding model...
+2026-02-21 11:39:42,922 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-21 11:39:43,194 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/telegram.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [16327]
+INFO:     Started server process [16332]
+INFO:     Waiting for application startup.
+2026-02-21 11:39:45,609 - app.main - INFO - Warming up embedding model...
+2026-02-21 11:39:45,609 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-21 11:39:46,042 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/telegram.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [16332]
+INFO:     Started server process [16333]
+INFO:     Waiting for application startup.
+2026-02-21 11:39:48,391 - app.main - INFO - Warming up embedding model...
+2026-02-21 11:39:48,391 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-21 11:39:48,643 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/telegram.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [16333]
+INFO:     Started server process [24961]
+INFO:     Waiting for application startup.
+2026-02-21 12:01:30,364 - app.main - INFO - Warming up embedding model...
+2026-02-21 12:01:30,365 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-21 12:01:30,951 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/services/groq.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [24961]
+INFO:     Started server process [28573]
+INFO:     Waiting for application startup.
+2026-02-21 12:11:02,016 - app.main - INFO - Warming up embedding model...
+2026-02-21 12:11:02,016 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-21 12:11:02,615 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'tests/test_response_length.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [28573]
+INFO:     Started server process [28684]
+INFO:     Waiting for application startup.
+2026-02-21 12:11:13,598 - app.main - INFO - Warming up embedding model...
+2026-02-21 12:11:13,598 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-21 12:11:14,167 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'tests/test_response_length.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [28684]
+INFO:     Started server process [29153]
+INFO:     Waiting for application startup.
+2026-02-21 12:11:52,326 - app.main - INFO - Warming up embedding model...
+2026-02-21 12:11:52,326 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-21 12:11:52,615 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'tests/test_response_length.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [29153]
+INFO:     Started server process [29224]
+INFO:     Waiting for application startup.
+2026-02-21 12:11:55,903 - app.main - INFO - Warming up embedding model...
+2026-02-21 12:11:55,903 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-21 12:11:56,452 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'tests/test_response_length.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [29224]
+INFO:     Started server process [29243]
+INFO:     Waiting for application startup.
+2026-02-21 12:11:57,592 - app.main - INFO - Warming up embedding model...
+2026-02-21 12:11:57,592 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
+2026-02-21 12:11:58,029 - app.main - INFO - Embedding model warmed up
+INFO:     Application startup complete.

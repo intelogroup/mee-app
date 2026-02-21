@@ -4,8 +4,12 @@ from app.core.config import TELEGRAM_BOT_TOKEN, BOT_WEBHOOK_SECRET
 from app.services.groq import get_groq_response, extract_traits
 from app.services.search import search_web
 from app.services.pinecone import save_memory, get_recent_memories, pc, PINECONE_INDEX # accessing embedding logic directly or via service
-from app.services.supabase import link_telegram_account, get_user_by_telegram_id, increment_message_count, update_onboarding_step, supabase
+from app.services.supabase import (
+    link_telegram_account, get_user_by_telegram_id, increment_message_count, 
+    update_onboarding_step, supabase, log_message, get_stale_profiles
+)
 from app.services.embeddings import get_embedding
+from app.services.memory import run_episodic_summarizer
 from app.core.prompts import get_active_protocol_fragment, TWIN_ARCHITECT_PROMPT, PROTOCOL_PILLARS
 from app.core.guardrails import validate_response
 
@@ -16,9 +20,39 @@ import httpx
 import asyncio
 import json
 import time
+from datetime import datetime, timezone
 from collections import defaultdict, deque
 
 logger = logging.getLogger(__name__)
+
+# --- CRON ENDPOINT ---
+@router.post("/cron/summarize")
+async def trigger_summaries(background_tasks: BackgroundTasks, x_cron_secret: str = Header(None)):
+    """
+    Triggered by Supabase pg_cron every hour.
+    Iterates through users who haven't been summarized recently and queues background tasks.
+    """
+    # Simple secret check (should be in env vars in prod)
+    EXPECTED_SECRET = "mee-cron-secret-123" 
+    if x_cron_secret != EXPECTED_SECRET:
+        raise HTTPException(status_code=401, detail="Unauthorized Cron Access")
+
+    stale_users = await get_stale_profiles()
+    triggered_count = 0
+    
+    for user in stale_users:
+        user_id = user.get("id")
+        last_summary_at = user.get("last_summary_at")
+        
+        # Fallback for NULL last_summary_at (treat as epoch start)
+        if not last_summary_at:
+            last_summary_at = "1970-01-01T00:00:00+00:00"
+            
+        background_tasks.add_task(run_episodic_summarizer, user_id, last_summary_at)
+        triggered_count += 1
+        
+    logger.info(f"[CRON] Triggered episodic summarizer for {triggered_count} users.")
+    return {"status": "ok", "triggered": triggered_count}
 
 # In-memory sliding window for recent context (Privacy-safe, zero-latency)
 # Stores the last 6 message objects per user
@@ -46,7 +80,7 @@ async def send_telegram_message(chat_id: int, text: str):
     except Exception as e:
         logger.error(f"Failed to send message to {chat_id}: {e}")
 
-async def process_telegram_update(update: dict):
+async def process_telegram_update(update: dict, background_tasks: BackgroundTasks = None):
     try:
         message = update.get("message")
         if not message:
@@ -264,6 +298,20 @@ Memories: {context_str if context_str else "Clean slate."}
         await send_telegram_message(chat_id, response_text)
 
         # 6. Post-Response Tasks (Async / Background)
+        # 6a. Log to Supabase for Episodic Memory
+        await log_message(user_id, "user", text)
+        await log_message(user_id, "assistant", response_text)
+
+        # 6b. Check for Episodic Summary Trigger (1hr threshold)
+        last_summary_at = user_profile.get("last_summary_at")
+        if last_summary_at:
+            from datetime import datetime, timezone, timedelta
+            last_ts = datetime.fromisoformat(last_summary_at.replace('Z', '+00:00'))
+            if datetime.now(timezone.utc) - last_ts > timedelta(hours=1):
+                # Trigger summarizer in background
+                if background_tasks:
+                    background_tasks.add_task(run_episodic_summarizer, user_id, last_summary_at)
+
         # Update in-memory sliding window
         recent_context[user_id].append({"role": "user", "content": text})
         recent_context[user_id].append({"role": "assistant", "content": response_text})
@@ -393,6 +441,6 @@ async def telegram_webhook(request: Request, background_tasks: BackgroundTasks, 
         raise HTTPException(status_code=400, detail="Invalid JSON")
 
     # 3. Process Async via Background Tasks
-    background_tasks.add_task(process_telegram_update, update)
+    background_tasks.add_task(process_telegram_update, update, background_tasks)
 
     return {"status": "ok"}
