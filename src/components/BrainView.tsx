@@ -62,7 +62,13 @@ export default function BrainView({ userId }: { userId: string }) {
     if (!data) return <div className="text-text-muted">Failed to load neural data.</div>;
 
     const traitsByCategory = data.traits.reduce((acc, trait) => {
-        const cat = trait.category || 'general';
+        let cat = trait.category ? trait.category.toLowerCase() : 'personality';
+        
+        // Map common variations or missing cats to the 4 main buckets
+        if (!['location', 'personality', 'goal', 'relationship'].includes(cat)) {
+            cat = 'personality'; // Fallback for 'general', 'N/A', etc.
+        }
+        
         if (!acc[cat]) acc[cat] = [];
         acc[cat].push(trait);
         return acc;
