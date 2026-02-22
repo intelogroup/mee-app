@@ -131,6 +131,12 @@ export default function BrainView({ userId }: { userId: string }) {
                     )}
                 </div>
             </div>
+
+            {/* DEBUG: Raw Data Dump */}
+            <div className="mt-12 p-4 bg-black/50 rounded-xl border border-white/10 overflow-auto max-h-60 text-[10px] font-mono text-green-400">
+                <h4 className="font-bold text-white mb-2">DEBUG DATA DUMP</h4>
+                <pre>{JSON.stringify(data, null, 2)}</pre>
+            </div>
         </div>
     );
 }
