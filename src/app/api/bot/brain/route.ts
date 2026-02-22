@@ -15,9 +15,9 @@ export async function GET(request: Request) {
         const res = await fetch(`${botApiUrl}/api/dashboard/brain/${userId}`, {
             headers: {
                 // If backend requires auth
-                // 'Authorization': `Bearer ${botApiKey}`
+                'Authorization': `Bearer ${botApiKey}`
             },
-            next: { revalidate: 60 } // Cache for 1 min
+            next: { revalidate: 0 } // Disable caching to ensure we see the fix
         });
 
         if (!res.ok) {
