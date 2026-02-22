@@ -8,8 +8,10 @@ export async function GET(request: Request) {
         return NextResponse.json({ error: 'Missing userId' }, { status: 400 });
     }
 
+    // Fallback to Render URL in production if env var is missing
+    const botApiUrl = process.env.BOT_BACKEND_API_URL || "https://mee-app-backend.onrender.com";
     const botApiKey = process.env.BOT_BACKEND_API_KEY;
-    const botApiUrl = process.env.BOT_BACKEND_API_URL || "http://127.0.0.1:8000";
+    
     const targetUrl = `${botApiUrl}/api/dashboard/brain/${userId}`;
 
     console.log(`[Proxy] Fetching brain data for ${userId} from: ${targetUrl}`);
