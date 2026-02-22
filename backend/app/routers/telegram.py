@@ -585,6 +585,48 @@ Memories: {context_str if context_str else "Clean slate."}
         logger.error(f"Error processing update: {e}", exc_info=True)
 
 
+
+@router.get("/users/{user_id}/traits")
+async def get_user_traits(user_id: str, authorization: str = Header(None)):
+    """
+    Returns a list of distilled traits for a user.
+    Used by the Frontend Dashboard.
+    """
+    # 1. Verify Authorization
+    if not BOT_WEBHOOK_SECRET or authorization != f"Bearer {BOT_WEBHOOK_SECRET}":
+        # Check if it matches exactly if Bearer is missing (for flexibility)
+        if authorization != BOT_WEBHOOK_SECRET:
+            raise HTTPException(status_code=401, detail="Unauthorized")
+
+    try:
+        index = pc.Index(PINECONE_INDEX)
+        
+        # Strategy: Query with a dummy vector and filter by role='trait'
+        # Namespace is the user_id (string)
+        res = await asyncio.to_thread(
+            index.query,
+            namespace=user_id,
+            vector=[0.01]*1024, # Dummy vector for metadata filtering
+            top_k=100,
+            filter={"role": {"$eq": "trait"}},
+            include_metadata=True
+        )
+        
+        # Extract unique traits
+        seen = set()
+        traits = []
+        for m in res.matches:
+            txt = m.metadata.get("text")
+            if txt and txt not in seen:
+                traits.append(txt)
+                seen.add(txt)
+        
+        return {"traits": traits}
+    except Exception as e:
+        logger.error(f"Error fetching user traits: {e}")
+        raise HTTPException(status_code=500, detail="Internal server error")
+
+
 @router.post("/webhook")
 async def telegram_webhook(request: Request, background_tasks: BackgroundTasks, x_telegram_bot_api_secret_token: str = Header(None)):
     # 1. Validate Secret

@@ -13,7 +13,25 @@ export async function POST(req: NextRequest) {
         }
 
         const supabase = await createClient();
-        const { data, error } = await supabase.auth.signUp({ email, password });
+        
+        // Determine the redirect URL
+        let siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
+        if (!siteUrl && process.env.VERCEL_URL) {
+            siteUrl = `https://${process.env.VERCEL_URL}`;
+        }
+        if (!siteUrl) {
+            siteUrl = req.headers.get("origin") || "http://localhost:3000";
+        }
+        
+        const redirectTo = `${siteUrl}/auth/callback`;
+
+        const { data, error } = await supabase.auth.signUp({ 
+            email, 
+            password,
+            options: {
+                emailRedirectTo: redirectTo
+            }
+        });
 
         if (error) {
             return NextResponse.json({ error: error.message }, { status: 400 });
