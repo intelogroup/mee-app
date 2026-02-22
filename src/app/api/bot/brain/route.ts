@@ -20,21 +20,31 @@ export async function GET(request: Request) {
     try {
         const res = await fetch(targetUrl, {
             headers: {
-                'Authorization': `Bearer ${botApiKey}`
+                // If backend requires auth
+                // 'Authorization': `Bearer ${botApiKey}`
             },
-            next: { revalidate: 0 }
+            next: { revalidate: 0 } // No cache for debugging
         });
 
         if (!res.ok) {
-            console.error(`[Proxy] Backend returned error: ${res.status} ${res.statusText} at ${targetUrl}`);
-            return NextResponse.json({ error: `Backend error: ${res.status}` }, { status: res.status });
+            const errorText = await res.text();
+            console.error(`[Proxy] Backend returned error ${res.status}: ${errorText}`);
+            return NextResponse.json({ 
+                error: 'Backend error', 
+                status: res.status,
+                url: targetUrl,
+                detail: errorText.slice(0, 100) 
+            }, { status: res.status });
         }
 
         const data = await res.json();
-        console.log(`[Proxy] Successfully proxied brain data for ${userId} (${res.status} OK)`);
         return NextResponse.json(data);
-    } catch (error) {
-        console.error("[Proxy] Unexpected error in brain proxy:", error);
-        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    } catch (error: any) {
+        console.error("Brain proxy error:", error);
+        return NextResponse.json({ 
+            error: 'Connection failed', 
+            message: error.message,
+            url: targetUrl 
+        }, { status: 502 });
     }
 }
