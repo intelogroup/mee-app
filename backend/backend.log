@@ -3740,3 +3740,4 @@ INFO:     Waiting for application startup.
 2026-02-21 19:12:35,391 - app.services.embeddings - INFO - Generating embedding (query) - Attempt 1
 2026-02-21 19:12:35,918 - app.main - INFO - Embedding model warmed up
 INFO:     Application startup complete.
+INFO:     127.0.0.1:57985 - "GET /api/telegram/users/164be941-19ab-4368-8bc3-4314fbe1062b/traits HTTP/1.1" 200 OK

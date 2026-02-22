@@ -16,30 +16,40 @@ async function getQRCode(url: string): Promise<string> {
 }
 
 async function getProfile(userId: string) {
-    const { data } = await supabaseAdmin
+    console.log(`[Dashboard] Fetching profile for user: ${userId}`);
+    const { data, error } = await supabaseAdmin
         .from("profiles")
         .select("telegram_chat_id, is_active, message_count, onboarding_step, bot_linked_at")
         .eq("id", userId)
         .single();
+    if (error) console.error(`[Dashboard] Profile fetch error for ${userId}:`, error);
     return data;
 }
 
 async function getTraits(userId: string): Promise<string[]> {
     const botApiKey = process.env.BOT_BACKEND_API_KEY;
-    // Use the backend URL directly if possible, or fallback gracefully
     const botApiUrl = process.env.BOT_BACKEND_API_URL || "https://mee-app-backend.onrender.com";
 
-    if (!botApiKey) return [];
+    console.log(`[Dashboard] Fetching traits for ${userId} from ${botApiUrl}`);
+    if (!botApiKey) {
+        console.warn("[Dashboard] Missing BOT_BACKEND_API_KEY");
+        return [];
+    }
+
     try {
         const res = await fetch(`${botApiUrl}/api/telegram/users/${userId}/traits`, {
             headers: { Authorization: `Bearer ${botApiKey}` },
             next: { revalidate: 60 },
         });
-        if (!res.ok) return [];
+        if (!res.ok) {
+            console.error(`[Dashboard] Traits API failed: ${res.status} ${res.statusText}`);
+            return [];
+        }
         const data = await res.json();
+        console.log(`[Dashboard] Successfully fetched ${data.traits?.length ?? 0} traits for ${userId}`);
         return data.traits ?? [];
     } catch (error) {
-        console.error("Failed to fetch traits:", error);
+        console.error("[Dashboard] Failed to fetch traits:", error);
         return [];
     }
 }
@@ -56,11 +66,13 @@ export default async function DashboardPage() {
         process.env.NEXT_PUBLIC_TELEGRAM_BOT_USERNAME || "YourBotName";
     const deepLink = `https://t.me/${botUsername}?start=${user.id}`;
 
+    console.log(`[Dashboard] Loading page data for user: ${user.id}`);
     const [profile, qrDataUrl, traits] = await Promise.all([
         getProfile(user.id),
         getQRCode(deepLink),
         getTraits(user.id),
     ]);
+    console.log(`[Dashboard] Data load complete for ${user.id}. Linked: ${!!profile?.telegram_chat_id}`);
 
     const isLinked = !!profile?.telegram_chat_id;
     const messageCount = profile?.message_count || 0;

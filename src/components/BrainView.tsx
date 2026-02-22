@@ -28,22 +28,21 @@ export default function BrainView({ userId }: { userId: string }) {
 
     useEffect(() => {
         const fetchData = async () => {
+            console.log(`[BrainView] Fetching neural data for user: ${userId}`);
             try {
-                // Use the backend API directly via proxy or direct fetch
-                // For now, assuming we can fetch from the backend if CORS allows or via Next.js API route
-                // Let's use the pattern from dashboard page but client-side? 
-                // Actually, client-side fetch to external backend might have CORS issues if not configured.
-                // Better to fetch via a Next.js API route that proxies to the Python backend.
-                // But for MVP, let's assume the backend URL is public or we use a server action.
-                
-                // For this implementation, I'll fetch from a new Next.js API route I'll create: /api/proxy/brain
                 const res = await fetch(`/api/bot/brain?userId=${userId}`);
                 if (res.ok) {
                     const json = await res.json();
+                    console.log(`[BrainView] Received neural data:`, {
+                        traits: json.traits?.length,
+                        memories: json.memories?.length
+                    });
                     setData(json);
+                } else {
+                    console.error(`[BrainView] API Error: ${res.status} ${res.statusText}`);
                 }
             } catch (e) {
-                console.error("Failed to fetch brain data", e);
+                console.error("[BrainView] Fetch operation failed", e);
             } finally {
                 setLoading(false);
             }
@@ -63,12 +62,12 @@ export default function BrainView({ userId }: { userId: string }) {
 
     const traitsByCategory = data.traits.reduce((acc, trait) => {
         let cat = trait.category ? trait.category.toLowerCase() : 'personality';
-        
+
         // Map common variations or missing cats to the 4 main buckets
         if (!['location', 'personality', 'goal', 'relationship'].includes(cat)) {
             cat = 'personality'; // Fallback for 'general', 'N/A', etc.
         }
-        
+
         if (!acc[cat]) acc[cat] = [];
         acc[cat].push(trait);
         return acc;

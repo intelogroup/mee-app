@@ -8,29 +8,33 @@ export async function GET(request: Request) {
         return NextResponse.json({ error: 'Missing userId' }, { status: 400 });
     }
 
-    const botApiUrl = process.env.BOT_BACKEND_API_URL || "http://127.0.0.1:8000";
     const botApiKey = process.env.BOT_BACKEND_API_KEY;
-    
+    const botApiUrl = process.env.BOT_BACKEND_API_URL || "http://127.0.0.1:8000";
     const targetUrl = `${botApiUrl}/api/dashboard/brain/${userId}`;
-    console.log(`[Proxy] Fetching brain data from: ${targetUrl}`);
+
+    console.log(`[Proxy] Fetching brain data for ${userId} from: ${targetUrl}`);
+    if (!botApiKey) {
+        console.warn("[Proxy] Missing BOT_BACKEND_API_KEY in environment");
+    }
 
     try {
         const res = await fetch(targetUrl, {
             headers: {
-                // If backend requires auth
                 'Authorization': `Bearer ${botApiKey}`
             },
-            next: { revalidate: 0 } // No cache for debugging
+            next: { revalidate: 0 }
         });
 
         if (!res.ok) {
-            return NextResponse.json({ error: 'Backend error' }, { status: res.status });
+            console.error(`[Proxy] Backend returned error: ${res.status} ${res.statusText} at ${targetUrl}`);
+            return NextResponse.json({ error: `Backend error: ${res.status}` }, { status: res.status });
         }
 
         const data = await res.json();
+        console.log(`[Proxy] Successfully proxied brain data for ${userId} (${res.status} OK)`);
         return NextResponse.json(data);
     } catch (error) {
-        console.error("Brain proxy error:", error);
+        console.error("[Proxy] Unexpected error in brain proxy:", error);
         return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
     }
 }
