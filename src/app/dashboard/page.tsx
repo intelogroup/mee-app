@@ -121,7 +121,7 @@ export default async function DashboardPage() {
                             Mee is online and ready to assist.
                         </p>
                     </div>
-                    
+
                     {/* Compact Profile Summary */}
                     <div className="flex items-center gap-4 bg-white/5 p-2 pr-6 rounded-2xl border border-white/10 backdrop-blur-md">
                         <div className="w-10 h-10 rounded-xl bg-accent/20 flex items-center justify-center text-accent font-bold text-lg border border-accent/20">
@@ -180,13 +180,24 @@ export default async function DashboardPage() {
                         </div>
                     </div>
 
-                    <div className="glass-card p-6 rounded-3xl border border-white/10 bg-white/5 relative overflow-hidden group hover:border-accent/30 transition-all text-center sm:text-left">
+                    <Link
+                        href="/dashboard/brain"
+                        className="glass-card p-6 rounded-3xl border border-white/10 bg-white/5 relative overflow-hidden group hover:border-accent/30 transition-all text-center sm:text-left cursor-pointer"
+                    >
+                        <div className="absolute top-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-all translate-x-4 group-hover:translate-x-0">
+                            <svg className="w-5 h-5 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
+                        </div>
                         <span className="text-[10px] uppercase tracking-widest text-text-muted font-bold mb-1 block">Memories</span>
-                        <div className="flex items-baseline gap-2 justify-center sm:justify-start">
+                        <div className="flex items-baseline gap-2 justify-center sm:justify-start mb-4">
                             <span className="text-3xl font-black text-white">{traits.length}</span>
                             <span className="text-xs text-accent font-medium">Active Traits</span>
                         </div>
-                    </div>
+                        <div className="text-[10px] text-accent font-bold uppercase tracking-tighter py-1 px-2 bg-accent/10 rounded-md inline-block group-hover:bg-accent group-hover:text-white transition-all">
+                            View Brain Interface
+                        </div>
+                    </Link>
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
@@ -194,13 +205,13 @@ export default async function DashboardPage() {
                     <div className="lg:col-span-4 flex flex-col gap-6">
                         <div className="glass-card p-8 rounded-[2rem] border border-white/10 bg-white/5 backdrop-blur-2xl flex flex-col shadow-2xl relative overflow-hidden">
                             <div className="absolute top-0 right-0 w-32 h-32 bg-accent/10 blur-[60px] -mr-16 -mt-16 rounded-full" />
-                            
+
                             <div className="flex items-center justify-between mb-8">
                                 <h2 className="text-xl font-bold text-white tracking-tight">Your Mee Bot</h2>
                                 <div className={`flex items-center gap-2 px-3 py-1 rounded-xl text-[10px] font-black uppercase tracking-tighter border ${isLinked
                                     ? "bg-accent/10 text-accent border-accent/20"
                                     : "bg-yellow-500/10 text-yellow-500 border-yellow-500/20"
-                                }`}>
+                                    }`}>
                                     {isLinked ? "Connected" : "Action Required"}
                                 </div>
                             </div>
@@ -220,7 +231,7 @@ export default async function DashboardPage() {
                             </div>
 
                             <p className="text-xs text-text-muted text-center mb-8 leading-relaxed max-w-[220px] mx-auto">
-                                {isLinked 
+                                {isLinked
                                     ? "Connected to your personal social co-pilot. Talk to Mee on Telegram to start evolving."
                                     : "Scan the secure code to link your account and start your social transformation."
                                 }
@@ -237,6 +248,12 @@ export default async function DashboardPage() {
                                 >
                                     <span>✈</span> Open Telegram <span className="opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all">→</span>
                                 </a>
+                                <Link
+                                    href="/dashboard/brain"
+                                    className="flex items-center justify-center gap-3 w-full py-4 px-6 bg-white/5 text-white font-bold rounded-2xl border border-white/10 hover:bg-white/10 transition-all active:scale-[0.98] text-sm group"
+                                >
+                                    <span>🔮</span> The Mirror <span className="opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all">→</span>
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -249,7 +266,7 @@ export default async function DashboardPage() {
                                 <h2 className="text-xl font-bold text-white tracking-tight">Social Identity</h2>
                                 <span className="text-[10px] uppercase tracking-widest text-accent font-black">Distilled Facts</span>
                             </div>
-                            
+
                             {traits.length > 0 ? (
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                     {traits.map((trait) => (
@@ -307,7 +324,7 @@ export default async function DashboardPage() {
                             <div className="glass-card p-8 rounded-[2rem] border border-red-500/10 bg-red-500/5 backdrop-blur-xl flex flex-col group hover:bg-red-500/10 transition-colors">
                                 <h2 className="text-xs font-black uppercase tracking-[0.2em] text-red-500/60 mb-4">Memory Control</h2>
                                 <p className="text-[11px] text-text-muted leading-relaxed mb-8">
-                                    Stop Mee from analyzing your behavior. All future social coaching will be disabled. 
+                                    Stop Mee from analyzing your behavior. All future social coaching will be disabled.
                                     <span className="block mt-2 text-red-400 opacity-0 group-hover:opacity-100 transition-opacity italic">Reversible action.</span>
                                 </p>
                                 <div className="mt-auto">
