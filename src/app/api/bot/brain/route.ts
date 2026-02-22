@@ -10,14 +10,17 @@ export async function GET(request: Request) {
 
     const botApiUrl = process.env.BOT_BACKEND_API_URL || "http://127.0.0.1:8000";
     const botApiKey = process.env.BOT_BACKEND_API_KEY;
+    
+    const targetUrl = `${botApiUrl}/api/dashboard/brain/${userId}`;
+    console.log(`[Proxy] Fetching brain data from: ${targetUrl}`);
 
     try {
-        const res = await fetch(`${botApiUrl}/api/dashboard/brain/${userId}`, {
+        const res = await fetch(targetUrl, {
             headers: {
                 // If backend requires auth
                 'Authorization': `Bearer ${botApiKey}`
             },
-            next: { revalidate: 0 } // Disable caching to ensure we see the fix
+            next: { revalidate: 0 } // No cache for debugging
         });
 
         if (!res.ok) {
