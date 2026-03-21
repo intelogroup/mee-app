@@ -12,7 +12,11 @@ SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_SERVICE_KEY = os.getenv("SUPABASE_SERVICE_KEY")
 BOT_WEBHOOK_SECRET = os.getenv("BOT_WEBHOOK_SECRET")
 TAVILY_API_KEY = os.getenv("TAVILY_API_KEY")
+CRON_SECRET = os.getenv("CRON_SECRET")
 
 
 if not all([TELEGRAM_BOT_TOKEN, GROQ_API_KEY, PINECONE_API_KEY, SUPABASE_URL, SUPABASE_SERVICE_KEY]):
     print("WARNING: Some environment variables are missing.")
+
+if not CRON_SECRET:
+    print("WARNING: CRON_SECRET is not set. Cron endpoints will reject all requests.")

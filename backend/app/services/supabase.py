@@ -1,10 +1,13 @@
 
+import asyncio
+import logging
+
 from supabase import create_client, Client
 from app.core.config import SUPABASE_URL, SUPABASE_SERVICE_KEY
 
-supabase: Client = create_client(SUPABASE_URL, SUPABASE_SERVICE_KEY)
+logger = logging.getLogger(__name__)
 
-import asyncio
+supabase: Client = create_client(SUPABASE_URL, SUPABASE_SERVICE_KEY)
 
 async def get_user_by_telegram_id(telegram_id: str):
     response = await asyncio.to_thread(
@@ -25,7 +28,8 @@ async def link_telegram_account(token: str, telegram_id: str):
         if existing_link.get("id") == token:
             return True, "You're already linked and ready to go! 🎉"
         else:
-            pass
+            logger.warning(f"Telegram ID {telegram_id} is already linked to a different account.")
+            return False, "This Telegram account is already linked to another Mee profile."
 
     # 2. Check if the profile (token) exists
     user_response = await asyncio.to_thread(
@@ -39,7 +43,7 @@ async def link_telegram_account(token: str, telegram_id: str):
     # 3. Check if the profile is already linked to a DIFFERENT telegram ID
     current_chat_id = user_profile.get("telegram_chat_id")
     if current_chat_id and current_chat_id != telegram_id:
-        pass
+        logger.warning(f"Profile {token} is already linked to Telegram ID {current_chat_id}, re-linking to {telegram_id}.")
 
     # 4. Update profile with the new telegram_chat_id
     try:
@@ -62,7 +66,7 @@ async def increment_message_count(user_id: str):
         )
     except Exception as e:
         # Non-critical, just log it
-        print(f"Failed to increment message count: {e}")
+        logger.warning(f"Failed to increment message count: {e}")
 
 async def update_onboarding_step(user_id: str, step: int):
     try:
@@ -70,7 +74,7 @@ async def update_onboarding_step(user_id: str, step: int):
             supabase.table("profiles").update({"onboarding_step": step}).eq("id", user_id).execute
         )
     except Exception as e:
-        print(f"Failed to update onboarding step: {e}")
+        logger.warning(f"Failed to update onboarding step: {e}")
 
 async def log_message(user_id: str, role: str, content: str):
     """Logs a message to the Supabase messages table."""
@@ -83,7 +87,7 @@ async def log_message(user_id: str, role: str, content: str):
             }).execute
         )
     except Exception as e:
-        print(f"Failed to log message: {e}")
+        logger.warning(f"Failed to log message: {e}")
 
 async def get_unsynced_messages(user_id: str, last_summary_at: str):
     """Fetches messages for a user created after last_summary_at."""
@@ -98,7 +102,7 @@ async def get_unsynced_messages(user_id: str, last_summary_at: str):
         )
         return response.data
     except Exception as e:
-        print(f"Failed to fetch unsynced messages: {e}")
+        logger.warning(f"Failed to fetch unsynced messages: {e}")
         return []
 
 async def update_last_summary_at(user_id: str):
@@ -110,7 +114,7 @@ async def update_last_summary_at(user_id: str):
             supabase.table("profiles").update({"last_summary_at": now}).eq("id", user_id).execute
         )
     except Exception as e:
-        print(f"Failed to update last_summary_at: {e}")
+        logger.warning(f"Failed to update last_summary_at: {e}")
 
 async def get_stale_profiles():
     """
@@ -130,5 +134,5 @@ async def get_stale_profiles():
         )
         return response.data
     except Exception as e:
-        print(f"Failed to fetch stale profiles: {e}")
+        logger.warning(f"Failed to fetch stale profiles: {e}")
         return []

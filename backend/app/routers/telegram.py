@@ -1,6 +1,6 @@
 
 from fastapi import APIRouter, Request, Header, HTTPException, BackgroundTasks
-from app.core.config import TELEGRAM_BOT_TOKEN, BOT_WEBHOOK_SECRET
+from app.core.config import TELEGRAM_BOT_TOKEN, BOT_WEBHOOK_SECRET, CRON_SECRET
 from app.services.groq import get_groq_response, extract_traits, transcribe_audio
 from app.services.search import search_web
 from app.services.pinecone import save_memory, get_recent_memories, pc, PINECONE_INDEX # accessing embedding logic directly or via service
@@ -32,9 +32,7 @@ async def trigger_summaries(background_tasks: BackgroundTasks, x_cron_secret: st
     Triggered by Supabase pg_cron every hour.
     Iterates through users who haven't been summarized recently and queues background tasks.
     """
-    # Simple secret check (should be in env vars in prod)
-    EXPECTED_SECRET = "mee-cron-secret-123" 
-    if x_cron_secret != EXPECTED_SECRET:
+    if not CRON_SECRET or x_cron_secret != CRON_SECRET:
         raise HTTPException(status_code=401, detail="Unauthorized Cron Access")
 
     stale_users = await get_stale_profiles()
@@ -60,9 +58,7 @@ async def process_pings(background_tasks: BackgroundTasks, x_cron_secret: str = 
     Triggered by Supabase pg_cron (e.g., every 15 mins).
     Checks for pending 'scheduled_messages' that are due and sends them.
     """
-    # Simple secret check
-    EXPECTED_SECRET = "mee-cron-secret-123"
-    if x_cron_secret != EXPECTED_SECRET:
+    if not CRON_SECRET or x_cron_secret != CRON_SECRET:
         raise HTTPException(status_code=401, detail="Unauthorized Cron Access")
 
     try:
