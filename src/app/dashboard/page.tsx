@@ -24,6 +24,42 @@ async function getProfile(userId: string) {
     return data;
 }
 
+interface SessionSummary {
+    started_at: string;
+    summary: string;
+    message_count: number;
+}
+
+async function getRecentSessions(userId: string): Promise<SessionSummary[]> {
+    const botApiKey = process.env.BOT_BACKEND_API_KEY;
+    const botApiUrl = process.env.BOT_BACKEND_API_URL || "https://mee-app-backend.onrender.com";
+
+    if (!botApiKey) return [];
+
+    try {
+        const res = await fetch(
+            `${botApiUrl}/api/dashboard/conversations/${userId}?limit=20&offset=0`,
+            {
+                headers: { Authorization: `Bearer ${botApiKey}` },
+                next: { revalidate: 60 },
+            }
+        );
+        if (!res.ok) return [];
+        const data = await res.json();
+        // Return top 3 most recent sessions with summaries
+        return (data.sessions || [])
+            .filter((s: SessionSummary) => s.summary)
+            .slice(0, 3)
+            .map((s: SessionSummary) => ({
+                started_at: s.started_at,
+                summary: s.summary,
+                message_count: s.message_count,
+            }));
+    } catch {
+        return [];
+    }
+}
+
 async function getTraits(userId: string): Promise<string[]> {
     const botApiKey = process.env.BOT_BACKEND_API_KEY;
     const botApiUrl = process.env.BOT_BACKEND_API_URL || "https://mee-app-backend.onrender.com";
@@ -59,10 +95,11 @@ export default async function DashboardPage() {
         process.env.NEXT_PUBLIC_TELEGRAM_BOT_USERNAME || "YourBotName";
     const deepLink = `https://t.me/${botUsername}?start=${user.id}`;
 
-    const [profile, qrDataUrl, traits] = await Promise.all([
+    const [profile, qrDataUrl, traits, recentSessions] = await Promise.all([
         getProfile(user.id),
         getQRCode(deepLink),
         getTraits(user.id),
+        getRecentSessions(user.id),
     ]);
     const isLinked = !!profile?.telegram_chat_id;
     const messageCount = profile?.message_count || 0;
@@ -256,6 +293,12 @@ export default async function DashboardPage() {
                                 >
                                     <span>🔮</span> The Mirror <span className="opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all">→</span>
                                 </Link>
+                                <Link
+                                    href="/dashboard/history"
+                                    className="flex items-center justify-center gap-3 w-full py-4 px-6 bg-white/5 text-white font-bold rounded-2xl border border-white/10 hover:bg-white/10 transition-all active:scale-[0.98] text-sm group"
+                                >
+                                    <span>💬</span> Session History <span className="opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all">→</span>
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -289,6 +332,56 @@ export default async function DashboardPage() {
                                         {isLinked
                                             ? "Mee hasn't distilled any traits yet. Keep chatting to build your profile."
                                             : "Link your account to unlock your personality profile."}
+                                    </p>
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Recent Sessions / Context Summaries */}
+                        <div className="glass-card p-8 rounded-[2rem] border border-white/10 bg-white/5 backdrop-blur-2xl shadow-xl">
+                            <div className="flex items-center justify-between mb-6">
+                                <h2 className="text-xl font-bold text-white tracking-tight">Recent Sessions</h2>
+                                <Link
+                                    href="/dashboard/history"
+                                    className="text-[10px] text-accent font-black uppercase tracking-tighter hover:underline"
+                                >
+                                    View All
+                                </Link>
+                            </div>
+
+                            {recentSessions.length > 0 ? (
+                                <div className="space-y-3">
+                                    {recentSessions.map((session, idx) => (
+                                        <Link
+                                            key={`${session.started_at}-${idx}`}
+                                            href="/dashboard/history"
+                                            className="block px-4 py-3 bg-white/5 border border-white/10 rounded-2xl group hover:bg-accent/5 hover:border-accent/20 transition-all"
+                                        >
+                                            <div className="flex items-center justify-between mb-1">
+                                                <span className="text-xs font-bold text-white">
+                                                    {new Date(session.started_at).toLocaleDateString("en-US", {
+                                                        month: "short",
+                                                        day: "numeric",
+                                                        hour: "numeric",
+                                                        minute: "2-digit",
+                                                    })}
+                                                </span>
+                                                <span className="text-[10px] text-text-muted">
+                                                    {session.message_count} msgs
+                                                </span>
+                                            </div>
+                                            <p className="text-xs text-text-secondary group-hover:text-white transition-colors line-clamp-2">
+                                                {session.summary}
+                                            </p>
+                                        </Link>
+                                    ))}
+                                </div>
+                            ) : (
+                                <div className="py-8 text-center border-2 border-dashed border-white/5 rounded-3xl">
+                                    <p className="text-sm text-text-muted leading-relaxed max-w-sm mx-auto">
+                                        {isLinked
+                                            ? "No sessions yet. Chat with Mee on Telegram and session summaries will appear here."
+                                            : "Link your Telegram to start coaching sessions."}
                                     </p>
                                 </div>
                             )}
