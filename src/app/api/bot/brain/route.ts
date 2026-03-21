@@ -13,9 +13,8 @@ export async function GET(request: Request) {
     const botApiKey = process.env.BOT_BACKEND_API_KEY;
     const targetUrl = `${botApiUrl}/api/dashboard/brain/${userId}`;
 
-    console.log(`[Proxy] Fetching brain data for ${userId} from: ${targetUrl}`);
     if (!botApiKey) {
-        console.warn("[Proxy] Missing BOT_BACKEND_API_KEY in environment");
+        return NextResponse.json({ error: 'Server misconfiguration' }, { status: 500 });
     }
 
     try {
@@ -35,25 +34,18 @@ export async function GET(request: Request) {
         clearTimeout(timeoutId);
 
         if (!res.ok) {
-            const errorText = await res.text();
-            console.error(`[Proxy] Backend returned error ${res.status}: ${errorText}`);
             return NextResponse.json({
                 error: 'Backend error',
                 status: res.status,
-                url: targetUrl,
-                detail: errorText.slice(0, 100)
             }, { status: res.status });
         }
 
         const data = await res.json();
-        console.log(`[Proxy] Successfully fetched data for ${userId}`);
         return NextResponse.json(data);
     } catch (error: any) {
-        console.error("Brain proxy error:", error);
         return NextResponse.json({
             error: 'Connection failed',
-            message: error.name === 'AbortError' ? 'Timeout' : error.message,
-            url: targetUrl
+            message: error.name === 'AbortError' ? 'Timeout' : 'Backend unavailable',
         }, { status: 502 });
     }
 }

@@ -50,8 +50,6 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ error: "Failed to link account." }, { status: 500 });
     }
 
-    console.log(`✅ Bot linked: user=${user_id} telegram_chat_id=${telegram_chat_id}`);
-
     return NextResponse.json({
         success: true,
         message: `Linked Telegram ${telegram_chat_id} to user ${user_id}`,
