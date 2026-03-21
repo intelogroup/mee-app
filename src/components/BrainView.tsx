@@ -28,21 +28,14 @@ export default function BrainView({ userId }: { userId: string }) {
 
     useEffect(() => {
         const fetchData = async () => {
-            console.log(`[BrainView] Fetching neural data for user: ${userId}`);
             try {
                 const res = await fetch(`/api/bot/brain?userId=${userId}`);
                 if (res.ok) {
                     const json = await res.json();
-                    console.log(`[BrainView] Received neural data:`, {
-                        traits: json.traits?.length,
-                        memories: json.memories?.length
-                    });
                     setData(json);
-                } else {
-                    console.error(`[BrainView] API Error: ${res.status} ${res.statusText}`);
                 }
             } catch (e) {
-                console.error("[BrainView] Fetch operation failed", e);
+                // Fetch failed silently — UI shows fallback
             } finally {
                 setLoading(false);
             }
@@ -132,11 +125,6 @@ export default function BrainView({ userId }: { userId: string }) {
                 </div>
             </div>
 
-            {/* DEBUG: Raw Data Dump */}
-            <div className="mt-12 p-4 bg-black/50 rounded-xl border border-white/10 overflow-auto max-h-60 text-[10px] font-mono text-green-400">
-                <h4 className="font-bold text-white mb-2">DEBUG DATA DUMP</h4>
-                <pre>{JSON.stringify(data, null, 2)}</pre>
-            </div>
         </div>
     );
 }
