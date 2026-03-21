@@ -6,7 +6,7 @@ Focus: complete the coaching experience from onboarding through ongoing use. Tel
 
 ## P0 — Journey Blockers (ship these first)
 
-- [ ] **Conversation history UI** — show past Telegram coaching sessions in the web dashboard; users need to review what the bot said
+- [x] **Conversation history UI** — show past Telegram coaching sessions in the web dashboard; users need to review what the bot said
 - [ ] **Onboarding completion gate** — enforce the onboarding steps before unlocking full coaching; currently tracked but not gated
 - [ ] **Bot connection error handling** — clear UI state when Telegram link fails or token expires; currently silently broken
 - [ ] **Trait/profile editor** — users should be able to correct or add traits the bot inferred; currently read-only
