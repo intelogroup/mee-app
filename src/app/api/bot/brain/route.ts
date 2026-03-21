@@ -1,12 +1,17 @@
 import { NextResponse } from 'next/server';
+import { createClient } from '@/lib/supabase';
 
 export async function GET(request: Request) {
-    const { searchParams } = new URL(request.url);
-    const userId = searchParams.get('userId');
+    // Verify authenticated user and scope to their own data
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
 
-    if (!userId) {
-        return NextResponse.json({ error: 'Missing userId' }, { status: 400 });
+    if (!user) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
+
+    // Users can only access their own brain data
+    const userId = user.id;
 
     // Normalize URL (no trailing slash)
     const botApiUrl = (process.env.BOT_BACKEND_API_URL || "https://mee-app-backend.onrender.com").replace(/\/$/, "");
@@ -24,7 +29,7 @@ export async function GET(request: Request) {
         const res = await fetch(targetUrl, {
             headers: {
                 // Backend requires auth for these endpoints
-                'Authorization': botApiKey ? `Bearer ${botApiKey}` : '',
+                'Authorization': `Bearer ${botApiKey}`,
                 'User-Agent': 'Mee-App-Proxy/1.0',
             },
             signal: controller.signal,
