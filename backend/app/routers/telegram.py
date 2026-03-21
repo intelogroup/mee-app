@@ -118,7 +118,7 @@ ONBOARDING_QUESTIONS = [
 
 # Helper to send message
 async def send_telegram_message(chat_id: int, text: str):
-    logger.info(f"Sending message to chat_id {chat_id}: {text[:50]}...")
+    logger.info(f"Sending message to chat_id {chat_id} (length={len(text)})")
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
     payload = {"chat_id": chat_id, "text": text}
     
@@ -210,7 +210,7 @@ async def process_telegram_update(update: dict, background_tasks: BackgroundTask
                     await send_telegram_message(chat_id, "Sorry, I couldn't understand that audio.")
                     return
                     
-                logger.info(f"Transcribed voice note: {text}")
+                logger.info(f"Transcribed voice note (length={len(text)})")
                 
                 # Immediate feedback: Show the user what we transcribed
                 await send_telegram_message(chat_id, f"🎤 *Heard:* _{text}_")
@@ -221,7 +221,7 @@ async def process_telegram_update(update: dict, background_tasks: BackgroundTask
                 await send_telegram_message(chat_id, "Something went wrong while listening to your voice note. Please try again.")
                 return
 
-        logger.info(f"Processing update for chat_id {chat_id}, text: {text}")
+        logger.info(f"Processing update for chat_id {chat_id} (text_length={len(text)})")
 
         # 1. Handle /start <token> linking
         if text.startswith("/start"):
@@ -271,7 +271,7 @@ async def process_telegram_update(update: dict, background_tasks: BackgroundTask
                 trait_vector = await get_embedding(trait_text, input_type="passage")
                 if trait_vector:
                     await save_memory(user_id, trait_text, "trait", trait_vector, {"category": trait_category})
-                    logger.info(f"Onboarding trait captured organically: {trait_text} ({trait_category})")
+                    logger.info(f"Onboarding trait captured organically (category={trait_category})")
             
             # Increment step until 4 (where we consider "onboarding" complete)
             await update_onboarding_step(user_id, onboarding_step + 1)
@@ -437,7 +437,7 @@ Memories: {context_str if context_str else "Clean slate."}
         })
         
         if not validation.is_valid:
-            logger.warning(f"Guardrail Flag: {validation.reason}. Original: {response_text[:50]}...")
+            logger.warning(f"Guardrail Flag: {validation.reason} (response_length={len(response_text)})")
             if validation.reason == "Banned phrases detected.":
                 # Automated Retry with stricter meta-prompt
                 messages.append({"role": "assistant", "content": response_text})
@@ -450,7 +450,7 @@ Memories: {context_str if context_str else "Clean slate."}
         else:
             response_text = validation.cleaned_text
 
-        logger.info(f"Final Response Sent: {response_text[:50]}...")
+        logger.info(f"Final Response Sent (length={len(response_text)})")
 
         # 5. Send Response
         await send_telegram_message(chat_id, response_text)
@@ -483,7 +483,7 @@ Memories: {context_str if context_str else "Clean slate."}
         if trait_obj:
             trait_text = trait_obj["trait"]
             trait_category = trait_obj["category"]
-            logger.info(f"Extracted trait: {trait_text} (Category: {trait_category})")
+            logger.info(f"Extracted trait (category={trait_category})")
             
             # RECONCILIATION: Search for similar existing traits in the SAME category
             trait_vector = await get_embedding(trait_text, input_type="passage")
@@ -526,7 +526,7 @@ Memories: {context_str if context_str else "Clean slate."}
                     conflict_text = conflict_text_raw.strip()
                     
                     if conflict_text == "EXISTS":
-                        logger.info(f"Fact already exists (score > 0.88), skipping save: {trait_text}")
+                        logger.info("Fact already exists (score > 0.88), skipping save")
                         is_duplicate = True
                     elif conflict_text != "NONE":
                         # Match the conflict text back to an ID
@@ -548,11 +548,11 @@ Memories: {context_str if context_str else "Clean slate."}
                                     }],
                                     namespace=str(user_id)
                                 )
-                                logger.info(f"Stored pending clarification for: {conflict_text} vs {trait_text}")
+                                logger.info("Stored pending clarification for conflicting traits")
 
                                 # Delete the old conflicting trait
                                 await asyncio.to_thread(index.delete, ids=[match.id], namespace=str(user_id))
-                                logger.info(f"Deleted conflicting trait: {conflict_text}")
+                                logger.info(f"Deleted conflicting trait (id={match.id})")
                                 break
 
                 # 3. Save new trait (Skip if duplicate)
@@ -573,7 +573,7 @@ Memories: {context_str if context_str else "Clean slate."}
                         }],
                         namespace=str(user_id)
                     )
-                    logger.info(f"Saved distilled fact to Pinecone: {trait_text}")
+                    logger.info(f"Saved distilled fact to Pinecone (category={trait_category})")
         else:
             logger.info("No significant permanent fact found in this message.")
 

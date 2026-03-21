@@ -1,8 +1,11 @@
 
 import os
+import logging
 from dotenv import load_dotenv
 
 load_dotenv()
+
+logger = logging.getLogger(__name__)
 
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
@@ -16,7 +19,7 @@ CRON_SECRET = os.getenv("CRON_SECRET")
 
 
 if not all([TELEGRAM_BOT_TOKEN, GROQ_API_KEY, PINECONE_API_KEY, SUPABASE_URL, SUPABASE_SERVICE_KEY]):
-    print("WARNING: Some environment variables are missing.")
+    logger.warning("Some environment variables are missing.")
 
 if not CRON_SECRET:
-    print("WARNING: CRON_SECRET is not set. Cron endpoints will reject all requests.")
+    logger.warning("CRON_SECRET is not set. Cron endpoints will reject all requests.")

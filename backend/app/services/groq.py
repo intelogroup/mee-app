@@ -53,9 +53,7 @@ async def get_groq_response(messages, model="llama-3.3-70b-versatile", json_mode
         chat_completion = await client.chat.completions.create(**kwargs)
         return chat_completion.choices[0].message.content
     except Exception as e:
-        import traceback
-        print(f"Error calling Groq: {e}")
-        traceback.print_exc()
+        logger.error(f"Error calling Groq: {e}", exc_info=True)
         return "Sorry, I'm having trouble thinking right now."
 
 async def extract_traits(text: str, model="llama-3.1-8b-instant"):
@@ -97,7 +95,7 @@ async def extract_traits(text: str, model="llama-3.1-8b-instant"):
             
         return res
     except Exception as e:
-        print(f"Error extracting traits: {e}")
+        logger.error(f"Error extracting traits: {e}", exc_info=True)
         return None
 
 async def transcribe_audio(audio_bytes: bytes, filename: str = "voice.oga"):
