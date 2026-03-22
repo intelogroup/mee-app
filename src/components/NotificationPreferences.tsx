@@ -24,6 +24,41 @@ interface Preferences {
     weekly_checkin_hour: number;
 }
 
+function getLocalTimezone(): string {
+    try {
+        return Intl.DateTimeFormat().resolvedOptions().timeZone;
+    } catch {
+        return 'Unknown';
+    }
+}
+
+function getNextReminderText(prefs: Preferences): string {
+    if (!prefs.weekly_checkin_enabled) return '';
+
+    const now = new Date();
+    const targetDay = prefs.weekly_checkin_day;
+    const targetHour = prefs.weekly_checkin_hour;
+    const currentDay = now.getDay();
+    const currentHour = now.getHours();
+
+    let daysUntil = targetDay - currentDay;
+    if (daysUntil < 0 || (daysUntil === 0 && currentHour >= targetHour)) {
+        daysUntil += 7;
+    }
+
+    const next = new Date(now);
+    next.setDate(now.getDate() + daysUntil);
+    next.setHours(targetHour, 0, 0, 0);
+
+    return next.toLocaleDateString('en-US', {
+        weekday: 'long',
+        month: 'short',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: '2-digit',
+    });
+}
+
 export default function NotificationPreferences() {
     const [prefs, setPrefs] = useState<Preferences>({
         weekly_checkin_enabled: false,
@@ -34,6 +69,7 @@ export default function NotificationPreferences() {
     const [saving, setSaving] = useState(false);
     const [saved, setSaved] = useState(false);
     const [error, setError] = useState('');
+    const [timezone] = useState(getLocalTimezone);
 
     useEffect(() => {
         fetch('/api/user/preferences')
@@ -170,11 +206,51 @@ export default function NotificationPreferences() {
                             </select>
                         </div>
 
+                        <div className="glass-card p-4 rounded-xl border border-accent/20 bg-accent/5">
+                            <div className="flex items-start gap-3">
+                                <span className="text-lg flex-shrink-0">📅</span>
+                                <div>
+                                    <p className="text-xs text-white font-medium mb-1">Next reminder</p>
+                                    <p className="text-[11px] text-text-secondary">
+                                        {getNextReminderText(prefs)}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                            <span className="text-[11px] text-text-muted">
+                                🌐 Timezone: {timezone}
+                            </span>
+                        </div>
+
                         <p className="text-[11px] text-text-muted">
                             Reminders are sent via Telegram. Make sure your bot is linked on the dashboard.
                         </p>
                     </div>
                 )}
+            </div>
+
+            {/* Re-engagement Nudge Info */}
+            <div className="glass-card p-6 rounded-3xl border border-white/10 bg-white/5">
+                <div className="flex items-center justify-between mb-4">
+                    <div>
+                        <h3 className="text-lg font-bold text-white tracking-tight">
+                            Re-engagement Nudge
+                        </h3>
+                        <p className="text-xs text-text-muted mt-1 max-w-md">
+                            If you haven&apos;t chatted with Mee in 7 days, the bot will send a gentle prompt to check in.
+                            This is always on to help maintain coaching momentum.
+                        </p>
+                    </div>
+                    <div className="px-3 py-1.5 rounded-xl text-[10px] font-bold uppercase tracking-wide bg-accent/10 text-accent border border-accent/20">
+                        Always On
+                    </div>
+                </div>
+                <p className="text-[11px] text-text-muted leading-relaxed">
+                    The nudge is a single friendly message — never spammy. You can always ignore it.
+                    If you want to fully stop coaching, use the deactivate option on your dashboard.
+                </p>
             </div>
 
             {/* Save button */}

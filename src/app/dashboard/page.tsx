@@ -327,6 +327,12 @@ export default async function DashboardPage() {
                                 >
                                     <span>📈</span> Progress Timeline <span className="opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all">→</span>
                                 </Link>
+                                <Link
+                                    href="/dashboard/settings"
+                                    className="flex items-center justify-center gap-3 w-full py-4 px-6 bg-white/5 text-white font-bold rounded-2xl border border-white/10 hover:bg-white/10 transition-all active:scale-[0.98] text-sm group"
+                                >
+                                    <span>🔔</span> Notification Settings <span className="opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all">→</span>
+                                </Link>
                             </div>
                         </div>
                     </div>

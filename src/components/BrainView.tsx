@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import TraitConnectionGraph from './TraitConnectionGraph';
+import PatternInsights from './PatternInsights';
 
 interface Trait {
     id: string;
@@ -173,6 +175,21 @@ export default function BrainView({ userId }: { userId: string }) {
                 <StatCard label="Episodic Depth" value={data.memories.length.toString()} sub="Memories" color="text-blue-400" />
                 <StatCard label="Last Sync" value="Just now" sub="Real-time" color="text-green-400" />
             </div>
+
+            {/* Knowledge Graph Visualization */}
+            <div className="glass-card p-6 rounded-3xl border border-white/10 bg-white/5">
+                <div className="flex items-center gap-3 mb-4">
+                    <span className="text-2xl">{'\uD83D\uDD78\uFE0F'}</span>
+                    <div>
+                        <h3 className="text-lg font-bold text-white tracking-tight">Knowledge Graph</h3>
+                        <p className="text-[11px] text-text-muted">Visual map of how Mee understands you. Each node is a trait, colored by category and connected to you at the center.</p>
+                    </div>
+                </div>
+                <TraitConnectionGraph traits={data.traits} />
+            </div>
+
+            {/* Pattern Insights */}
+            <PatternInsights traits={data.traits} memories={data.memories} />
 
             {/* Add Trait Button */}
             <div className="flex justify-end">
