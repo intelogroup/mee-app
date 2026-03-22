@@ -44,7 +44,7 @@ When the pattern matches:
 1. **Skip** all LLM calls, vector search, trait extraction
 2. **Save** the user message to `messages` with `flagged = true`
 3. **Fetch** the most recent assistant message for this user from `messages` (`role = 'assistant'`, `created_at` within the last 10 minutes, ordered by `created_at DESC`, limit 1). The 10-minute window guards against a race condition: two Telegram webhook background tasks for the same user can run concurrently (no per-user lock exists). Without a time window, a correction task could flag an assistant message written by a concurrently-executing normal-message task that isn't what the user is correcting.
-4. **Update** that row: `flagged = true`
+4. **Update** that row: `flagged = true`. If no row found within the window, or if the update fails, log a warning and continue — the correction user message is already saved, so the failure is non-fatal.
 5. **Return early** — no reply sent to Telegram
 
 ### 4. `log_message` service update
@@ -73,11 +73,11 @@ This replaces the full-table scan + in-Python iteration with targeted per-correc
 ## What Doesn't Change
 
 - No reply is sent for flagged messages (silent save, option A)
-- The in-memory `recent_context` sliding window is NOT updated for correction messages (so the correction doesn't pollute the LLM context window on the next turn)
+- The in-memory `recent_context` sliding window is NOT updated for correction messages (so the correction doesn't pollute the LLM context window on the next turn). The bad assistant message that triggered the correction remains in the sliding window — evicting it is out of scope for this feature (the window expires naturally after 6 turns).
 - Existing `is_correction()` patterns in `prepare_training_data.py` remain as a fallback for any unflagged historical messages
 
 ## Edge Cases
 
-- **N: with no ideal text:** Still flagged. Script Case 3 handles this by looking at the next assistant message.
+- **N: with no ideal text:** Still flagged. For new flagged corrections, the training script uses the preceding assistant message as the reference (step 2 of the two-step query). Case 3 (next-assistant lookup) only applies to historical unflagged data.
 - **Correction as first message:** No preceding assistant message to flag — gracefully skip the update step.
 - **User not found:** Early exit already handled upstream in the telegram router.
