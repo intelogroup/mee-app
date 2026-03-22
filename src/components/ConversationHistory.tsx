@@ -30,7 +30,32 @@ export default function ConversationHistory() {
     const [error, setError] = useState<string | null>(null);
     const [expandedSession, setExpandedSession] = useState<number | null>(null);
     const [offset, setOffset] = useState(0);
+    const [sessionSummaries, setSessionSummaries] = useState<Record<number, string>>({});
+    const [loadingSummary, setLoadingSummary] = useState<number | null>(null);
     const limit = 50;
+
+    async function fetchSessionSummary(sessionIndex: number) {
+        if (sessionSummaries[sessionIndex]) return; // already fetched
+        setLoadingSummary(sessionIndex);
+        try {
+            const res = await fetch("/api/bot/conversations", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ sessionIndex }),
+            });
+            if (res.ok) {
+                const json = await res.json();
+                setSessionSummaries((prev) => ({
+                    ...prev,
+                    [sessionIndex]: json.summary,
+                }));
+            }
+        } catch {
+            // silent — summary is optional
+        } finally {
+            setLoadingSummary(null);
+        }
+    }
 
     useEffect(() => {
         fetchConversations();
@@ -167,6 +192,35 @@ export default function ConversationHistory() {
                             />
                         </svg>
                     </button>
+
+                    {/* Session Context Summary */}
+                    {expandedSession === idx && (
+                        <div className="border-t border-white/5 px-6 py-3">
+                            {sessionSummaries[idx] ? (
+                                <div className="bg-accent/5 border border-accent/15 rounded-xl px-4 py-3">
+                                    <p className="text-[10px] uppercase tracking-widest text-accent font-bold mb-1">
+                                        What we discussed
+                                    </p>
+                                    <p className="text-xs text-text-secondary leading-relaxed">
+                                        {sessionSummaries[idx]}
+                                    </p>
+                                </div>
+                            ) : (
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        fetchSessionSummary(idx);
+                                    }}
+                                    disabled={loadingSummary === idx}
+                                    className="text-[10px] text-accent hover:text-white transition-colors disabled:opacity-50"
+                                >
+                                    {loadingSummary === idx
+                                        ? "Generating summary..."
+                                        : "Generate session summary"}
+                                </button>
+                            )}
+                        </div>
+                    )}
 
                     {/* Expanded Messages */}
                     {expandedSession === idx && (

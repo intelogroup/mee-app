@@ -588,11 +588,11 @@ async def get_user_traits(user_id: str, authorization: str = Header(None)):
     Returns a list of distilled traits for a user.
     Used by the Frontend Dashboard.
     """
-    # 1. Verify Authorization
-    if not BOT_WEBHOOK_SECRET or authorization != f"Bearer {BOT_WEBHOOK_SECRET}":
-        # Check if it matches exactly if Bearer is missing (for flexibility)
-        if authorization != BOT_WEBHOOK_SECRET:
-            raise HTTPException(status_code=401, detail="Unauthorized")
+    # 1. Verify Authorization — require Bearer token, no fallback
+    if not BOT_WEBHOOK_SECRET:
+        raise HTTPException(status_code=500, detail="Server misconfigured")
+    if authorization != f"Bearer {BOT_WEBHOOK_SECRET}":
+        raise HTTPException(status_code=401, detail="Unauthorized")
 
     try:
         index = pc.Index(PINECONE_INDEX)
@@ -625,14 +625,18 @@ async def get_user_traits(user_id: str, authorization: str = Header(None)):
 
 @router.post("/webhook")
 async def telegram_webhook(request: Request, background_tasks: BackgroundTasks, x_telegram_bot_api_secret_token: str = Header(None)):
-    # 1. Validate Secret
-    if BOT_WEBHOOK_SECRET and x_telegram_bot_api_secret_token != BOT_WEBHOOK_SECRET:
+    # 1. Validate Secret — reject if secret is missing from env or header doesn't match
+    if not BOT_WEBHOOK_SECRET:
+        logger.error("BOT_WEBHOOK_SECRET not configured — rejecting webhook")
+        raise HTTPException(status_code=500, detail="Server misconfigured")
+    if x_telegram_bot_api_secret_token != BOT_WEBHOOK_SECRET:
         raise HTTPException(status_code=401, detail="Unauthorized")
 
     # 2. Parse Update
     try:
         update = await request.json()
-        logger.info(f"Incoming update: {update}")
+        # Log update_id only — never log message content (PII)
+        logger.info(f"Incoming update_id: {update.get('update_id', 'unknown')}")
     except Exception as e:
         logger.error(f"Failed to parse JSON: {e}")
         raise HTTPException(status_code=400, detail="Invalid JSON")

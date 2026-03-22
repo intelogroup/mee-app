@@ -48,3 +48,12 @@ __pycache__/
 venv/
 .venv/
 .pytest_cache/
+
+# backend runtime artifacts
+backend/ngrok_url.txt
+
+# data exports / debug dumps
+*.csv
+
+# render debug
+render_help.txt

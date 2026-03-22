@@ -1,15 +1,9 @@
-import { redirect } from "next/navigation";
-import { createClient } from "@/lib/supabase";
+import { requireOnboardingComplete } from "@/lib/require-onboarding";
 import ConversationHistory from "@/components/ConversationHistory";
 import Link from "next/link";
 
 export default async function HistoryPage() {
-    const supabase = await createClient();
-    const {
-        data: { user },
-    } = await supabase.auth.getUser();
-
-    if (!user) redirect("/login");
+    const user = await requireOnboardingComplete();
 
     return (
         <main className="min-h-screen relative overflow-hidden bg-background text-text-primary">

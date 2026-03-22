@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 interface Trait {
     id: string;
@@ -21,27 +21,118 @@ interface BrainData {
     memories: Memory[];
 }
 
+const CATEGORIES = ['personality', 'location', 'goal', 'relationship'] as const;
+type Category = typeof CATEGORIES[number];
+
 export default function BrainView({ userId }: { userId: string }) {
     const [data, setData] = useState<BrainData | null>(null);
     const [loading, setLoading] = useState(true);
-    const [activeTab, setActiveTab] = useState<'overview' | 'memories'>('overview');
+    const [editingTrait, setEditingTrait] = useState<Trait | null>(null);
+    const [editText, setEditText] = useState('');
+    const [editCategory, setEditCategory] = useState<string>('personality');
+    const [isAdding, setIsAdding] = useState(false);
+    const [addText, setAddText] = useState('');
+    const [addCategory, setAddCategory] = useState<string>('personality');
+    const [saving, setSaving] = useState(false);
+
+    const fetchData = useCallback(async () => {
+        try {
+            const res = await fetch(`/api/bot/brain?userId=${userId}`);
+            if (res.ok) {
+                const json = await res.json();
+                setData(json);
+            }
+        } catch {
+            // Fetch failed silently — UI shows fallback
+        } finally {
+            setLoading(false);
+        }
+    }, [userId]);
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const res = await fetch(`/api/bot/brain?userId=${userId}`);
-                if (res.ok) {
-                    const json = await res.json();
-                    setData(json);
-                }
-            } catch (e) {
-                // Fetch failed silently — UI shows fallback
-            } finally {
-                setLoading(false);
-            }
-        };
         fetchData();
-    }, [userId]);
+    }, [fetchData]);
+
+    const handleDelete = async (traitId: string) => {
+        if (!confirm('Remove this trait?')) return;
+        setSaving(true);
+        try {
+            const res = await fetch('/api/bot/brain', {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ traitId }),
+            });
+            if (res.ok) {
+                setData(prev => prev ? {
+                    ...prev,
+                    traits: prev.traits.filter(t => t.id !== traitId),
+                } : prev);
+            }
+        } catch {
+            // silent
+        } finally {
+            setSaving(false);
+        }
+    };
+
+    const handleEditSave = async () => {
+        if (!editingTrait || !editText.trim()) return;
+        setSaving(true);
+        try {
+            const res = await fetch('/api/bot/brain', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    traitId: editingTrait.id,
+                    text: editText.trim(),
+                    category: editCategory,
+                }),
+            });
+            if (res.ok) {
+                setData(prev => prev ? {
+                    ...prev,
+                    traits: prev.traits.map(t =>
+                        t.id === editingTrait.id
+                            ? { ...t, text: editText.trim(), category: editCategory }
+                            : t
+                    ),
+                } : prev);
+                setEditingTrait(null);
+            }
+        } catch {
+            // silent
+        } finally {
+            setSaving(false);
+        }
+    };
+
+    const handleAdd = async () => {
+        if (!addText.trim()) return;
+        setSaving(true);
+        try {
+            const res = await fetch('/api/bot/brain', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    text: addText.trim(),
+                    category: addCategory,
+                }),
+            });
+            if (res.ok) {
+                const result = await res.json();
+                setData(prev => prev ? {
+                    ...prev,
+                    traits: [...prev.traits, { id: result.id, text: addText.trim(), category: addCategory, score: 0 }],
+                } : prev);
+                setAddText('');
+                setIsAdding(false);
+            }
+        } catch {
+            // silent
+        } finally {
+            setSaving(false);
+        }
+    };
 
     if (loading) {
         return (
@@ -57,7 +148,7 @@ export default function BrainView({ userId }: { userId: string }) {
         let cat = trait.category ? trait.category.toLowerCase() : 'personality';
 
         // Map common variations or missing cats to the 4 main buckets
-        if (!['location', 'personality', 'goal', 'relationship'].includes(cat)) {
+        if (!CATEGORIES.includes(cat as Category)) {
             cat = 'personality'; // Fallback for 'general', 'N/A', etc.
         }
 
@@ -76,26 +167,110 @@ export default function BrainView({ userId }: { userId: string }) {
                 <StatCard label="Last Sync" value="Just now" sub="Real-time" color="text-green-400" />
             </div>
 
+            {/* Add Trait Button */}
+            <div className="flex justify-end">
+                {isAdding ? (
+                    <div className="flex items-center gap-2 glass-card p-3 rounded-xl border border-accent/30 bg-white/5">
+                        <input
+                            type="text"
+                            value={addText}
+                            onChange={(e) => setAddText(e.target.value)}
+                            placeholder="New trait..."
+                            className="bg-transparent border border-white/20 rounded-lg px-3 py-1.5 text-sm text-white placeholder-text-muted focus:outline-none focus:border-accent"
+                            onKeyDown={(e) => e.key === 'Enter' && handleAdd()}
+                            autoFocus
+                        />
+                        <select
+                            value={addCategory}
+                            onChange={(e) => setAddCategory(e.target.value)}
+                            className="bg-background border border-white/20 rounded-lg px-2 py-1.5 text-xs text-text-secondary"
+                        >
+                            {CATEGORIES.map(c => (
+                                <option key={c} value={c}>{c}</option>
+                            ))}
+                        </select>
+                        <button onClick={handleAdd} disabled={saving || !addText.trim()} className="px-3 py-1.5 bg-accent text-white rounded-lg text-xs font-medium disabled:opacity-50">
+                            {saving ? '...' : 'Add'}
+                        </button>
+                        <button onClick={() => { setIsAdding(false); setAddText(''); }} className="px-2 py-1.5 text-text-muted text-xs hover:text-white">
+                            Cancel
+                        </button>
+                    </div>
+                ) : (
+                    <button onClick={() => setIsAdding(true)} className="px-4 py-2 border border-white/10 hover:border-accent/50 rounded-xl text-xs font-medium text-text-secondary hover:text-white transition-colors">
+                        + Add Trait
+                    </button>
+                )}
+            </div>
+
+            {/* Edit Modal */}
+            {editingTrait && (
+                <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4" onClick={() => setEditingTrait(null)}>
+                    <div className="glass-card p-6 rounded-2xl border border-white/20 bg-background max-w-md w-full space-y-4" onClick={(e) => e.stopPropagation()}>
+                        <h3 className="text-lg font-bold text-white">Edit Trait</h3>
+                        <input
+                            type="text"
+                            value={editText}
+                            onChange={(e) => setEditText(e.target.value)}
+                            className="w-full bg-transparent border border-white/20 rounded-lg px-4 py-2 text-sm text-white focus:outline-none focus:border-accent"
+                            onKeyDown={(e) => e.key === 'Enter' && handleEditSave()}
+                            autoFocus
+                        />
+                        <select
+                            value={editCategory}
+                            onChange={(e) => setEditCategory(e.target.value)}
+                            className="w-full bg-background border border-white/20 rounded-lg px-4 py-2 text-sm text-text-secondary"
+                        >
+                            {CATEGORIES.map(c => (
+                                <option key={c} value={c}>{c}</option>
+                            ))}
+                        </select>
+                        <div className="flex justify-end gap-2 pt-2">
+                            <button onClick={() => setEditingTrait(null)} className="px-4 py-2 text-text-muted text-sm hover:text-white">Cancel</button>
+                            <button onClick={handleEditSave} disabled={saving || !editText.trim()} className="px-4 py-2 bg-accent text-white rounded-lg text-sm font-medium disabled:opacity-50">
+                                {saving ? 'Saving...' : 'Save'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             {/* Main Bento Grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {/* 📍 Coordinates (Location) */}
-                <BentoCard title="Coordinates" icon="📍" color="bg-blue-500/10 border-blue-500/20">
-                    <TraitList traits={traitsByCategory['location']} emptyMsg="No fixed location data." />
+                <BentoCard title="Coordinates" icon="location" color="bg-blue-500/10 border-blue-500/20">
+                    <TraitList
+                        traits={traitsByCategory['location']}
+                        emptyMsg="No fixed location data."
+                        onEdit={(t) => { setEditingTrait(t); setEditText(t.text); setEditCategory(t.category); }}
+                        onDelete={handleDelete}
+                    />
                 </BentoCard>
 
-                {/* 🧠 Firmware (Personality) */}
-                <BentoCard title="Firmware" icon="🧠" color="bg-purple-500/10 border-purple-500/20" className="md:col-span-2">
-                    <TraitList traits={traitsByCategory['personality']} emptyMsg="Personality profile building..." />
+                <BentoCard title="Firmware" icon="brain" color="bg-purple-500/10 border-purple-500/20" className="md:col-span-2">
+                    <TraitList
+                        traits={traitsByCategory['personality']}
+                        emptyMsg="Personality profile building..."
+                        onEdit={(t) => { setEditingTrait(t); setEditText(t.text); setEditCategory(t.category); }}
+                        onDelete={handleDelete}
+                    />
                 </BentoCard>
 
-                {/* 🎯 Directives (Goals) */}
-                <BentoCard title="Directives" icon="🎯" color="bg-red-500/10 border-red-500/20" className="md:col-span-2">
-                    <TraitList traits={traitsByCategory['goal']} emptyMsg="No active goals identified." />
+                <BentoCard title="Directives" icon="target" color="bg-red-500/10 border-red-500/20" className="md:col-span-2">
+                    <TraitList
+                        traits={traitsByCategory['goal']}
+                        emptyMsg="No active goals identified."
+                        onEdit={(t) => { setEditingTrait(t); setEditText(t.text); setEditCategory(t.category); }}
+                        onDelete={handleDelete}
+                    />
                 </BentoCard>
 
-                {/* ❤️ Social Graph */}
-                <BentoCard title="Social Graph" icon="❤️" color="bg-pink-500/10 border-pink-500/20">
-                    <TraitList traits={traitsByCategory['relationship']} emptyMsg="Social network mapping..." />
+                <BentoCard title="Social Graph" icon="heart" color="bg-pink-500/10 border-pink-500/20">
+                    <TraitList
+                        traits={traitsByCategory['relationship']}
+                        emptyMsg="Social network mapping..."
+                        onEdit={(t) => { setEditingTrait(t); setEditText(t.text); setEditCategory(t.category); }}
+                        onDelete={handleDelete}
+                    />
                 </BentoCard>
             </div>
 
@@ -129,11 +304,18 @@ export default function BrainView({ userId }: { userId: string }) {
     );
 }
 
+const ICON_MAP: Record<string, string> = {
+    location: '\uD83D\uDCCD',
+    brain: '\uD83E\uDDE0',
+    target: '\uD83C\uDFAF',
+    heart: '\u2764\uFE0F',
+};
+
 function BentoCard({ title, icon, children, color, className = "" }: { title: string, icon: string, children: React.ReactNode, color: string, className?: string }) {
     return (
         <div className={`glass-card p-6 rounded-3xl border ${color} backdrop-blur-xl bg-opacity-20 ${className}`}>
             <div className="flex items-center gap-3 mb-6">
-                <span className="text-2xl">{icon}</span>
+                <span className="text-2xl">{ICON_MAP[icon] || icon}</span>
                 <h3 className="text-lg font-bold text-white tracking-tight">{title}</h3>
             </div>
             {children}
@@ -151,15 +333,44 @@ function StatCard({ label, value, sub, color }: { label: string, value: string, 
     );
 }
 
-function TraitList({ traits, emptyMsg }: { traits: Trait[] | undefined, emptyMsg: string }) {
+function TraitList({
+    traits,
+    emptyMsg,
+    onEdit,
+    onDelete,
+}: {
+    traits: Trait[] | undefined;
+    emptyMsg: string;
+    onEdit: (trait: Trait) => void;
+    onDelete: (traitId: string) => void;
+}) {
     if (!traits || traits.length === 0) {
         return <p className="text-xs text-text-muted italic">{emptyMsg}</p>;
     }
     return (
         <div className="flex flex-wrap gap-2">
             {traits.map((t, idx) => (
-                <span key={t.id || idx} className="px-3 py-1.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-xs font-medium text-text-secondary transition-colors cursor-default">
+                <span
+                    key={t.id || idx}
+                    className="group relative px-3 py-1.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-xs font-medium text-text-secondary transition-colors cursor-default"
+                >
                     {t.text}
+                    <span className="hidden group-hover:inline-flex items-center gap-1 ml-2">
+                        <button
+                            onClick={(e) => { e.stopPropagation(); onEdit(t); }}
+                            className="text-accent hover:text-white text-[10px]"
+                            title="Edit"
+                        >
+                            edit
+                        </button>
+                        <button
+                            onClick={(e) => { e.stopPropagation(); onDelete(t.id); }}
+                            className="text-red-400 hover:text-red-300 text-[10px]"
+                            title="Remove"
+                        >
+                            x
+                        </button>
+                    </span>
                 </span>
             ))}
         </div>

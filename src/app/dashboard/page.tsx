@@ -4,6 +4,7 @@ import { supabaseAdmin } from "@/lib/supabase-admin";
 import QRCode from "qrcode";
 import DeactivateButton from "@/components/DeactivateButton";
 import BotStatusWatcher from "@/components/BotStatusWatcher";
+import OnboardingGate from "@/components/OnboardingGate";
 import Link from "next/link";
 
 
@@ -113,6 +114,8 @@ export default async function DashboardPage() {
         })
         : "—";
 
+    const onboardingComplete = onboardingStep >= 4;
+
     return (
         <main className="min-h-screen relative overflow-hidden bg-background text-text-primary">
             {/* Background Noise Texture */}
@@ -148,7 +151,20 @@ export default async function DashboardPage() {
                 </div>
             </nav>
 
-            {/* Content */}
+            {/* Onboarding Gate — blocks dashboard until onboarding is done */}
+            {!onboardingComplete && (
+                <div className="relative z-10">
+                    <OnboardingGate
+                        currentStep={onboardingStep}
+                        deepLink={deepLink}
+                        isLinked={isLinked}
+                    />
+                    <BotStatusWatcher userId={user.id} initialLinked={isLinked} />
+                </div>
+            )}
+
+            {/* Full Dashboard — only visible after onboarding */}
+            {onboardingComplete && (
             <div className="relative z-10 max-w-6xl mx-auto px-6 py-12">
                 <div className="mb-12 flex flex-col md:flex-row md:items-center justify-between gap-6">
                     <div>
