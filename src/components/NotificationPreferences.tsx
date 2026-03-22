@@ -240,16 +240,16 @@ export default function NotificationPreferences() {
                         </h3>
                         <p className="text-xs text-text-muted mt-1 max-w-md">
                             If you haven&apos;t chatted with Mee in 7 days, the bot will send a gentle prompt to check in.
-                            This is always on to help maintain coaching momentum.
+                            You can toggle this in your Privacy settings.
                         </p>
                     </div>
                     <div className="px-3 py-1.5 rounded-xl text-[10px] font-bold uppercase tracking-wide bg-accent/10 text-accent border border-accent/20">
-                        Always On
+                        On by default
                     </div>
                 </div>
                 <p className="text-[11px] text-text-muted leading-relaxed">
-                    The nudge is a single friendly message — never spammy. You can always ignore it.
-                    If you want to fully stop coaching, use the deactivate option on your dashboard.
+                    The nudge is a single friendly message — never spammy. You can always ignore it or
+                    disable it from your <a href="/dashboard/privacy" className="text-accent hover:underline">Privacy Controls</a> page.
                 </p>
             </div>
 

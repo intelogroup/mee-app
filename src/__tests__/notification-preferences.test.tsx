@@ -163,7 +163,7 @@ describe("NotificationPreferences", () => {
         render(<NotificationPreferences />);
         await waitFor(() => {
             expect(screen.getByText("Re-engagement Nudge")).toBeTruthy();
-            expect(screen.getByText("Always On")).toBeTruthy();
+            expect(screen.getByText("On by default")).toBeTruthy();
         });
     });
 
