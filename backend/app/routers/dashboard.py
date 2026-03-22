@@ -407,6 +407,59 @@ async def summarize_session(user_id: str, session_index: int = Query(default=0, 
 
 
 # ============================================================
+# Privacy Reset Endpoints
+# ============================================================
+
+@router.post("/brain/{user_id}/reset", dependencies=[Depends(verify_api_key)])
+async def reset_brain(user_id: str):
+    """
+    Deletes ALL vectors (traits, episodic memories) for a user from their Pinecone namespace.
+    Used by the privacy controls to clear all AI-inferred knowledge about the user.
+    """
+    try:
+        index = pc.Index(PINECONE_INDEX)
+        await asyncio.to_thread(index.delete, delete_all=True, namespace=user_id)
+        logger.info(f"Brain reset for user {user_id}")
+        return {"status": "ok", "message": "Brain data cleared"}
+    except Exception as e:
+        logger.error(f"Error resetting brain for {user_id}: {e}")
+        raise HTTPException(status_code=500, detail="Failed to reset brain data")
+
+
+@router.post("/conversations/{user_id}/reset", dependencies=[Depends(verify_api_key)])
+async def reset_conversations(user_id: str):
+    """
+    Deletes ALL messages for a user from the messages table.
+    Used by the privacy controls to wipe conversation history.
+    """
+    try:
+        await asyncio.to_thread(
+            supabase.table("messages").delete().eq("user_id", user_id).execute
+        )
+        logger.info(f"Conversation history reset for user {user_id}")
+        return {"status": "ok", "message": "Conversation history cleared"}
+    except Exception as e:
+        logger.error(f"Error resetting conversations for {user_id}: {e}")
+        raise HTTPException(status_code=500, detail="Failed to reset conversation history")
+
+
+@router.post("/vectors/{user_id}/reset", dependencies=[Depends(verify_api_key)])
+async def reset_vectors(user_id: str):
+    """
+    Alias for brain reset — deletes the entire Pinecone namespace for a user.
+    Kept separate so the frontend can call each reset step independently for granular error reporting.
+    """
+    try:
+        index = pc.Index(PINECONE_INDEX)
+        await asyncio.to_thread(index.delete, delete_all=True, namespace=user_id)
+        logger.info(f"Vector store reset for user {user_id}")
+        return {"status": "ok", "message": "Vector store cleared"}
+    except Exception as e:
+        logger.error(f"Error resetting vectors for {user_id}: {e}")
+        raise HTTPException(status_code=500, detail="Failed to reset vector store")
+
+
+# ============================================================
 # Coaching Goals CRUD
 # ============================================================
 
