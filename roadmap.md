@@ -18,8 +18,8 @@ Focus: complete the coaching experience from onboarding through ongoing use. Tel
 
 - [x] **Coaching goals setting** — user sets 1–3 coaching goals in the web app; bot uses them to steer conversations
 - [x] **Progress timeline** — weekly/monthly view of trait changes and goal progress inferred from conversation history
-- [ ] **Brain page** — clarify and complete this feature: likely a knowledge graph of user's traits and patterns; add UI explaining what it shows
-- [ ] **Notification preferences** — weekly check-in reminder via Telegram; frequency setting in web app
+- [x] **Brain page** — knowledge graph of user's traits and patterns with pattern insights analysis
+- [x] **Notification preferences** — weekly check-in reminder via Telegram; frequency setting + next reminder preview in web app
 - [ ] **Memory reset / privacy controls** — let user clear their coaching history and Pinecone vectors from the web app
 - [ ] **Re-engagement nudge** — if user hasn't interacted in 7 days, bot sends a gentle prompt
 
