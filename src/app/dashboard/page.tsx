@@ -5,6 +5,7 @@ import QRCode from "qrcode";
 import DeactivateButton from "@/components/DeactivateButton";
 import BotStatusWatcher from "@/components/BotStatusWatcher";
 import OnboardingGate from "@/components/OnboardingGate";
+import CoachingGoals from "@/components/CoachingGoals";
 import Link from "next/link";
 
 
@@ -255,6 +256,11 @@ export default async function DashboardPage() {
                     </Link>
                 </div>
 
+                {/* Coaching Goals Section */}
+                <div className="mb-12">
+                    <CoachingGoals />
+                </div>
+
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
                     {/* Left Column: Bot Connection (4/12) */}
                     <div className="lg:col-span-4 flex flex-col gap-6">
@@ -314,6 +320,12 @@ export default async function DashboardPage() {
                                     className="flex items-center justify-center gap-3 w-full py-4 px-6 bg-white/5 text-white font-bold rounded-2xl border border-white/10 hover:bg-white/10 transition-all active:scale-[0.98] text-sm group"
                                 >
                                     <span>💬</span> Session History <span className="opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all">→</span>
+                                </Link>
+                                <Link
+                                    href="/dashboard/progress"
+                                    className="flex items-center justify-center gap-3 w-full py-4 px-6 bg-white/5 text-white font-bold rounded-2xl border border-white/10 hover:bg-white/10 transition-all active:scale-[0.98] text-sm group"
+                                >
+                                    <span>📈</span> Progress Timeline <span className="opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all">→</span>
                                 </Link>
                             </div>
                         </div>

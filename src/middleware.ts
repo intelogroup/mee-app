@@ -9,7 +9,7 @@ import { NextResponse, type NextRequest } from "next/server";
  */
 
 // Dashboard sub-routes that require completed onboarding
-const GATED_SUBROUTES = ["/dashboard/history", "/dashboard/brain"];
+const GATED_SUBROUTES = ["/dashboard/history", "/dashboard/brain", "/dashboard/settings"];
 const ONBOARDING_REQUIRED_STEP = 4;
 
 export async function middleware(request: NextRequest) {

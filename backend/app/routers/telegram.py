@@ -5,8 +5,9 @@ from app.services.groq import get_groq_response, extract_traits, transcribe_audi
 from app.services.search import search_web
 from app.services.pinecone import save_memory, get_recent_memories, pc, PINECONE_INDEX # accessing embedding logic directly or via service
 from app.services.supabase import (
-    link_telegram_account, get_user_by_telegram_id, increment_message_count, 
-    update_onboarding_step, supabase, log_message, get_stale_profiles
+    link_telegram_account, get_user_by_telegram_id, increment_message_count,
+    update_onboarding_step, supabase, log_message, get_stale_profiles,
+    get_active_goals
 )
 from app.services.embeddings import get_embedding
 from app.services.memory import run_episodic_summarizer
@@ -326,7 +327,13 @@ async def process_telegram_update(update: dict, background_tasks: BackgroundTask
         # 4. Generate AI Response
         user_traits_list = user_profile.get("traits", [])
         user_traits = ", ".join(user_traits_list) if user_traits_list else "None yet."
-        
+
+        # Fetch coaching goals for context
+        coaching_goals = await get_active_goals(user_id)
+        goals_str = ""
+        if coaching_goals:
+            goals_str = "\n[COACHING GOALS]\nThe user has set these coaching goals. Steer the conversation to help them make progress:\n" + "\n".join(f"- {g}" for g in coaching_goals) + "\n"
+
         # AGENTIC SEARCH DECISION (GATED)
         web_context = ""
         # Only run search decision if message is likely a question or specific query
@@ -413,7 +420,7 @@ async def process_telegram_update(update: dict, background_tasks: BackgroundTask
 [CONTEXT]
 User Traits: {user_traits}
 Memories: {context_str if context_str else "Clean slate."}
-{web_context}
+{goals_str}{web_context}
 {clarification_prompt}
 {decay_note}
 """

@@ -1,5 +1,6 @@
 from fastapi import APIRouter, HTTPException, Depends, Query, Header
 from pydantic import BaseModel
+from typing import Optional, List
 from app.services.supabase import supabase
 from app.services.pinecone import pc, PINECONE_INDEX
 from app.services.embeddings import get_embedding
@@ -32,6 +33,15 @@ async def verify_api_key(authorization: str = Header(None)):
 class TraitUpdate(BaseModel):
     text: str
     category: str = "general"
+
+
+class GoalCreate(BaseModel):
+    title: str
+
+
+class GoalUpdate(BaseModel):
+    title: Optional[str] = None
+    status: Optional[str] = None
 
 
 @router.get("/conversations/{user_id}", dependencies=[Depends(verify_api_key)])
@@ -394,3 +404,244 @@ async def summarize_session(user_id: str, session_index: int = Query(default=0, 
     except Exception as e:
         logger.error(f"Error generating session summary: {e}")
         raise HTTPException(status_code=500, detail="Failed to generate summary")
+
+
+# ============================================================
+# Coaching Goals CRUD
+# ============================================================
+
+@router.get("/goals/{user_id}", dependencies=[Depends(verify_api_key)])
+async def get_goals(user_id: str):
+    """Fetch all coaching goals for a user, ordered by creation date."""
+    try:
+        response = await asyncio.to_thread(
+            supabase.table("coaching_goals")
+            .select("id, title, status, created_at, updated_at")
+            .eq("user_id", user_id)
+            .order("created_at", desc=False)
+            .execute
+        )
+        return {"goals": response.data or []}
+    except Exception as e:
+        logger.error(f"Error fetching goals for {user_id}: {e}")
+        raise HTTPException(status_code=500, detail="Failed to fetch goals")
+
+
+@router.post("/goals/{user_id}", dependencies=[Depends(verify_api_key)])
+async def create_goal(user_id: str, body: GoalCreate):
+    """Create a new coaching goal (max 3 active per user)."""
+    if not body.title or not body.title.strip():
+        raise HTTPException(status_code=400, detail="Goal title cannot be empty")
+    if len(body.title) > 200:
+        raise HTTPException(status_code=400, detail="Goal title too long (max 200 chars)")
+
+    try:
+        # Check active count first (defence in depth — DB trigger also enforces)
+        count_res = await asyncio.to_thread(
+            supabase.table("coaching_goals")
+            .select("id", count="exact")
+            .eq("user_id", user_id)
+            .eq("status", "active")
+            .execute
+        )
+        active_count = count_res.count if count_res.count is not None else 0
+        if active_count >= 3:
+            raise HTTPException(status_code=400, detail="Maximum of 3 active goals allowed")
+
+        response = await asyncio.to_thread(
+            supabase.table("coaching_goals")
+            .insert({"user_id": user_id, "title": body.title.strip()})
+            .execute
+        )
+        if response.data:
+            return {"status": "created", "goal": response.data[0]}
+        raise HTTPException(status_code=500, detail="Failed to create goal")
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error creating goal for {user_id}: {e}")
+        raise HTTPException(status_code=500, detail="Failed to create goal")
+
+
+@router.patch("/goals/{user_id}/{goal_id}", dependencies=[Depends(verify_api_key)])
+async def update_goal(user_id: str, goal_id: str, body: GoalUpdate):
+    """Update a coaching goal's title or status."""
+    update_data = {}
+    if body.title is not None:
+        if not body.title.strip():
+            raise HTTPException(status_code=400, detail="Goal title cannot be empty")
+        update_data["title"] = body.title.strip()
+    if body.status is not None:
+        if body.status not in ("active", "completed", "archived"):
+            raise HTTPException(status_code=400, detail="Invalid status")
+        update_data["status"] = body.status
+
+    if not update_data:
+        raise HTTPException(status_code=400, detail="No fields to update")
+
+    update_data["updated_at"] = datetime.now(timezone.utc).isoformat()
+
+    try:
+        response = await asyncio.to_thread(
+            supabase.table("coaching_goals")
+            .update(update_data)
+            .eq("id", goal_id)
+            .eq("user_id", user_id)
+            .execute
+        )
+        if response.data:
+            return {"status": "updated", "goal": response.data[0]}
+        raise HTTPException(status_code=404, detail="Goal not found")
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error updating goal {goal_id}: {e}")
+        raise HTTPException(status_code=500, detail="Failed to update goal")
+
+
+@router.delete("/goals/{user_id}/{goal_id}", dependencies=[Depends(verify_api_key)])
+async def delete_goal(user_id: str, goal_id: str):
+    """Delete a coaching goal."""
+    try:
+        response = await asyncio.to_thread(
+            supabase.table("coaching_goals")
+            .delete()
+            .eq("id", goal_id)
+            .eq("user_id", user_id)
+            .execute
+        )
+        if response.data:
+            return {"status": "deleted", "id": goal_id}
+        raise HTTPException(status_code=404, detail="Goal not found")
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error deleting goal {goal_id}: {e}")
+        raise HTTPException(status_code=500, detail="Failed to delete goal")
+
+
+# ============================================================
+# Progress Timeline
+# ============================================================
+
+@router.get("/progress/{user_id}", dependencies=[Depends(verify_api_key)])
+async def get_progress_timeline(
+    user_id: str,
+    period: str = Query(default="weekly", pattern="^(weekly|monthly)$"),
+):
+    """
+    Returns a progress timeline: weekly or monthly summary of
+    conversation activity and goal status changes.
+    """
+    from datetime import timedelta
+
+    try:
+        now = datetime.now(timezone.utc)
+
+        if period == "weekly":
+            # Last 4 weeks
+            num_periods = 4
+            delta = timedelta(weeks=1)
+            label_fmt = "%b %d"
+        else:
+            # Last 3 months
+            num_periods = 3
+            delta = timedelta(days=30)
+            label_fmt = "%b %Y"
+
+        # Fetch all messages in the time range
+        range_start = now - (delta * num_periods)
+        messages_res = await asyncio.to_thread(
+            supabase.table("messages")
+            .select("created_at, role")
+            .eq("user_id", user_id)
+            .gte("created_at", range_start.isoformat())
+            .order("created_at", desc=False)
+            .execute
+        )
+        messages = messages_res.data or []
+
+        # Fetch goals with timestamps
+        goals_res = await asyncio.to_thread(
+            supabase.table("coaching_goals")
+            .select("title, status, created_at, updated_at")
+            .eq("user_id", user_id)
+            .order("created_at", desc=False)
+            .execute
+        )
+        goals = goals_res.data or []
+
+        # Fetch traits from Pinecone (to show trait changes over time)
+        index = pc.Index(PINECONE_INDEX)
+        trait_res = await asyncio.to_thread(
+            index.query,
+            namespace=user_id,
+            vector=[0.1] * 1024,
+            top_k=30,
+            filter={"role": {"$eq": "trait"}},
+            include_metadata=True,
+        )
+        traits = []
+        if trait_res.matches:
+            for m in trait_res.matches:
+                traits.append({
+                    "text": m.metadata.get("text"),
+                    "category": m.metadata.get("category", "general"),
+                    "created_at": m.metadata.get("created_at"),
+                })
+
+        # Build timeline buckets
+        timeline = []
+        for i in range(num_periods):
+            bucket_start = now - (delta * (num_periods - i))
+            bucket_end = now - (delta * (num_periods - i - 1))
+
+            # Count messages in this bucket
+            bucket_msgs = [
+                m for m in messages
+                if bucket_start.isoformat() <= m["created_at"] < bucket_end.isoformat()
+            ]
+            user_msgs = len([m for m in bucket_msgs if m["role"] == "user"])
+            bot_msgs = len([m for m in bucket_msgs if m["role"] == "assistant"])
+
+            # Goals completed in this bucket
+            completed_goals = [
+                g["title"] for g in goals
+                if g["status"] == "completed"
+                and g.get("updated_at")
+                and bucket_start.isoformat() <= g["updated_at"] < bucket_end.isoformat()
+            ]
+
+            # Traits discovered in this bucket (using epoch timestamp)
+            bucket_start_epoch = int(bucket_start.timestamp())
+            bucket_end_epoch = int(bucket_end.timestamp())
+            new_traits = [
+                t["text"] for t in traits
+                if isinstance(t.get("created_at"), (int, float))
+                and bucket_start_epoch <= t["created_at"] < bucket_end_epoch
+            ]
+
+            timeline.append({
+                "label": bucket_start.strftime(label_fmt) + " - " + bucket_end.strftime(label_fmt),
+                "start": bucket_start.isoformat(),
+                "end": bucket_end.isoformat(),
+                "user_messages": user_msgs,
+                "bot_messages": bot_msgs,
+                "total_messages": user_msgs + bot_msgs,
+                "completed_goals": completed_goals,
+                "new_traits": new_traits,
+            })
+
+        # Active goals summary
+        active_goals = [g for g in goals if g["status"] == "active"]
+
+        return {
+            "period": period,
+            "timeline": timeline,
+            "active_goals": [{"title": g["title"], "created_at": g["created_at"]} for g in active_goals],
+            "total_traits": len(traits),
+        }
+
+    except Exception as e:
+        logger.error(f"Error generating progress timeline for {user_id}: {e}")
+        raise HTTPException(status_code=500, detail="Failed to generate timeline")

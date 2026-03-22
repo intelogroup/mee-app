@@ -22,6 +22,13 @@ interface BrainData {
 }
 
 const CATEGORIES = ['personality', 'location', 'goal', 'relationship'] as const;
+
+const CATEGORY_DESCRIPTIONS: Record<string, string> = {
+    location: 'Places you mention frequently — where you live, work, or spend time. Helps Mee give location-aware advice.',
+    personality: 'Core personality traits Mee has picked up from your conversations — communication style, values, and tendencies.',
+    goal: 'Active goals and aspirations you have shared. Mee uses these to keep coaching sessions focused on what matters to you.',
+    relationship: 'Key people in your life that come up in conversations. Helps Mee understand your social context.',
+};
 type Category = typeof CATEGORIES[number];
 
 export default function BrainView({ userId }: { userId: string }) {
@@ -237,7 +244,7 @@ export default function BrainView({ userId }: { userId: string }) {
 
             {/* Main Bento Grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <BentoCard title="Coordinates" icon="location" color="bg-blue-500/10 border-blue-500/20">
+                <BentoCard title="Coordinates" icon="location" color="bg-blue-500/10 border-blue-500/20" description={CATEGORY_DESCRIPTIONS.location}>
                     <TraitList
                         traits={traitsByCategory['location']}
                         emptyMsg="No fixed location data."
@@ -246,7 +253,7 @@ export default function BrainView({ userId }: { userId: string }) {
                     />
                 </BentoCard>
 
-                <BentoCard title="Firmware" icon="brain" color="bg-purple-500/10 border-purple-500/20" className="md:col-span-2">
+                <BentoCard title="Firmware" icon="brain" color="bg-purple-500/10 border-purple-500/20" className="md:col-span-2" description={CATEGORY_DESCRIPTIONS.personality}>
                     <TraitList
                         traits={traitsByCategory['personality']}
                         emptyMsg="Personality profile building..."
@@ -255,7 +262,7 @@ export default function BrainView({ userId }: { userId: string }) {
                     />
                 </BentoCard>
 
-                <BentoCard title="Directives" icon="target" color="bg-red-500/10 border-red-500/20" className="md:col-span-2">
+                <BentoCard title="Directives" icon="target" color="bg-red-500/10 border-red-500/20" className="md:col-span-2" description={CATEGORY_DESCRIPTIONS.goal}>
                     <TraitList
                         traits={traitsByCategory['goal']}
                         emptyMsg="No active goals identified."
@@ -264,7 +271,7 @@ export default function BrainView({ userId }: { userId: string }) {
                     />
                 </BentoCard>
 
-                <BentoCard title="Social Graph" icon="heart" color="bg-pink-500/10 border-pink-500/20">
+                <BentoCard title="Social Graph" icon="heart" color="bg-pink-500/10 border-pink-500/20" description={CATEGORY_DESCRIPTIONS.relationship}>
                     <TraitList
                         traits={traitsByCategory['relationship']}
                         emptyMsg="Social network mapping..."
@@ -276,10 +283,13 @@ export default function BrainView({ userId }: { userId: string }) {
 
             {/* Memory Stream */}
             <div className="mt-12">
-                <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
+                <h3 className="text-xl font-bold text-white mb-2 flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
                     Memory Stream
                 </h3>
+                <p className="text-xs text-text-muted mb-6 max-w-lg">
+                    Timestamped notes Mee has stored from your conversations. These help maintain context across sessions so coaching stays consistent.
+                </p>
                 <div className="space-y-4 relative border-l-2 border-white/10 ml-3 pl-8 pb-4">
                     {data.memories.map((mem) => (
                         <div key={mem.id} className="relative">
@@ -311,13 +321,16 @@ const ICON_MAP: Record<string, string> = {
     heart: '\u2764\uFE0F',
 };
 
-function BentoCard({ title, icon, children, color, className = "" }: { title: string, icon: string, children: React.ReactNode, color: string, className?: string }) {
+function BentoCard({ title, icon, children, color, className = "", description }: { title: string, icon: string, children: React.ReactNode, color: string, className?: string, description?: string }) {
     return (
         <div className={`glass-card p-6 rounded-3xl border ${color} backdrop-blur-xl bg-opacity-20 ${className}`}>
-            <div className="flex items-center gap-3 mb-6">
+            <div className="flex items-center gap-3 mb-2">
                 <span className="text-2xl">{ICON_MAP[icon] || icon}</span>
                 <h3 className="text-lg font-bold text-white tracking-tight">{title}</h3>
             </div>
+            {description && (
+                <p className="text-[11px] text-text-muted leading-relaxed mb-5">{description}</p>
+            )}
             {children}
         </div>
     );

@@ -49,9 +49,19 @@ export default async function BrainPage() {
                     <h1 className="text-4xl font-bold tracking-tight text-white mb-2">
                         The <span className="text-purple-400">Mirror</span>
                     </h1>
-                    <p className="text-text-secondary text-sm max-w-xl">
-                        Visualizing your digital twin's understanding of you. These traits and memories drive Mee's personality and responses.
+                    <p className="text-text-secondary text-sm max-w-xl mb-6">
+                        Visualizing your digital twin&apos;s understanding of you. These traits and memories drive Mee&apos;s personality and responses.
                     </p>
+
+                    {/* How It Works explainer */}
+                    <div className="glass-card p-5 rounded-2xl border border-white/10 bg-white/5 max-w-2xl">
+                        <h2 className="text-sm font-semibold text-white mb-2">How does this work?</h2>
+                        <ul className="text-xs text-text-secondary space-y-1.5 list-disc list-inside leading-relaxed">
+                            <li><strong className="text-text-primary">Traits</strong> are automatically extracted from your Telegram conversations with Mee. You can edit, add, or remove them anytime.</li>
+                            <li><strong className="text-text-primary">Memories</strong> are timestamped notes Mee stores to remember important context from past sessions.</li>
+                            <li>Everything here shapes how Mee talks to you. Removing a trait means Mee won&apos;t factor it into future coaching.</li>
+                        </ul>
+                    </div>
                 </div>
 
                 <BrainView userId={user.id} />
