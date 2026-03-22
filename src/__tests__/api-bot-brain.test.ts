@@ -29,11 +29,13 @@ describe("GET /api/bot/brain", () => {
         expect(res.status).toBe(401);
     });
 
-    it("returns 500 when API key is missing", async () => {
+    it("returns 503 when API key is missing", async () => {
         mockAuth({ id: "user-1" });
         vi.stubEnv("BOT_BACKEND_API_KEY", "");
         const res = await GET();
-        expect(res.status).toBe(500);
+        expect(res.status).toBe(503);
+        const body = await res.json();
+        expect(body.error).toContain("backend API key not configured");
     });
 
     it("returns brain data from backend", async () => {

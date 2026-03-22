@@ -17,7 +17,7 @@ async function proxyToBackend(url: string, options: RequestInit = {}) {
     const { botApiKey } = getBackendConfig();
 
     if (!botApiKey) {
-        return NextResponse.json({ error: 'Server misconfiguration' }, { status: 500 });
+        return NextResponse.json({ error: 'Service unavailable: backend API key not configured' }, { status: 503 });
     }
 
     const controller = new AbortController();
