@@ -76,15 +76,14 @@ async def update_onboarding_step(user_id: str, step: int):
     except Exception as e:
         logger.warning(f"Failed to update onboarding step: {e}")
 
-async def log_message(user_id: str, role: str, content: str):
+async def log_message(user_id: str, role: str, content: str, flagged: bool = False):
     """Logs a message to the Supabase messages table."""
     try:
+        row = {"user_id": user_id, "role": role, "content": content}
+        if flagged:
+            row["flagged"] = True
         await asyncio.to_thread(
-            supabase.table("messages").insert({
-                "user_id": user_id,
-                "role": role,
-                "content": content
-            }).execute
+            supabase.table("messages").insert(row).execute
         )
     except Exception as e:
         logger.warning(f"Failed to log message: {e}")

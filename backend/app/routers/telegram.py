@@ -20,6 +20,7 @@ import logging
 import httpx
 import asyncio
 import json
+import re
 import time
 from datetime import datetime, timezone
 from collections import defaultdict, deque
@@ -197,25 +198,27 @@ async def process_telegram_update(update: dict, background_tasks: BackgroundTask
                 logger.info(f"Received voice note from {username} (file_id: {voice['file_id']})")
                 # Notify user we are listening
                 await send_chat_action(chat_id, "upload_voice")
-                
+
                 # Step A: Download
                 audio_bytes = await download_telegram_file(voice["file_id"])
                 if not audio_bytes:
                     await send_telegram_message(chat_id, "Sorry, I couldn't download your voice note.")
                     return
-                
+
                 # Step B: Transcribe (Use .ogg extension which is more universally recognized by Groq/Whisper)
                 text = await transcribe_audio(audio_bytes, filename="voice.ogg")
-                
+
                 if not text:
                     await send_telegram_message(chat_id, "Sorry, I couldn't understand that audio.")
                     return
-                    
+
                 logger.info(f"Transcribed voice note (length={len(text)})")
-                
-                # Immediate feedback: Show the user what we transcribed
-                await send_telegram_message(chat_id, f"🎤 *Heard:* _{text}_")
-                
+
+                # Echo suppression: if transcription is a correction, skip the "Heard:" message
+                # so the user doesn't receive an echo before the silent correction save
+                if not re.match(r"^(?:nope|n):\s+", text, re.IGNORECASE):
+                    await send_telegram_message(chat_id, f"🎤 *Heard:* _{text}_")
+
                 # We now treat 'text' as if it was typed, so the rest of the flow continues normally
             except Exception as e:
                 logger.error(f"Error processing voice note: {e}", exc_info=True)
@@ -242,18 +245,53 @@ async def process_telegram_update(update: dict, background_tasks: BackgroundTask
                 await send_telegram_message(chat_id, "Welcome! Link your account via the dashboard to get started.")
                 return
 
-        # 2. Parallel: Check Profile + Get Embedding for Retrieval
-        # This saves ~400ms by running I/O tasks simultaneously
-        logger.info(f"Parallelizing profile fetch and embedding for {telegram_user_id}")
-        user_profile_task = get_user_by_telegram_id(telegram_user_id)
-        embedding_task = get_embedding(text, input_type="query")
-        
-        user_profile, vector = await asyncio.gather(user_profile_task, embedding_task)
+        # 2. Fetch profile first (needed for user_id before correction check)
+        user_profile = await get_user_by_telegram_id(telegram_user_id)
 
         if not user_profile:
             logger.warning(f"User {telegram_user_id} not linked (chat_id: {chat_id})")
             await send_telegram_message(chat_id, "Wait, we haven't met properly. Link your account from the dashboard so I know who I'm talking to!")
             return
+
+        # 2a. CORRECTION EARLY-EXIT: Detect N:/Nope: before any LLM/vector work
+        if re.match(r"^(?:nope|n):\s+", text, re.IGNORECASE):
+            user_id = user_profile.get("id")
+            logger.info(f"Correction message detected for user {user_id} — skipping LLM pipeline")
+
+            # Save correction message as flagged
+            await log_message(user_id, "user", text, flagged=True)
+
+            # Flag the preceding assistant message within the last 10 minutes
+            try:
+                from datetime import datetime, timezone, timedelta
+                ten_min_ago = (datetime.now(timezone.utc) - timedelta(minutes=10)).isoformat()
+                prev_res = await asyncio.to_thread(
+                    supabase.table("messages")
+                    .select("id")
+                    .eq("user_id", user_id)
+                    .eq("role", "assistant")
+                    .gte("created_at", ten_min_ago)
+                    .order("created_at", desc=True)
+                    .limit(1)
+                    .execute
+                )
+                if prev_res.data:
+                    prev_id = prev_res.data[0]["id"]
+                    await asyncio.to_thread(
+                        supabase.table("messages").update({"flagged": True}).eq("id", prev_id).execute
+                    )
+                    logger.info(f"Flagged preceding assistant message id={prev_id}")
+                else:
+                    logger.warning(f"No preceding assistant message found within 10 min to flag (user={user_id})")
+            except Exception as e:
+                logger.warning(f"Failed to flag preceding assistant message: {e}")
+
+            # No reply sent — silent save
+            return
+
+        # 2b. Normal path: now fetch embedding in parallel (profile already fetched above)
+        logger.info(f"Fetching embedding for {telegram_user_id}")
+        vector = await get_embedding(text, input_type="query")
 
         # ONBOARDING FLOW
         user_id = user_profile.get("id")
