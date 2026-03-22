@@ -34,6 +34,12 @@ Focus: complete the coaching experience from onboarding through ongoing use. Tel
 
 ---
 
+## Infrastructure / Model Quality
+
+- [ ] **Nope-flagging** — detect `Nope:`/`N:` correction messages in real-time in the Telegram handler; skip LLM call, save as `flagged=true`, mark preceding assistant message; makes training data extraction a `WHERE flagged=true` query instead of fragile post-hoc pattern matching. Spec: `docs/superpowers/specs/2026-03-22-nope-flagging-design.md`
+
+---
+
 ## Out of Scope (do not build)
 
 - WhatsApp, Slack, or other messaging platform integrations
