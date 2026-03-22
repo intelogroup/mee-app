@@ -136,3 +136,21 @@ async def get_stale_profiles():
     except Exception as e:
         logger.warning(f"Failed to fetch stale profiles: {e}")
         return []
+
+
+async def get_active_goals(user_id: str) -> list[str]:
+    """Fetch active coaching goal titles for a user (max 3)."""
+    try:
+        response = await asyncio.to_thread(
+            supabase.table("coaching_goals")
+            .select("title")
+            .eq("user_id", user_id)
+            .eq("status", "active")
+            .order("created_at", desc=False)
+            .limit(3)
+            .execute
+        )
+        return [g["title"] for g in (response.data or [])]
+    except Exception as e:
+        logger.warning(f"Failed to fetch coaching goals for {user_id}: {e}")
+        return []
