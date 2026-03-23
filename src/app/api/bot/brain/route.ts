@@ -20,8 +20,9 @@ async function proxyToBackend(url: string, options: RequestInit = {}) {
         return NextResponse.json({ error: 'Service unavailable: backend API key not configured' }, { status: 503 });
     }
 
+    const timeout = parseInt(process.env.BOT_BRAIN_TIMEOUT_MS || '10000', 10);
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 10000);
+    const timeoutId = setTimeout(() => controller.abort(), timeout);
 
     try {
         const res = await fetch(url, {

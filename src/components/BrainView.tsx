@@ -36,6 +36,7 @@ type Category = typeof CATEGORIES[number];
 export default function BrainView({ userId }: { userId: string }) {
     const [data, setData] = useState<BrainData | null>(null);
     const [loading, setLoading] = useState(true);
+    const [loadError, setLoadError] = useState<string | null>(null);
     const [editingTrait, setEditingTrait] = useState<Trait | null>(null);
     const [editText, setEditText] = useState('');
     const [editCategory, setEditCategory] = useState<string>('personality');
@@ -45,14 +46,23 @@ export default function BrainView({ userId }: { userId: string }) {
     const [saving, setSaving] = useState(false);
 
     const fetchData = useCallback(async () => {
+        setLoadError(null);
         try {
             const res = await fetch(`/api/bot/brain?userId=${userId}`);
             if (res.ok) {
                 const json = await res.json();
                 setData(json);
+            } else {
+                const json = await res.json().catch(() => ({}));
+                const isTimeout = res.status === 502 && json?.message === 'Timeout';
+                setLoadError(
+                    isTimeout
+                        ? 'Brain is warming up, please try again in a moment.'
+                        : 'Failed to load neural data.'
+                );
             }
         } catch {
-            // Fetch failed silently — UI shows fallback
+            setLoadError('Brain is warming up, please try again in a moment.');
         } finally {
             setLoading(false);
         }
@@ -151,7 +161,17 @@ export default function BrainView({ userId }: { userId: string }) {
         );
     }
 
-    if (!data) return <div className="text-text-muted">Failed to load neural data.</div>;
+    if (!data) return (
+        <div className="flex flex-col items-center gap-3 py-12 text-center">
+            <p className="text-text-muted">{loadError || 'Failed to load neural data.'}</p>
+            <button
+                onClick={() => { setLoading(true); fetchData(); }}
+                className="px-4 py-2 border border-white/10 hover:border-accent/50 rounded-xl text-xs font-medium text-text-secondary hover:text-white transition-colors"
+            >
+                Try again
+            </button>
+        </div>
+    );
 
     const traitsByCategory = data.traits.reduce((acc, trait) => {
         let cat = trait.category ? trait.category.toLowerCase() : 'personality';
