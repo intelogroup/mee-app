@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
     try {
         const body = await req.json();
 
-        const { email, password } = body;
+        const { email, password, referral_code } = body;
 
         if (!email || !password) {
             return NextResponse.json({ error: "Email and password are required." }, { status: 400 });
@@ -51,6 +51,23 @@ export async function POST(req: NextRequest) {
 
         if (error) {
             return NextResponse.json({ error: error.message }, { status: 400 });
+        }
+
+        // If a valid referral_code was supplied, link the new user to the referrer
+        if (data.user?.id && referral_code && typeof referral_code === "string") {
+            const { supabaseAdmin } = await import("@/lib/supabase-admin");
+            const { data: referrerProfile } = await supabaseAdmin
+                .from("profiles")
+                .select("id")
+                .eq("referral_code", referral_code.toUpperCase())
+                .single();
+
+            if (referrerProfile?.id && referrerProfile.id !== data.user.id) {
+                await supabaseAdmin
+                    .from("profiles")
+                    .update({ referred_by: referrerProfile.id })
+                    .eq("id", data.user.id);
+            }
         }
 
         return NextResponse.json({ user: { id: data.user?.id, email: data.user?.email } }, { status: 201 });

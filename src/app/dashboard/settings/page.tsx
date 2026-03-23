@@ -2,6 +2,7 @@ import { requireOnboardingComplete } from "@/lib/require-onboarding";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 import NotificationPreferences from "@/components/NotificationPreferences";
 import UserAccountSettings from "@/components/UserAccountSettings";
+import ReferralCard from "@/components/ReferralCard";
 import Link from "next/link";
 
 export default async function SettingsPage() {
@@ -88,6 +89,23 @@ export default async function SettingsPage() {
                         </p>
                     </div>
                     <UserAccountSettings initialLanguage={initialLanguage} />
+                </section>
+
+                {/* Divider */}
+                <div className="border-t border-white/5" />
+
+                {/* Referral section */}
+                <section>
+                    <div className="mb-8">
+                        <h2 className="text-3xl font-bold tracking-tight text-white mb-2">
+                            <span className="text-accent">Invite</span> Friends
+                        </h2>
+                        <p className="text-text-secondary text-sm max-w-xl">
+                            Share your personal invite link. Anyone who signs up with it
+                            will be connected to you as a referral.
+                        </p>
+                    </div>
+                    <ReferralCard />
                 </section>
             </div>
         </main>
