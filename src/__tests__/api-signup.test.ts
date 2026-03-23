@@ -43,6 +43,14 @@ describe("POST /api/signup", () => {
         expect(body.error).toContain("password");
     });
 
+    it("returns 400 when email format is invalid", async () => {
+        mockSupabase({ data: {}, error: null });
+        const res = await POST(makeRequest({ email: "not-an-email", password: "password123" }));
+        expect(res.status).toBe(400);
+        const body = await res.json();
+        expect(body.error).toContain("Invalid email format");
+    });
+
     it("returns 400 when password is too short", async () => {
         mockSupabase({ data: {}, error: null });
         const res = await POST(makeRequest({ email: "test@example.com", password: "short" }));
