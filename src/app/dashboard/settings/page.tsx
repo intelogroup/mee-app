@@ -1,9 +1,24 @@
 import { requireOnboardingComplete } from "@/lib/require-onboarding";
+import { supabaseAdmin } from "@/lib/supabase-admin";
 import NotificationPreferences from "@/components/NotificationPreferences";
+import UserAccountSettings from "@/components/UserAccountSettings";
 import Link from "next/link";
 
 export default async function SettingsPage() {
     const user = await requireOnboardingComplete();
+
+    // Fetch saved language preference (best-effort; falls back to 'en')
+    let initialLanguage = "en";
+    try {
+        const { data } = await supabaseAdmin
+            .from("profiles")
+            .select("language")
+            .eq("id", user.id)
+            .single();
+        if (data?.language) initialLanguage = data.language;
+    } catch {
+        // use default
+    }
 
     return (
         <main className="min-h-screen relative overflow-hidden bg-background text-text-primary">
@@ -44,17 +59,36 @@ export default async function SettingsPage() {
                 </div>
             </nav>
 
-            <div className="relative z-10 max-w-2xl mx-auto px-6 py-12">
-                <div className="mb-12">
-                    <h1 className="text-4xl font-bold tracking-tight text-white mb-2">
-                        <span className="text-accent">Notification</span> Settings
-                    </h1>
-                    <p className="text-text-secondary text-sm max-w-xl">
-                        Control how and when Mee reaches out to you. These preferences apply to your Telegram coaching bot.
-                    </p>
-                </div>
+            <div className="relative z-10 max-w-2xl mx-auto px-6 py-12 space-y-16">
+                {/* Notifications section */}
+                <section>
+                    <div className="mb-8">
+                        <h1 className="text-3xl font-bold tracking-tight text-white mb-2">
+                            <span className="text-accent">Notification</span> Preferences
+                        </h1>
+                        <p className="text-text-secondary text-sm max-w-xl">
+                            Control how and when Mee reaches out to you. These preferences apply to your
+                            Telegram coaching bot.
+                        </p>
+                    </div>
+                    <NotificationPreferences />
+                </section>
 
-                <NotificationPreferences />
+                {/* Divider */}
+                <div className="border-t border-white/5" />
+
+                {/* Account section: timezone, language, password */}
+                <section>
+                    <div className="mb-8">
+                        <h2 className="text-3xl font-bold tracking-tight text-white mb-2">
+                            <span className="text-accent">Account</span> Settings
+                        </h2>
+                        <p className="text-text-secondary text-sm max-w-xl">
+                            Timezone, language, and password for your Mee account.
+                        </p>
+                    </div>
+                    <UserAccountSettings initialLanguage={initialLanguage} />
+                </section>
             </div>
         </main>
     );

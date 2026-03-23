@@ -27,16 +27,16 @@ Focus: complete the coaching experience from onboarding through ongoing use. Tel
 
 ## P2 — Quality of Life
 
-- [ ] **Coaching topic tags** — categorize conversation snippets (career, relationships, habits, etc.); show in history
-- [ ] **Export conversation history** — download as PDF or markdown for personal records
+- [x] **Coaching topic tags** — categorize conversation snippets (career, relationships, habits, etc.); show in history
+- [x] **Export conversation history** — download as PDF or markdown for personal records
 - [ ] **Referral / invite link** — simple invite flow; no complex rewards needed
-- [ ] **User settings page** — notification preferences, timezone, language; currently only password change exists
+- [x] **User settings page** — notification preferences, timezone, language, password change; expanded settings page with all four sections
 
 ---
 
 ## Infrastructure / Model Quality
 
-- [ ] **Nope-flagging** — detect `Nope:`/`N:` correction messages in real-time in the Telegram handler; skip LLM call, save as `flagged=true`, mark preceding assistant message; makes training data extraction a `WHERE flagged=true` query instead of fragile post-hoc pattern matching. Spec: `docs/superpowers/specs/2026-03-22-nope-flagging-design.md`
+- [x] **Nope-flagging** — detect `Nope:`/`N:` correction messages in real-time in the Telegram handler; skip LLM call, save as `flagged=true`, mark preceding assistant message; makes training data extraction a `WHERE flagged=true` query instead of fragile post-hoc pattern matching. Shipped 2026-03-22.
 
 ---
 

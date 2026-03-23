@@ -12,7 +12,7 @@ async function getAuthenticatedUser() {
 
 /**
  * GET /api/user/profile
- * Returns the user's profile preferences: communication style, coaching focus areas.
+ * Returns the user's profile preferences: communication style, coaching focus areas, language.
  */
 export async function GET() {
     const user = await getAuthenticatedUser();
@@ -20,7 +20,7 @@ export async function GET() {
 
     const { data, error } = await supabaseAdmin
         .from("profiles")
-        .select("communication_style, coaching_focus, display_name")
+        .select("communication_style, coaching_focus, display_name, language")
         .eq("id", user.id)
         .single();
 
@@ -30,6 +30,7 @@ export async function GET() {
             communication_style: "balanced",
             coaching_focus: [],
             display_name: "",
+            language: "en",
         });
     }
 
@@ -37,19 +38,20 @@ export async function GET() {
         communication_style: data.communication_style ?? "balanced",
         coaching_focus: data.coaching_focus ?? [],
         display_name: data.display_name ?? "",
+        language: data.language ?? "en",
     });
 }
 
 /**
  * PUT /api/user/profile
- * Updates communication style, coaching focus areas, and display name.
+ * Updates communication style, coaching focus areas, display name, and language.
  */
 export async function PUT(request: Request) {
     const user = await getAuthenticatedUser();
     if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     const body = await request.json();
-    const { communication_style, coaching_focus, display_name } = body;
+    const { communication_style, coaching_focus, display_name, language } = body;
 
     // Validate communication_style
     const validStyles = ["direct", "gentle", "balanced", "socratic"];
@@ -84,10 +86,20 @@ export async function PUT(request: Request) {
         );
     }
 
+    // Validate language code (ISO 639-1, 2-letter)
+    const validLanguages = ["en", "es", "fr", "de", "pt", "it", "ru", "zh", "ja", "ko", "ar", "hi"];
+    if (language !== undefined && !validLanguages.includes(language)) {
+        return NextResponse.json(
+            { error: `language must be one of: ${validLanguages.join(", ")}` },
+            { status: 400 }
+        );
+    }
+
     const updateData: Record<string, unknown> = {};
     if (communication_style !== undefined) updateData.communication_style = communication_style;
     if (coaching_focus !== undefined) updateData.coaching_focus = coaching_focus;
     if (display_name !== undefined) updateData.display_name = display_name;
+    if (language !== undefined) updateData.language = language;
 
     const { error } = await supabaseAdmin
         .from("profiles")
