@@ -32,7 +32,7 @@ describe("POST /api/signup", () => {
         const res = await POST(makeRequest({ password: "password123" }));
         expect(res.status).toBe(400);
         const body = await res.json();
-        expect(body.error).toContain("Email");
+        expect(body.error).toContain("required");
     });
 
     it("returns 400 when password is missing", async () => {
@@ -40,7 +40,7 @@ describe("POST /api/signup", () => {
         const res = await POST(makeRequest({ email: "test@example.com" }));
         expect(res.status).toBe(400);
         const body = await res.json();
-        expect(body.error).toContain("password");
+        expect(body.error).toContain("required");
     });
 
     it("returns 400 when email format is invalid", async () => {

@@ -8,6 +8,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 load_dotenv()
 
+import asyncio
 from app.services.groq import get_groq_response
 
 def test_groq():
@@ -16,8 +17,8 @@ def test_groq():
         {"role": "system", "content": "You are a test bot."},
         {"role": "user", "content": "Hello! Can you hear me?"}
     ]
-    
-    response = get_groq_response(messages)
+
+    response = asyncio.run(get_groq_response(messages))
     print(f"\nAI Response: {response}")
     
     if "Error" in response or "Sorry" in response:

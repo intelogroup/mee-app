@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 interface Message {
     id: string;
@@ -14,6 +14,7 @@ interface Session {
     ended_at: string;
     message_count: number;
     summary: string;
+    tags?: string[];
     messages: Message[];
 }
 
@@ -32,7 +33,52 @@ export default function ConversationHistory() {
     const [offset, setOffset] = useState(0);
     const [sessionSummaries, setSessionSummaries] = useState<Record<number, string>>({});
     const [loadingSummary, setLoadingSummary] = useState<number | null>(null);
+    const [sessionTags, setSessionTags] = useState<Record<number, string[]>>({});
+    const [exporting, setExporting] = useState(false);
     const limit = 50;
+
+    async function handleExport(format: "markdown" | "json" = "markdown") {
+        setExporting(true);
+        try {
+            const res = await fetch(`/api/bot/conversations/export?format=${format}`);
+            if (!res.ok) throw new Error("Export failed");
+            const blob = await res.blob();
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            const date = new Date().toISOString().slice(0, 10);
+            a.href = url;
+            a.download = `mee-coaching-history-${date}.${format === "json" ? "json" : "md"}`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        } catch {
+            // silent — export is optional
+        } finally {
+            setExporting(false);
+        }
+    }
+
+    const fetchTagsForSession = useCallback(async (idx: number, session: Session) => {
+        if (sessionTags[idx] !== undefined) return;
+        const text = [session.summary, ...(session.messages ?? []).map((m) => m.content)]
+            .filter(Boolean)
+            .join(" ");
+        if (!text.trim()) return;
+        try {
+            const res = await fetch("/api/bot/conversations/tags", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ session_key: session.started_at, text }),
+            });
+            if (res.ok) {
+                const json = await res.json();
+                setSessionTags((prev) => ({ ...prev, [idx]: json.tags ?? [] }));
+            }
+        } catch {
+            // silent
+        }
+    }, [sessionTags]);
 
     async function fetchSessionSummary(sessionIndex: number) {
         if (sessionSummaries[sessionIndex]) return; // already fetched
@@ -136,12 +182,23 @@ export default function ConversationHistory() {
 
     return (
         <div className="space-y-4">
-            {/* Summary */}
+            {/* Summary + Export */}
             <div className="flex items-center justify-between mb-6">
                 <p className="text-xs text-text-muted">
                     {data.total_messages} total messages across {data.sessions.length}{" "}
                     session{data.sessions.length !== 1 ? "s" : ""}
                 </p>
+                <button
+                    onClick={() => handleExport("markdown")}
+                    disabled={exporting}
+                    className="flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-medium text-text-secondary bg-white/5 border border-white/10 rounded-lg hover:bg-white/10 hover:text-white transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                    title="Download conversation history as Markdown"
+                >
+                    <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    </svg>
+                    {exporting ? "Exporting..." : "Export"}
+                </button>
             </div>
 
             {/* Session List */}
@@ -152,19 +209,30 @@ export default function ConversationHistory() {
                 >
                     {/* Session Header */}
                     <button
-                        onClick={() =>
-                            setExpandedSession(expandedSession === idx ? null : idx)
-                        }
+                        onClick={() => {
+                            const next = expandedSession === idx ? null : idx;
+                            setExpandedSession(next);
+                            if (next !== null) fetchTagsForSession(idx, session);
+                        }}
                         className="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-white/5 transition-colors"
                     >
                         <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-3 mb-1">
+                            <div className="flex items-center gap-3 mb-1 flex-wrap">
                                 <span className="text-xs font-bold text-white">
                                     {formatDate(session.started_at)}
                                 </span>
                                 <span className="text-[10px] text-text-muted px-2 py-0.5 bg-white/5 rounded-full">
                                     {session.message_count} messages
                                 </span>
+                                {/* Topic tags */}
+                                {(sessionTags[idx] ?? session.tags ?? []).map((tag) => (
+                                    <span
+                                        key={tag}
+                                        className="text-[9px] font-medium text-accent/80 px-2 py-0.5 bg-accent/10 border border-accent/20 rounded-full"
+                                    >
+                                        {tag}
+                                    </span>
+                                ))}
                             </div>
                             {session.summary && (
                                 <p className="text-xs text-text-secondary truncate max-w-lg">

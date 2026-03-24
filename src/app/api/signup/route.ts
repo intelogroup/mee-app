@@ -11,22 +11,21 @@ export async function POST(req: NextRequest) {
     try {
         const body = await req.json();
 
-        const { email, password, referral_code } = body;
-
-        if (!email || !password) {
-            return NextResponse.json({ error: "Email and password are required." }, { status: 400 });
-        }
-        if (password.length < 8) {
-            return NextResponse.json({ error: "Password must be at least 8 characters." }, { status: 400 });
-        }
+        const { referral_code } = body;
 
         const parsed = signupSchema.safeParse(body);
         if (!parsed.success) {
-            const emailIssue = parsed.error.issues.find((i) => i.path[0] === "email");
-            if (emailIssue) {
-                return NextResponse.json({ error: "Invalid email format" }, { status: 400 });
-            }
+            const firstIssue = parsed.error.issues[0];
+            const field = firstIssue.path[0];
+            const isTypeMissing = firstIssue.code === "invalid_type";
+            const message =
+                isTypeMissing && (field === "email" || field === "password")
+                    ? "Email and password are required."
+                    : firstIssue.message;
+            return NextResponse.json({ error: message }, { status: 400 });
         }
+
+        const { email, password } = parsed.data;
 
         const supabase = await createClient();
         
